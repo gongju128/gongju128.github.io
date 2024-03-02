@@ -1475,7 +1475,7 @@ canvas:not(#ribbon-canvas),
 body {
   position: relative;
   min-height: 100%;
-  background: var(--global-bg);
+  background: #d4e7c5;
   color: var(--font-color);
   font-size: var(--global-font-size);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -2005,7 +2005,7 @@ figure.highlight pre .javascript .function {
 .article-sort {
   margin-left: 10px;
   padding-left: 20px;
-  border-left: 2px solid #aadafa;
+  border-left: 2px solid #fbfdfe;
 }
 .article-sort-title {
   position: relative;
@@ -2154,6 +2154,7 @@ figure.highlight pre .javascript .function {
 .category-lists .category-list a {
   color: var(--font-color);
 }
+.category-lists .category-list a #,
 .category-lists .category-list a:hover {
   color: #49b1f5;
 }
@@ -3327,7 +3328,7 @@ h1.page-title + .tag-cloud-list {
 }
 #footer {
   position: relative;
-  background-color: #49b1f5;
+  background-color: #99bc85;
   background-attachment: scroll;
   background-position: bottom;
   background-size: cover;
@@ -3356,7 +3357,7 @@ h1.page-title + .tag-cloud-list {
 #page-header {
   position: relative;
   width: 100%;
-  background-color: #49b1f5;
+  background-color: #e1f0da;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -3482,7 +3483,7 @@ h1.page-title + .tag-cloud-list {
   background: 0;
 }
 #page-header.not-top-img #nav {
-  background: rgba(255,255,255,0.8);
+  background: rgba(225,240,218,0.8);
   -webkit-box-shadow: 0 5px 6px -5px rgba(133,133,133,0.6);
   box-shadow: 0 5px 6px -5px rgba(133,133,133,0.6);
 }
