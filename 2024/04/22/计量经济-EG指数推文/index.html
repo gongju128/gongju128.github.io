@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>EG指数计算工具 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天推出的是EG指数计算工具。 EG 指数法的运用相对成熟，它弥补了早期测度方法的劣势，解决了Gini 系数法失真的原因并结合了赫芬达尔指数法的使用，同时对能够采集到的数据具有良好的适用性。 其计算公式如下： $$\gamma_{EG}&#x3D;\frac{G-(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})H}{(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EG指数计算工具">
+<meta property="og:url" content="http://gongju128.github.io/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/index.html">
+<meta property="og:site_name" content="工具视界">
+<meta property="og:description" content="今天推出的是EG指数计算工具。 EG 指数法的运用相对成熟，它弥补了早期测度方法的劣势，解决了Gini 系数法失真的原因并结合了赫芬达尔指数法的使用，同时对能够采集到的数据具有良好的适用性。 其计算公式如下： $$\gamma_{EG}&#x3D;\frac{G-(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})H}{(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
+<meta property="article:published_time" content="2024-04-22T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-22T12:45:36.346Z">
+<meta property="article:author" content="任公子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://gongju128.github.io/img/zhuang.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://gongju128.github.io/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EG指数计算工具',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-04-22 20:45:36'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">80</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">100</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">EG指数计算工具</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-22T12:45:36.346Z" title="更新于 2024-04-22 20:45:36">2024-04-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EG指数计算工具"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>今天推出的是EG指数计算工具。</p>
+<p>EG 指数法的运用相对成熟，它弥补了早期测度方法的劣势，解决了Gini 系数法失真的原因并结合<br>了赫芬达尔指数法的使用，同时对能够采集到的数据具有良好的适用性。</p>
+<p>其计算公式如下：</p>
+<p>$$\gamma_{EG}&#x3D;\frac{G-(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})H}{(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})(1-H)}&#x3D;\frac{\sum_{i&#x3D;1}^{M}(s_{i}-x_{i})^{2}-(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})\sum_{j&#x3D;1}^{N}Z_{j}^{2}}{(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})(1-\sum_{j&#x3D;1}^{N}Z_{j}^{2})}$$</p>
+<p>其中，N为经济体中某产业企业的个数；M 代表经济体地理区域的划分个数$;<em>{\lambda_i}$表示$i$市总就业人数占全国总就业人数的比重；s_i表示$i$市旅游产业就业人数占该产业全部就业人数的比重；$G&#x3D;\sum</em>{i&#x3D;1}^{n}(s_i-x_i)^2$为空间Gini 系数$;H&#x3D;\sum_{j&#x3D;1}^NZ_j^2$是防止Gini 系数失真引入的 Herfindahl-Hirschman 指数$;Z_j&#x3D;x_j&#x2F;\sum_{j&#x3D;1}^Nx_j$中的$x_j$表示$i$市旅游产业内$j$企业的规模，$\sum_{j&#x3D;1}^Nx_j$为$i$市旅游产业总规模，N为$i$市旅游产业企业总数$^{[12]}$。</p>
+<p>Elilsion &amp; Glaeser指出集中度指标分为三个区间：若$\gamma&lt;0.02$,表明该区域内产业分布比较发散，不存在地理集中趋势；若$0.02\leqslant\gamma\leqslant0.05$,表明该区域内的产业分布比较均匀；若$\gamma&gt;0.05$,表明该区域内的产业高度集聚。</p>
+<p>该使用起来十分方便，可以直接得到各个行业的EG指数。需要的话，可以直接联系微信<strong>canglang12002</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/">http://gongju128.github.io/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/10/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DEA0510/" title="存在共享投入的两阶段博弈交叉DEA模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">存在共享投入的两阶段博弈交叉DEA模型</div></div></a></div><div class="next-post pull-right"><a href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DO%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="度量空间集聚的DO指数计算工具"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">度量空间集聚的DO指数计算工具</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">80</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">100</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/10/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DEA0510/" title="存在共享投入的两阶段博弈交叉DEA模型">存在共享投入的两阶段博弈交叉DEA模型</a><time datetime="2024-05-10T10:04:57.000Z" title="发表于 2024-05-10 18:04:57">2024-05-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="EG指数计算工具">EG指数计算工具</a><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DO%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="度量空间集聚的DO指数计算工具">度量空间集聚的DO指数计算工具</a><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/12/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-NSBM%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" title="网络SBM模型复现">网络SBM模型复现</a><time datetime="2024-04-12T00:00:00.000Z" title="发表于 2024-04-12 08:00:00">2024-04-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/26/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%9B%A2%E4%BD%93%E6%9C%BA%E6%9E%84%E6%8C%81%E8%82%A1%E6%AF%94%E4%BE%8B%E4%BB%A3%E7%A0%81%E6%9B%B4%E6%96%B0/" title="团体机构持股比例代码更新">团体机构持股比例代码更新</a><time datetime="2024-03-26T14:55:29.000Z" title="发表于 2024-03-26 22:55:29">2024-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2024  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'gongju128/gongju128.github.io',
+      'data-repo-id': 'R_kgDOLZkzyw',
+      'data-category-id': 'DIC_kwDOLZkzy84Cdncw',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"mapping":"https://gongju128.github.io","reactions-enabled":1,"input-position":"end"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
