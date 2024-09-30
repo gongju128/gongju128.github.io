@@ -1,245 +1,38 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>分类: 计量经济 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="经济、金融领域模型的实现工具及代码。微信: canglang12002">
-<meta property="og:type" content="website">
-<meta property="og:title" content="工具视界">
-<meta property="og:url" content="http://gongju128.github.io/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/index.html">
-<meta property="og:site_name" content="工具视界">
-<meta property="og:description" content="经济、金融领域模型的实现工具及代码。微信: canglang12002">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
-<meta property="article:author" content="任公子">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://gongju128.github.io/img/zhuang.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://gongju128.github.io/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '分类: 计量经济',
-  isPost: false,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: false,
-  postUpdate: '2024-08-18 12:50:19'
-}</script><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
-      
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
+{% extends '_layout.swig' %}
+{% import '_macro/post-collapse.swig' as post_template %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
+{% block title %}{{ __('title.category') }}: {{ page.category }} | {{ title }}{% endblock %}
 
-        document.head.appendChild(script)
-      })
-    
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
-    
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">97</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div class="recent-posts category_ui" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/10/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DEA0510/" title="存在共享投入的两阶段博弈交叉DEA模型">存在共享投入的两阶段博弈交叉DEA模型</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-05-10T10:04:57.000Z" title="发表于 2024-05-10 18:04:57">2024-05-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">今天推出的是存在共享投入的两阶段博弈交叉DEA模型。
-网络 DEA 博弈交叉效率模型不仅适用于基本两阶段网络结构，还适用于多种网络结构，本文进一步将模型拓展为存在共享投入的两阶段DEA 博弈交叉效率模型。 存在共享投入的两阶段网络结构中，假设有 n 个 DMU;在第一阶段，$DMU_j(j&#x3D;1,2,…,n)$用 m 种共享比例分别为$\alpha_{ij}(i&#x3D;1,2,…,m)$的外源投入$x_ij(i&#x3D;1,2,…,m)$产生 q 种产出$z_pj(p&#x3D;1,2,…,q);$ 在第二阶段，$DMU_{j}(j&#x3D;1,2,…,n)$用 m 种共享比例分别为的外源投入$$(1-\alpha_{i_{i}})$$,$x_{ij}(i&#x3D;1,2,….,m)$和第一阶段的 q 种产出$z_{pj}(p&#x3D;1,2,…,q)$产生 S 种产出$y_{rj}(r&#x3D;1,2,….,s)$,这 S 种产出离开系统。其中，共享比例$\alpha_{i_i}(i&#x3D;1,2,…,m)$是未知参数，管理者可根据现实情况设置共享比例的下界 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="EG指数计算工具">EG指数计算工具</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">今天推出的是EG指数计算工具。
-EG 指数法的运用相对成熟，它弥补了早期测度方法的劣势，解决了Gini 系数法失真的原因并结合了赫芬达尔指数法的使用，同时对能够采集到的数据具有良好的适用性。
-其计算公式如下：
-$$\gamma_{EG}&#x3D;\frac{G-(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})H}{(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})(1-H)}&#x3D;\frac{\sum_{i&#x3D;1}^{M}(s_{i}-x_{i})^{2}-(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})\sum_{j&#x3D;1}^{N}Z_{j}^{2}}{(1-\sum_{i&#x3D;1}^{M}x_{i}^{2})(1-\sum_{j&#x3D;1}^{N}Z_{j}^{2})}$$
-其中，N为经济体中某产业企业的个数；M 代表经济体地理区域的划分个数$;{\lambda_i}$表示$i$市总就业人数占全国总就业人数的比重；s_i表示$i$市旅游产业就业人数占该产业全部就业人数的比重；$G&#x3D;\sum{i ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DO%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="度量空间集聚的DO指数计算工具">度量空间集聚的DO指数计算工具</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">今天推出的是DO指数计算工具。
-DO 指数方法由Duranton and Overman（2005）提出，用于对产业空间集聚程度进行度量。DO 指数的计算分为三步:
-(1)计算核密度函数。假定行业$I$中存在$n$ 家企业，运用每家企业的经纬度数据，可以计算出$n( n- 1) &#x2F;2$个两两企业对彼此的空间距离，它与实际交通距离存在一定偏差，但对估计结果影响不大，Duranton and Overman(2005)曾详细阐述了这一问题。计算该行业两两企业彼此距离的核密度函数$\hat{K}(d)$的公式如下：$$\hat{K}(d)&#x3D;\frac{1}{n(n-1)h}\sum_{i&#x3D;1}^{n-1}\sum_{j&#x3D;i+1}^{n}f(\frac{d-d_{i,j}}{h})$$其中，$d$ 表示两两企业彼此的空间距离，$d_{i,j}$表示企业$i$ 与企业$j$ 之间距离值，$f$为高斯核密度函数，h 表示窗宽。
-因为企业规模的大小会明显地影响企业的分布模式特征，所以本文采用企业就业人数作为规模的权重进入核密度函数，​加入权重后公式如下:
-$$ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/12/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-NSBM%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" title="网络SBM模型复现">网络SBM模型复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-12T00:00:00.000Z" title="发表于 2024-04-12 08:00:00">2024-04-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">今天推出的是网络SBM模型。
-传统的SBM模型处理关于多输入与多输出的dmu相对效率的测量。这些模型的缺点之一是忽略了中间产品或链接活动。在指出将中间产品纳入DEA模型的需求后，作者提出了一个基于松弛的网络DEA模型，称为网络SBM，它可以形式化地处理中间产品。使用该模型，我们可以评估部门效率以及决策单位(dmu)的整体效率。
-其结构图如下：
+{% block content %}
 
-变量约束如下：
-$$$$\begin{aligned}&amp;\mathbf{x}{o}^{k}&#x3D;\mathbf{X}^{k}\lambda^{k}+\mathbf{s}^{k-}\quad(k&#x3D;1,\ldots,K), \&amp;\mathbf{y}{o}^{k}&#x3D;\mathbf{Y}^{k}\lambda^{k}-\mathbf{s}^{k+}\quad(k&#x3D;1,\ldots,K), \&amp;\mathbf{e}\lambda^{k}&#x3D;1\quad(k&#x3D;1,\ldots,K), \&amp;\lambda^{k}\geqslant\mathbf{0},\mathbf{s}^ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/26/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%9B%A2%E4%BD%93%E6%9C%BA%E6%9E%84%E6%8C%81%E8%82%A1%E6%AF%94%E4%BE%8B%E4%BB%A3%E7%A0%81%E6%9B%B4%E6%96%B0/" title="团体机构持股比例代码更新">团体机构持股比例代码更新</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-26T14:55:29.000Z" title="发表于 2024-03-26 22:55:29">2024-03-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">之前做的上市公司团体机构持股比例的代码，重新写了一遍，现在可以直接利用国泰安下载的数据进行运算。
-分别执行三个py文件，即可得到团体机构持股比例，最大团团体机构持股比例两个指标，可以直接导入stata进行回归等计算，方便快捷。
-需要的同学可以联系微信 canglang12002
-往期推文：
-空间马尔科夫工具更新****
-共享投入型关联两阶段生产系统的网络DEA效率测度与分解复现
-基尼系数双维度分解计算工具
-动态SBM模型（DSBM)复现
-共享投入的两阶段DEA模型复现
-基于凸分位数回归的影子价格计算工具
-Doyle和Green(1994)的对抗性和仁慈性DEA
-一种新的两阶段网络DEA模型
-适用于面板数据的动态StoNED模型计算工具****
-零和博弈SBM模型（ZSG-SBM）模型
-三阶段动态网络DEA(DNSBM)模型的实现
-计算相对资源承载力模型的工具
-基于参数化的方向性距离函数（DDF)估算污染物影子价格的工具
-基于非期望产出的RAM 碳环境效率模型
-使用遗传算法或NSGA2算法解决多式联运问题
-莫兰指数计算小工具
-Panda_DEA增加至强有效前沿最近距离-MinDS模型
-Q ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/14/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-3-14%E7%A9%BA%E9%97%B4markov%E6%9B%B4%E6%96%B0/" title="空间马尔可夫链工具更新">空间马尔可夫链工具更新</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-14T00:00:00.000Z" title="发表于 2024-03-14 08:00:00">2024-03-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">Markov工具已经推出很久了，最近对其做了一些更新，具体如下：
-1、可以指定状态数。
-之前默认是分4类，可是有些用户有分三类或者五类的需求，现在用户可以自由指定分类状态数。
-2、增加了卡方检验
-现在很多关于空间markov的文献，增加了卡方检验，这里一并加上。
-3、初始分布和稳态分布
-结果表中增加了传统markov的初始分布和稳态分布结果，以及空间markov的稳态分布结果。
-4、分位数
-原先的版本，需要用户手动计算分位数，比较麻烦，本次更新的版本，用户可以指定软件自行计算分位数，
-当然，如果有用户需要手动指定分位数，我们也保留了这一功能。
-2024年3月14日。
-PS：由于某些原因，工具视界官网转到了github，网址为gongju128.github.io
-新网站可以评论了哦，欢迎大家留言，提出意见！
-</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/01/26/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-01-26-%E5%85%B1%E4%BA%AB%E6%8A%95%E5%85%A5%E5%9E%8B%E5%85%B3%E8%81%94%E4%B8%A4%E9%98%B6%E6%AE%B5%E7%94%9F%E4%BA%A7%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BD%91%E7%BB%9CDEA/" title="共享投入型关联两阶段生产系统的网络DEA效率测度与分解复现">共享投入型关联两阶段生产系统的网络DEA效率测度与分解复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-25T16:00:00.000Z" title="发表于 2024-01-26 00:00:00">2024-01-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">今天推出的是一个关于2011年陈凯华和官建成的《共享投入型关联两阶段生产系统的网络DEA效率测度与分解》这篇
-文献中建立的DEA模型结果的复现。
-该文提出的考虑中间产出的共享投入的两阶段网络DEA模型，在规模报酬不变时，其规划式如下：
-$$\begin{aligned}&amp;E_k&#x3D;\max\sum_{p&#x3D;1}^qW_p^1Z_{pk}+\sum_{r&#x3D;1}^sU_rY_{rk}\&amp;\mathrm{s.t.}\begin{cases}\sum_{i&#x3D;1}^m\pi_i^1X_{ik}+\sum_{i&#x3D;1}^mV_i^2X_{ik}-\sum_{i&#x3D;1}^m\pi_i^2X_{ik}+\sum_{p&#x3D;1}^qW_p^2Z_{pk}&#x3D;1\\sum_{i&#x3D;1}^m\pi_i^1X_{ij}-\sum_{p&#x3D;1}^qW_p^1Z_{pj}\geq0,j&#x3D;1,2,\cdots,n\\sum_{i&#x3D;1}^mV_i^2X_{ij}-\sum_{i&#x3D;1}^m\p ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/01/19/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-01-19%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0%E5%8F%8C%E7%BB%B4%E5%BA%A6%E5%88%86%E8%A7%A3/" title="基尼系数双维度分解工具">基尼系数双维度分解工具</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-19T00:00:00.000Z" title="发表于 2024-01-19 08:00:00">2024-01-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">基尼系数双维度分解计算工具
-今天推出的是一个基尼系数双维度分解工具，之前的基尼系数分解，要么是基不同的子群，或者基于不同的分项，但是有时候我们需要同时基于分组和分项来研究，如GDP，既需要根据区域分组研究区域差异，也需要揭示总体差异的产业来源，这时候常用的泰尔指数、Dagum基尼系数分解就不再适用了。
-这个基尼系数双维度分解是由Mussard在2004年提出，其主要理论如下：
-给定一个样本总体$P$,其规模为$n$,均值为$\mu$,该总体划分为$k$ 个子群，每个子群可以表示为$P_i(\forall j,h&#x3D;1$, 2,…,k)。每一个子群的均值和规模分别表示为$\mu_j$和$n_j$。基尼系数可以用下面的公式来计算，其中，$s_{p,i},s_{p,r}$分别表示样本总体$P$中的个体$i$、个体$r$ 的指标$\langle i&#x3D;1,2,\cdots,n\rangle$。
-$$G&#x3D;\frac{\hat{\sum}{i&#x3D;1}\hat{\sum}{r&#x3D;1}|x_{p,i}-x_{p,r}|}{2\mu n^{2}}$$
- 总体指标 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/01/02/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8A%A8%E6%80%81sbm%E6%A8%A1%E5%9E%8Bdsbm%E5%A4%8D%E7%8E%B0/" title="动态SBM模型DSBM)复现">动态SBM模型DSBM)复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-02T00:00:00.000Z" title="发表于 2024-01-02 08:00:00">2024-01-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">大家新年好！
-今天推出的是动态SBM模型，参考文献是：《Dynamic DEA: A slacks-based measure approach》，文献doi是：10.1016&#x2F;j.omega.2009.07.003
-不同于常见的DEA模型只能处理截面数据，动态SBM模型能够处理面板数据，其结构如下：  
+  {######################}
+  {### CATEGORY BLOCK ###}
+  {######################}
+  <div class="post-block category">
 
-其中的链接变量，carry-over分为以下四种：
-（1） 理想的（好的）链接，这表示需要结转。例如。留存收益和净盈余转入下一期。在我们的模型中，期望的链接被视为输出，并且链接值被限制为不小于观察到的值。这一类链接的相对短缺被认为是效率低下。
-（2） 不良链接。这属于不良结转，例如结转损失、坏账。在我们的模型中，不希望的链接被视为输入，其值被限制为不大于观察到的值。这一类别中的链接相对过剩被视为效率低下。
-（3） 自由链接。这对应于DMU可以自由处理的结转。它的值可以从观察到的值增加或减少。与当前值的偏差不会直接反映在效率评估中。
-（4） 非自由支配（固定）链接。这表明结转超出了DMU的控制范围。它的值固定在观察到的水平上。与自由链接类似，固定链接通过两个术语之间的连续性 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/29/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2023-12-29-%E5%85%B1%E4%BA%AB%E6%8A%95%E5%85%A5%E7%9A%84%E4%B8%A4%E9%98%B6%E6%AE%B5dea%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" title="共享投入的两阶段DEA模型复现">共享投入的两阶段DEA模型复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-29T00:00:00.000Z" title="发表于 2023-12-29 08:00:00">2023-12-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="content">今天推出的是含有共享投入的两阶段DEA模型,参考文献是：Yao Chen的《DEA model with shared resources and efficiency decomposition》，doi是：10.1016&#x2F;j.ejor.2010.03.031，大家可以直接在网上下载这篇文献，或者找我要。
-它的结构大概是这样子：
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <{% if theme.seo %}h2{% else %}h1{% endif %}>{#
+        #}{{ page.category }}{#
+        #}<small>{{  __('title.category')  }}</small>
+        </{% if theme.seo %}h2{% else %}h1{% endif %}>
+      </div>
 
-然后这个是第一阶段的总效率：
+      {% for post in page.posts %}
+        {{ post_template.render(post) }}
+      {% endfor %}
+    </div>
 
-得到效率E以后，分别最大化第一阶段效率和第二阶段效率：
+  </div>
+  {##########################}
+  {### END CATEGORY BLOCK ###}
+  {##########################}
 
+  {% include '_partials/pagination.swig' %}
 
-下面是我复现的结果：
+{% endblock %}
 
-
-可以看到，总效率值，和最大化第一阶段和第二阶段的效率值是基本相同的，但是由于不同的优化求解器，得到的w1和w2不同，就导致最大化其中一个阶段效率后，求得的另外一个效率值，和论文结果是有差异的，这点注意即可。
-如果需要该模型，欢迎联系微信 canglang12002
-往期推荐：
-基于凸分位数回归的影子价格计算工具
-Doyle和Green(1994)的对抗性和仁慈性DEA
-一种新的两阶段网络DEA模型
-适用于面板数据的动态StoNED模型计算工具
-零和博弈SBM模型（ZSG-SBM）模型
-三阶段动态网络DEA(DNSBM)模型的实现
- ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/page/5/">5</a><a class="extend next" rel="next" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/page/2/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">97</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/10/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DEA0510/" title="存在共享投入的两阶段博弈交叉DEA模型">存在共享投入的两阶段博弈交叉DEA模型</a><time datetime="2024-05-10T10:04:57.000Z" title="发表于 2024-05-10 18:04:57">2024-05-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EG%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="EG指数计算工具">EG指数计算工具</a><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DO%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="度量空间集聚的DO指数计算工具">度量空间集聚的DO指数计算工具</a><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/12/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-NSBM%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" title="网络SBM模型复现">网络SBM模型复现</a><time datetime="2024-04-12T00:00:00.000Z" title="发表于 2024-04-12 08:00:00">2024-04-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/26/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%9B%A2%E4%BD%93%E6%9C%BA%E6%9E%84%E6%8C%81%E8%82%A1%E6%AF%94%E4%BE%8B%E4%BB%A3%E7%A0%81%E6%9B%B4%E6%96%B0/" title="团体机构持股比例代码更新">团体机构持股比例代码更新</a><time datetime="2024-03-26T14:55:29.000Z" title="发表于 2024-03-26 22:55:29">2024-03-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
-            <i class="fas fa-folder-open"></i>
-            <span>分类</span>
-            
-            </div>
-            <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/QLAB/"><span class="card-category-list-name">QLAB</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/R%E8%AF%AD%E8%A8%80/"><span class="card-category-list-name">R语言</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><span class="card-category-list-name">数值计算</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><span class="card-category-list-name">智能算法</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">深度学习</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><span class="card-category-list-name">计量经济</span><span class="card-category-list-count">49</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><span class="card-category-list-name">运筹优化</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%B7%A5%E5%85%B7%E8%A7%86%E7%95%8C/" style="font-size: 1.37em; color: #99a4b2">工具视界</a> <a href="/tags/%E6%9D%A1%E5%BD%A2%E5%9B%BE/" style="font-size: 1.1em; color: #999">条形图</a> <a href="/tags/%E6%95%B0%E6%8D%AE/" style="font-size: 1.1em; color: #999">数据</a> <a href="/tags/%E5%A4%9A%E5%BC%8F%E8%81%94%E8%BF%90/" style="font-size: 1.1em; color: #999">多式联运</a> <a href="/tags/julia/" style="font-size: 1.1em; color: #999">julia</a> <a href="/tags/%E6%9C%BA%E6%9E%84%E6%8A%95%E8%B5%84%E8%80%85%E6%8A%B1%E5%9B%A2%E4%B8%8E%E8%82%A1%E4%BB%B7%E5%B4%A9%E7%9B%98%E9%A3%8E%E9%99%A9/" style="font-size: 1.1em; color: #999">机构投资者抱团与股价崩盘风险</a> <a href="/tags/dagum%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0%E5%88%86%E8%A7%A3%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">dagum基尼系数分解工具</a> <a href="/tags/%E5%9F%BA%E5%B0%BC%E7%B3%BB%E6%95%B0/" style="font-size: 1.1em; color: #999">基尼系数</a> <a href="/tags/armadillo/" style="font-size: 1.1em; color: #999">armadillo</a> <a href="/tags/ram%E6%A8%A1%E5%9E%8B/" style="font-size: 1.23em; color: #999ea6">ram模型</a> <a href="/tags/%E5%8A%A8%E6%80%81SBM/" style="font-size: 1.1em; color: #999">动态SBM</a> <a href="/tags/corrplot/" style="font-size: 1.1em; color: #999">corrplot</a> <a href="/tags/DSBM/" style="font-size: 1.1em; color: #999">DSBM</a> <a href="/tags/%E5%85%B1%E4%BA%AB%E6%8A%95%E5%85%A5DEA/" style="font-size: 1.1em; color: #999">共享投入DEA</a> <a href="/tags/%E5%B9%BF%E4%B9%89sbm%E6%A8%A1%E5%9E%8B/" style="font-size: 1.1em; color: #999">广义sbm模型</a> <a href="/tags/%E9%9D%A2%E6%9D%BF%E6%95%B0%E6%8D%AE%E5%9B%9E%E5%BD%92/" style="font-size: 1.1em; color: #999">面板数据回归</a> <a href="/tags/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">遗传算法</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9C%E5%88%86%E6%9E%90/" style="font-size: 1.5em; color: #99a9bf">数据包络分析</a> <a href="/tags/qlab/" style="font-size: 1.1em; color: #999">qlab</a> <a href="/tags/%E5%8D%9A%E5%BC%88%E4%BA%A4%E5%8F%89%E6%95%88%E7%8E%87DEA/" style="font-size: 1.1em; color: #999">博弈交叉效率DEA</a> <a href="/tags/%E5%AF%B9%E6%8A%97%E5%9E%8B/" style="font-size: 1.1em; color: #999">对抗型</a> <a href="/tags/ggally%E5%8C%85/" style="font-size: 1.1em; color: #999">ggally包</a> <a href="/tags/nsga3/" style="font-size: 1.1em; color: #999">nsga3</a> <a href="/tags/%E9%9B%B6%E5%92%8C%E6%94%B6%E7%9B%8Adea/" style="font-size: 1.1em; color: #999">零和收益dea</a> <a href="/tags/%E8%80%A6%E5%90%88%E5%8D%8F%E8%B0%83%E5%BA%A6/" style="font-size: 1.1em; color: #999">耦合协调度</a> <a href="/tags/%E5%9C%86%E5%BD%A2%E6%9D%A1%E5%BD%A2%E5%9B%BE/" style="font-size: 1.1em; color: #999">圆形条形图</a> <a href="/tags/%E6%B0%94%E6%B3%A1%E5%9B%BE/" style="font-size: 1.1em; color: #999">气泡图</a> <a href="/tags/%E6%A1%91%E5%9F%BA%E5%9B%BE/" style="font-size: 1.1em; color: #999">桑基图</a> <a href="/tags/sbm/" style="font-size: 1.1em; color: #999">sbm</a> <a href="/tags/var%E6%A8%A1%E5%9E%8B/" style="font-size: 1.1em; color: #999">var模型</a> <a href="/tags/kernel/" style="font-size: 1.1em; color: #999">kernel</a> <a href="/tags/%E6%99%BA%E8%83%BD%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">智能优化算法</a> <a href="/tags/%E6%B7%B1%E4%BA%A4%E6%89%80/" style="font-size: 1.1em; color: #999">深交所</a> <a href="/tags/%E7%BD%91%E7%BB%9Cdea/" style="font-size: 1.1em; color: #999">网络dea</a> <a href="/tags/%E5%8A%A8%E6%80%81StoNED/" style="font-size: 1.1em; color: #999">动态StoNED</a> <a href="/tags/matlab%E4%BB%A3%E7%A0%81/" style="font-size: 1.1em; color: #999">matlab代码</a> <a href="/tags/panda-dea/" style="font-size: 1.1em; color: #999">panda_dea</a> <a href="/tags/gams/" style="font-size: 1.1em; color: #999">gams</a> <a href="/tags/r/" style="font-size: 1.37em; color: #99a4b2">r</a> <a href="/tags/%E5%B0%8F%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">小工具</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">78</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-08-18T04:50:19.804Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2024  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+{% block sidebar %}
+  {{ sidebar_template.render(false) }}
+{% endblock %}
