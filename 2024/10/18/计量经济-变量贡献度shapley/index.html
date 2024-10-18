@@ -1,0 +1,580 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Shapley方法测算DEA模型变量重要性 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天推出的是利用Shapley方法，测算DEA中投入产出变量重要性的方法。 Shapley 值法是由 L. S. Shapley 于 1953 年提出的方法。Shapley 值的特点为参与人之间的平等性。可以通过构造联盟、联盟内外平等和联盟中参与人平等性这三个角度体现。基于 Shapley 值进行联盟成员的利益分配体现了各盟员对联盟总目标的贡献程度，避免了分配上的平均主义。通过每个变量的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shapley方法测算DEA模型变量重要性">
+<meta property="og:url" content="http://gongju128.github.io/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/index.html">
+<meta property="og:site_name" content="工具视界">
+<meta property="og:description" content="今天推出的是利用Shapley方法，测算DEA中投入产出变量重要性的方法。 Shapley 值法是由 L. S. Shapley 于 1953 年提出的方法。Shapley 值的特点为参与人之间的平等性。可以通过构造联盟、联盟内外平等和联盟中参与人平等性这三个角度体现。基于 Shapley 值进行联盟成员的利益分配体现了各盟员对联盟总目标的贡献程度，避免了分配上的平均主义。通过每个变量的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
+<meta property="article:published_time" content="2024-10-18T05:58:29.000Z">
+<meta property="article:modified_time" content="2024-10-18T09:17:44.536Z">
+<meta property="article:author" content="任公子">
+<meta property="article:tag" content="Shapley方法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://gongju128.github.io/img/zhuang.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://gongju128.github.io/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Shapley方法测算DEA模型变量重要性',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-18 17:17:44'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">100</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Shapley方法测算DEA模型变量重要性</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-18T05:58:29.000Z" title="发表于 2024-10-18 13:58:29">2024-10-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-18T09:17:44.536Z" title="更新于 2024-10-18 17:17:44">2024-10-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Shapley方法测算DEA模型变量重要性"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>今天推出的是利用Shapley方法，测算DEA中投入产出变量重要性的方法。</p>
+<p>Shapley 值法是由 L. S. Shapley 于 1953 年提出的方法。Shapley
+值的特点为参与人之间的平等性。可以通过构造联盟、联盟内外平等和联盟中参与人平等性这三个角度体现。基于
+Shapley
+值进行联盟成员的利益分配体现了各盟员对联盟总目标的贡献程度，避免了分配上的平均主义。通过每个变量的
+Shapley
+值，可以求出变量在效率中的边际影响，从而合理筛选投入产出指标，构建科学的投入产出指标体系，为后续测算煤炭生态效率奠定基础。</p>
+<p>参考文献：《A Shapley value index on the importance of variables in
+DEA models》Yongjun Li, Liang Liang</p>
+<h1 id="dea模型中的效率贡献率ecr">DEA模型中的效率贡献率(ECR)</h1>
+<h2 id="引言">1. 引言</h2>
+<p>Wagner和Shimshak(2007)开发了一种逐步减少变量的程序方法。该方法的核心是计算每个变量对效率评估的影响程度;在他们的论文中,给定变量的影响被定义为包含和不包含该变量的两个DEA模型中所有DMU平均效率的差异。</p>
+<h2 id="ecr定义">2. ECR定义</h2>
+<p>变量<span class="math inline">\(X_i\)</span>对DMU<span
+class="math inline">\(_d\)</span>的ECR定义为:</p>
+<p><span class="math display">\[
+\text{ECR}_d^S(X_i) = \frac{E_d(M, S)}{E_d(M/\{i\}, S)} - 1, \quad d \in
+N; \forall\{i\} \subset M, \{i\} \neq M,
+\]</span></p>
+<p>其中<span class="math inline">\(E_d(M/\{i\},
+S)\)</span>是基于模型(1)的DMU<span
+class="math inline">\(_d\)</span>的最优效率得分,输入集为<span
+class="math inline">\(M/\{i\}\)</span>,输出为<span
+class="math inline">\(S\)</span>。显然,随着<span
+class="math inline">\(\text{ECR}_d^S(i)\)</span>的数值越大,其对效率的影响就越重要。</p>
+<h2 id="ecr变量集的性质">3. ECR变量集的性质</h2>
+<h3 id="定义2">定义2</h3>
+<p>变量集的ECR为:</p>
+<p><span class="math display">\[
+\text{ECR}_d^S(P) = \frac{E_d(M, S)}{E_d(M/P, S)} - 1, \quad d \in N;
+\quad \forall P \subset M, M \neq P.
+\]</span></p>
+<h3 id="备注1">备注1</h3>
+<p><span class="math inline">\(\text{ECR}_d^S(\emptyset) = 0, \quad
+\forall d \in N\)</span>.</p>
+<h3 id="定理1">定理1</h3>
+<p><span class="math inline">\(\text{ECR}_d^S(P) \geq 0, \quad \forall d
+\in N, P \subset M\)</span>.</p>
+<h3 id="定理2">定理2</h3>
+<p><span class="math inline">\(\frac{E_d(M,S)}{E_d(M/P,S)} =
+\text{ECR}_d^S(P) + 1 = 1/p_d^*\)</span>,其中<span
+class="math inline">\(p_d^*\)</span>是以下模型的最优目标函数值:</p>
+<p><span class="math display">\[
+\begin{aligned}
+p_d^* &amp;= \text{Min} \quad p \\
+\text{s.t.} \quad &amp;\sum_{j\in N} \lambda_j E_i(M, S)x_{ij} \leq
+p[E_d(M, S)x_{di}], \quad i \in M/P, \\
+&amp;\sum_{j\in N} \lambda_j y_{rj} \geq y_{rd}, \quad r \in S, \\
+&amp;\lambda_j \geq 0, \quad p : \text{free}.
+\end{aligned}
+\]</span></p>
+<h3 id="定理3">定理3</h3>
+<p><span
+class="math inline">\(M\)</span>的任意两个输入子集没有公共点,即<span
+class="math inline">\(\forall P_1 \cup P_2 \subset M, P_1 \cap P_2 =
+\emptyset\)</span>,则:</p>
+<p><span class="math display">\[
+\text{ECR}_d^S(P_1 + P_2) \geq \text{ECR}_d^S(P_1) +
+\text{ECR}_d^S(P_2), \quad \forall d \in N.
+\]</span></p>
+<h2 id="确定每个变量重要性的合作博弈">4.
+确定每个变量重要性的合作博弈</h2>
+<p>在本节中,我们将ECR与合作博弈相结合,计算每个变量的重要程度。</p>
+<h3 id="定义3">定义3</h3>
+<p>对于输入集<span class="math inline">\(M\)</span>中的给定联盟<span
+class="math inline">\(P\)</span>,P在所有DMU中的ECR之和定义为:</p>
+<p><span class="math display">\[
+V^S(P) = \sum_{d=1}^n \text{ECR}_d^S(P).
+\]</span></p>
+<h3 id="备注2">备注2</h3>
+<p><span class="math inline">\(V^S(\emptyset) = 0\)</span>.</p>
+<p><span class="math inline">\(V^S(P)\)</span>,与<span
+class="math inline">\(V^S(\emptyset) = 0\)</span>一起,定义了联盟<span
+class="math inline">\(P\)</span>的特征函数。因此,我们得到了一个联盟形式的博弈,表示为<span
+class="math inline">\((M, V)\)</span>。</p>
+<h3 id="定理4">定理4</h3>
+<p>特征函数<span
+class="math inline">\(V\)</span>是超可加的,即对于任意<span
+class="math inline">\(P_1 \subset M\)</span>和<span
+class="math inline">\(P_2 \subset M\)</span>且<span
+class="math inline">\(P_1 \cap P_2 = \emptyset\)</span>,我们有:</p>
+<p><span class="math display">\[
+V^S(P_1 + P_2) \geq V^S(P_1) + V^S(P_2).
+\]</span></p>
+<p>由于特征函数<span
+class="math inline">\(V\)</span>是超可加的,Shapley值可以用作合作博弈<span
+class="math inline">\((M, V)\)</span>的解。因此,输入<span
+class="math inline">\(X_i\)</span>的重要性可以定义为:</p>
+<p><span class="math display">\[
+\phi_i^S(V) = \sum_{i\subset P \\ P\subset M ,\ P\neq M} \frac{(p -
+1)!(m - p)!}{m!}[V^S(P) - V^S(P/\{i\})],
+\]</span></p>
+<p>其中<span class="math inline">\(p\)</span>是联盟<span
+class="math inline">\(P\)</span>的成员数,而<span
+class="math inline">\(m\)</span>是<span
+class="math inline">\(M\)</span>的成员数。这个值<span
+class="math inline">\(\phi_i^S(V)\)</span>是变量<span
+class="math inline">\(X_i\)</span>在所有大联盟形成顺序等概率的情况下的边际贡献的数学期望。</p>
+<h2 id="数值示例">5. 数值示例</h2>
+<p>在本节中,我们将提出的方法应用于一个发表在一般DEA文献中的数据集。我们使用的数据集来自Ragsdale(2001,
+p. 132)的最新教科书。如表4所示,有六个输入,两个输出和仅八个DMU。</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 10%" />
+<col style="width: 11%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>DMU</th>
+<th>X1</th>
+<th>X2</th>
+<th>X3</th>
+<th>X4</th>
+<th>X5</th>
+<th>X6</th>
+<th>Y1</th>
+<th>Y2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1.5</td>
+<td>2.7</td>
+<td>70</td>
+<td>2.3</td>
+<td>1.8</td>
+<td>3.3</td>
+<td>85</td>
+<td>82</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.5</td>
+<td>0.2</td>
+<td>70</td>
+<td>1.5</td>
+<td>1.1</td>
+<td>0.5</td>
+<td>96</td>
+<td>93</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2.5</td>
+<td>2.6</td>
+<td>75</td>
+<td>2.2</td>
+<td>2.4</td>
+<td>3.2</td>
+<td>78</td>
+<td>87</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1.8</td>
+<td>1.5</td>
+<td>75</td>
+<td>1.8</td>
+<td>1.6</td>
+<td>2.3</td>
+<td>87</td>
+<td>88</td>
+</tr>
+<tr>
+<td>E</td>
+<td>0.9</td>
+<td>0.4</td>
+<td>80</td>
+<td>0.5</td>
+<td>1.4</td>
+<td>2.6</td>
+<td>89</td>
+<td>94</td>
+</tr>
+<tr>
+<td>F</td>
+<td>0.6</td>
+<td>0.2</td>
+<td>80</td>
+<td>1.3</td>
+<td>0.9</td>
+<td>2.8</td>
+<td>93</td>
+<td>93</td>
+</tr>
+<tr>
+<td>G</td>
+<td>1.4</td>
+<td>0.6</td>
+<td>85</td>
+<td>1.4</td>
+<td>1.3</td>
+<td>2.1</td>
+<td>92</td>
+<td>91</td>
+</tr>
+<tr>
+<td>H</td>
+<td>1.7</td>
+<td>1.7</td>
+<td>90</td>
+<td>0.3</td>
+<td>1.7</td>
+<td>1.8</td>
+<td>97</td>
+<td>92</td>
+</tr>
+<tr>
+<td>Shapley</td>
+<td>2.4299</td>
+<td>0.96571</td>
+<td>6.4408</td>
+<td>3.2423</td>
+<td>4.1729</td>
+<td>1.6889</td>
+<td>0.004759</td>
+<td>0.09774</td>
+</tr>
+</tbody>
+</table>
+<p><strong>这篇文章提出了一种从合作博弈的角度确定性能测量中每个变量重要性的方法。这种方法可以直接给出输入和输出变量的排序。排序信息可以帮助决策者找到对效率评估至关重要的变量。</strong></p>
+<p>针对这个方法，我们开发了相关工具，可以复现该篇文献中关于shapley的结果，具体如下图：</p>
+<figure>
+<img
+src="https://github.com/gongju128/picx-images-hosting/raw/master/image.4n7pf6x1yx.webp"
+alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.4n7pf6x1yx.webp" />
+<figcaption
+aria-hidden="true">https://github.com/gongju128/picx-images-hosting/raw/master/image.4n7pf6x1yx.webp</figcaption>
+</figure>
+<p>可以看到，与论文给出的结果，完全一致。</p>
+<p>需要的话，联系微信:<strong>canglang12002</strong></p>
+<p>往期推文：</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484292&amp;idx=1&amp;sn=ead4cc6a7ed0e7822e6d339f3b0a0a2d&amp;chksm=fd2f05b2ca588ca49a3892a0c18a190ebc983800d7d3cd8eae63797c69d76a8daa6196c87100&amp;scene=21#wechat_redirect">Panda_DEA更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484277&amp;idx=1&amp;sn=cf28e9ab55e7b24905b601f17a903edf&amp;chksm=fd2f0543ca588c55b9cc3dc18f93301424dba598ac06a9f0084941b6ad473b62abcdd5013ede&amp;scene=21#wechat_redirect">三阶段DEA之SFA回归</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484269&amp;idx=1&amp;sn=53eab62797c565a16c5fe589c08a91cb&amp;chksm=fd2f055bca588c4d30d70938610b3f4fd2fefe259801693cb99eb243b6267157fb58a69a9623&amp;scene=21#wechat_redirect">产业空间聚集DO指数计算工具更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484258&amp;idx=1&amp;sn=eeb4f41d41009058558e1330e1187091&amp;chksm=fd2f0554ca588c420024204fc43e641ea8310ccfb7d634196caa7d57c4c0beb070f279d1394a&amp;scene=21#wechat_redirect">存在共享投入的两阶段博弈交叉DEA模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484246&amp;idx=1&amp;sn=354da2dfa48c0847a848ba03cb5c4773&amp;chksm=fd2f0560ca588c766b95d485ca1537a30c09f22504f66c9c9226e6e74e4e4ea4332d78de6086&amp;scene=21#wechat_redirect">产业空间聚集DO指数计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484200&amp;idx=1&amp;sn=f121f558bc1f7a5c07deca417e9d13a7&amp;chksm=fd2f051eca588c081e24a4fbf5c678681ae7da78f4fd763aedd2440bca81ed6fcc19dd63df47&amp;scene=21#wechat_redirect">网络SBM模型（NSBM)复现</a></p>
+<p><strong><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484189&amp;idx=1&amp;sn=d80e8d2d3d07ebeaacdabd52856fd09c&amp;chksm=fd2f052bca588c3d17e8425e44a54b86baede3e3df3da23396fe827ebcf1316c809dae978521&amp;scene=21#wechat_redirect">团体机构持股比例代码更新</a></strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484183&amp;idx=1&amp;sn=a55cc955f5bd06c58f47f5e576e6935d&amp;chksm=fd2f0521ca588c379a14bce2caa13432b44927fabf6650900a2a8ad0bc1104f8796b82767800&amp;scene=21#wechat_redirect">空间马尔科夫工具更新</a>**
+**</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484177&amp;idx=1&amp;sn=274fb011231edee0381f35be48e6180a&amp;chksm=fd2f0527ca588c31afd91da37630d44ef2c2a3d4e734580cfd6af3dfd7cea83fe9f0bf715282&amp;scene=21#wechat_redirect">共享投入型关联两阶段生产系统的网络DEA效率测度与分解复现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484164&amp;idx=1&amp;sn=3858fae1ff809b3353b1629bee3aff41&amp;chksm=fd2f0532ca588c24188059db70811a1bf42c3b99ebbc0040b8111df80b0c5cc37f4f2bf34891&amp;scene=21#wechat_redirect">基尼系数双维度分解计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484135&amp;idx=1&amp;sn=0c0b5a237d0c8c6b89acc8cdc8d56e4e&amp;chksm=fd2f04d1ca588dc75b18b5d5f134b6b6d5f33980fbeff61b8c1a5512d6d0f2372bd333d20509&amp;scene=21#wechat_redirect">动态SBM模型（DSBM)复现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484126&amp;idx=1&amp;sn=fc54e19a7ff9e8d644c5ac310b25e18d&amp;chksm=fd2f04e8ca588dfedb166486836a54dc97ed4968fabad9455bd05e1c17a181a1d1d80bab84e6&amp;scene=21#wechat_redirect">共享投入的两阶段DEA模型复现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484114&amp;idx=1&amp;sn=22f1880c59ad04e5e83e7b10b98a4ebe&amp;chksm=fd2f04e4ca588df2c1739e69b96f8b9691e8602f1a027784f30abc75dca06ee711414c2862ac&amp;scene=21#wechat_redirect">基于凸分位数回归的影子价格计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484107&amp;idx=1&amp;sn=bbb9442f963aa2fa22605f3c174a1a13&amp;chksm=fd2f04fdca588debe2d86ff2f2f210162bd268e0f8f995c52d06475ce5abde0e0ecb66332f61&amp;scene=21#wechat_redirect">Doyle和Green(1994)的对抗性和仁慈性DEA</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484096&amp;idx=1&amp;sn=b0feb447ed44eb0917dfbc579b1a27cc&amp;chksm=fd2f04f6ca588de00abafc9bb2c4c9aa5af0a3e6c98bd54107fbe8df1e2e989cc5a6c8af6eb6&amp;scene=21#wechat_redirect">一种新的两阶段网络DEA模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484085&amp;idx=1&amp;sn=5d05cd43c8340e161d26aaa0f6ba9476&amp;chksm=fd2f0483ca588d95bd08ef47b5fb678cc1d691c26f85d161a2e92aeac648826cbda2c1969d43&amp;scene=21#wechat_redirect">适用于面板数据的动态StoNED模型计算工具</a>**
+**</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484072&amp;idx=1&amp;sn=7baad0f87e5a1706b9aade2026dcc31f&amp;chksm=fd2f049eca588d88d78a8745b62bc262ced153a08823b51bffc9663d886052b4c59559a80879&amp;scene=21#wechat_redirect">零和博弈SBM模型（ZSG-SBM）模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484065&amp;idx=1&amp;sn=ce11d3b8f3233427bbfda73b37c641e9&amp;chksm=fd2f0497ca588d81740807845942d0373fb09c4fdd167175fb6da0c8acf35ba7d8689cb5ec2b&amp;scene=21#wechat_redirect">三阶段动态网络DEA(DNSBM)模型的实现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484053&amp;idx=1&amp;sn=f3d4450b381df801a82af1c903616a95&amp;chksm=fd2f04a3ca588db518fd4b5573207ce091809c02e7d75a82039384653382059b56f28bcd324e&amp;scene=21#wechat_redirect">计算相对资源承载力模型的工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484042&amp;idx=1&amp;sn=2893ea55cdd727a9de4a31c8076f1ac4&amp;chksm=fd2f04bcca588daa58910619bdb904a2bb8d6be292db35bdc1aa9a42aa752b5c8eb4fc9c1716&amp;scene=21#wechat_redirect">基于参数化的方向性距离函数（DDF)估算污染物影子价格的工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484017&amp;idx=1&amp;sn=88ebe176df7e6f7e8ad011f1549d2db4&amp;chksm=fd2f0447ca588d5193bc16509bd5f55171bded8ff835eb97bfee28df85edf562796ba92641fd&amp;scene=21#wechat_redirect">基于非期望产出的RAM
+碳环境效率模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484028&amp;idx=1&amp;sn=54e16f8a31f3d7af2d6a298701196db7&amp;chksm=fd2f044aca588d5c72667248701da28e99188cb726857d0805e9e31a4f6004dd1c14294ef078&amp;scene=21#wechat_redirect">使用遗传算法或NSGA2算法解决多式联运问题</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483999&amp;idx=1&amp;sn=e53ea529a08101c86c1ae1a4f6abb27d&amp;chksm=fd2f0469ca588d7fe68617195fd1aade17903cd5d821c54140eb630df27d0e5fbaeef3354f28&amp;scene=21#wechat_redirect">莫兰指数计算小工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483993&amp;idx=1&amp;sn=30f1d7fbe59e8380b084e0da62f311ee&amp;chksm=fd2f046fca588d79648cafe2bbe7cfac75bdfeb7abfb39ed503e8798b165875e1c1d82d2f7a5&amp;scene=21#wechat_redirect">Panda_DEA增加至强有效前沿最近距离-MinDS模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483984&amp;idx=1&amp;sn=d54bb58a4c4cd15437232eb0747d89e8&amp;chksm=fd2f0466ca588d702b8cab63ef061ffcec2f851f60ac537f26420cf9fa216d6f5d39c1f6768c&amp;scene=21#wechat_redirect">QLab增加耦合协调度模型</a>**
+**</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483976&amp;idx=1&amp;sn=d1d02cd8ab9133fb0209cde77076d4be&amp;chksm=fd2f047eca588d68204016e1d2bb2a0d482a9916d115ac3daec228f7ce20a8a3442f198f7323&amp;scene=21#wechat_redirect">广义SBM模型的matlab代码</a>**
+**</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483935&amp;idx=1&amp;sn=53b59c1fce81c886f42f3a3539f83b0b&amp;chksm=fd2f0429ca588d3f880a3302adbf42834abf7adaaa3ff66e9db6e6e03b3a0883592d0c1de8b1&amp;scene=21#wechat_redirect">QLab1.4正式发布！增加全排列多边形图示指标法</a>**
+**</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483924&amp;idx=1&amp;sn=ff0565b5c751c701627e1bb6ed39a307&amp;chksm=fd2f0422ca588d34eb68bfdca08b214d7f184f1996215ddc31aff11d80e85c7de56b6ded4fa4&amp;scene=21#wechat_redirect">大量数据时的Dagum基尼系数分解工具</a>**
+**</p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483908&amp;idx=1&amp;sn=c3410d846b17c7a4ab86d87b9aabaf71&amp;chksm=fd2f0432ca588d24cc6ef2bb3a27a77f5f2776d20ea6daf764179c99580345f4de27bb10b51e&amp;scene=21#wechat_redirect">Panda-DEA_1.0正式发布！</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483878&amp;idx=1&amp;sn=2e676de5f515492757ebdd5c051162e0&amp;chksm=fd2f07d0ca588ec6bf1fcf1608d4b16352dc4368c0b3d6d3f2d830a403a0275c5348c849293c&amp;scene=21#wechat_redirect">含有非期望产出的ZSG-DEA模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483868&amp;idx=1&amp;sn=14e07f2cc9b1efaa655106faddda05fa&amp;chksm=fd2f07eaca588efc30d9f126d8f1a423e50df54bb6674cb2b4da774b3636783f2961b1d7d344&amp;scene=21#wechat_redirect">两阶段网络DEA模型及其计算</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483857&amp;idx=1&amp;sn=092e4b0ce69579777b19b06c9e2e8d59&amp;chksm=fd2f07e7ca588ef185aac309159929a3a2bacf868c39175dbe3ff103722d0e01525ec74248e6&amp;scene=21#wechat_redirect">Panda-DEA，一款新的DEA模型软件</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483847&amp;idx=1&amp;sn=e581c0d77fd4d7cb2a7f226adb0d033c&amp;chksm=fd2f07f1ca588ee7a4f5e15aef18444d75d6da8f740f66ca52a49e657548801305c34e34f9ec&amp;scene=21#wechat_redirect">DKM_1.3更新---CCM收敛交叉映射</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483827&amp;idx=1&amp;sn=8554eda1a7595d2ec83612dc030e9baa&amp;chksm=fd2f0785ca588e930a3b101f008ad9ab520163beb250bd903c9e4e0e775c4f74b3310e321c3a&amp;scene=21#wechat_redirect">DKM_1.2:两阶段嵌套泰尔指数工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483817&amp;idx=1&amp;sn=612d8555d743b4274ca7e50f9912e1b7&amp;chksm=fd2f079fca588e89f5babb27b4bb880bbafd563829e35534eb2d13edb8e7efe022b892982f2d&amp;scene=21#wechat_redirect">DKM_1.1--新增熵值法功能</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483808&amp;idx=1&amp;sn=46e213b0e0a16c4d03901f91eb256353&amp;chksm=fd2f0796ca588e80e60d267fd2fecadf727e81c119b11abcd3685ec8f0ce5aca1603930a2f65&amp;scene=21#wechat_redirect">数量经济学工具DKM_1.0</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483801&amp;idx=1&amp;sn=be569284186256129d00223bf162e951&amp;chksm=fd2f07afca588eb925b3e1261948238a22df35cc3427973d148dbf9644b46465a99c49143c7b&amp;scene=21#wechat_redirect">空间马尔科夫链工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483791&amp;idx=1&amp;sn=405dfd42be6387db6f56cb5a53d8885f&amp;chksm=fd2f07b9ca588eafc2ca9779ea9e31efab5cae00646fc15d4b2992f06ccdd008c15384ae0a12&amp;scene=21#wechat_redirect">空间静态kernel核密度、空间动态kernel核密度工具更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483786&amp;idx=1&amp;sn=cafde88006a876e27883749094e2149f&amp;chksm=fd2f07bcca588eaa8d167c20fe37e2b02cccc65fa035e089ee5a482d611312273606713ddb79&amp;scene=21#wechat_redirect">马尔科夫链之传统马尔可夫链</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483778&amp;idx=1&amp;sn=096c3ae6529666292103c4b051efc16d&amp;chksm=fd2f07b4ca588ea2ef52f3571ad29654d32d44db873819380ee0ebd0e35ea00d3c23cdbd0e6c&amp;scene=21#wechat_redirect">Dagum基尼系数分解工具更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483773&amp;idx=1&amp;sn=926665b79c22fe5c0deffbb1f32191bc&amp;chksm=fd2f074bca588e5deed9f46c29686be25759ad21413c31900f20a8f75ec75134e40e260836fc&amp;scene=21#wechat_redirect">无条件、空间静态、空间动态kernel核密度工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483762&amp;idx=1&amp;sn=8cfe17735470d3a4bc8e42f0d616cbcf&amp;chksm=fd2f0744ca588e52e0270ca460811ad724c3896ae58ff3d26272442d8c836be7abed4546fec7&amp;scene=21#wechat_redirect">基于共同前沿下含非期望产出SBM模型的影子价格测算</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483757&amp;idx=1&amp;sn=52b653c647cde10deea4e48410aa43f2&amp;chksm=fd2f075bca588e4d4a2ac8ca5f70c85e85ed69ff2466a03c7cd45d099ffa42b5c0f31a5b0860&amp;scene=21#wechat_redirect">基于非期望产出SBM模型的群组前沿和共同前沿的DEA效率</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483747&amp;idx=1&amp;sn=45321676f283e782319cbcdaa31fd1ae&amp;chksm=fd2f0755ca588e43e1c0aa25fe1cf0c7fdcef17398d4beb28b41a336553ad587c76f8ede94f2&amp;scene=21#wechat_redirect">零和收益ZSG-DEA模型的求解程序</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483737&amp;idx=1&amp;sn=b22ace1dec3db5a3985f64091af1c33f&amp;chksm=fd2f076fca588e797e154566fc15525fc1844d8b1e25b8e8283ce6f99baebe03f877c418b7a3&amp;scene=21#wechat_redirect">三阶嵌套泰尔指数计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483728&amp;idx=1&amp;sn=703a49585627131782a77f51834e60dd&amp;chksm=fd2f0766ca588e700bef7117ca0a75937e1795819203f0dc02bfdd74b767b3747bbf263b6085&amp;scene=21#wechat_redirect">dagum基尼系数分解工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483714&amp;idx=1&amp;sn=8c5d4b6011d0b158f5c6dcf19c22752e&amp;chksm=fd2f0774ca588e62afe9e03a7fdf98220eaf41a0cfd6a55510b00abc09639c358326375f51a5&amp;scene=21#wechat_redirect">《机构投资者抱团与股价崩盘风险》数据处理代码</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/">http://gongju128.github.io/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Shapley%E6%96%B9%E6%B3%95/">Shapley方法</a></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/" title="非平衡面板Malquist指数计算工具"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">非平衡面板Malquist指数计算工具</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">100</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dea%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E6%95%88%E7%8E%87%E8%B4%A1%E7%8C%AE%E7%8E%87ecr"><span class="toc-number">1.</span> <span class="toc-text">DEA模型中的效率贡献率(ECR)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ecr%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.</span> <span class="toc-text">2. ECR定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ecr%E5%8F%98%E9%87%8F%E9%9B%86%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">1.3.</span> <span class="toc-text">3. ECR变量集的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%892"><span class="toc-number">1.3.1.</span> <span class="toc-text">定义2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%B3%A81"><span class="toc-number">1.3.2.</span> <span class="toc-text">备注1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%861"><span class="toc-number">1.3.3.</span> <span class="toc-text">定理1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%862"><span class="toc-number">1.3.4.</span> <span class="toc-text">定理2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%863"><span class="toc-number">1.3.5.</span> <span class="toc-text">定理3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%AF%8F%E4%B8%AA%E5%8F%98%E9%87%8F%E9%87%8D%E8%A6%81%E6%80%A7%E7%9A%84%E5%90%88%E4%BD%9C%E5%8D%9A%E5%BC%88"><span class="toc-number">1.4.</span> <span class="toc-text">4.
+确定每个变量重要性的合作博弈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%893"><span class="toc-number">1.4.1.</span> <span class="toc-text">定义3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%B3%A82"><span class="toc-number">1.4.2.</span> <span class="toc-text">备注2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%864"><span class="toc-number">1.4.3.</span> <span class="toc-text">定理4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.5.</span> <span class="toc-text">5. 数值示例</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/" title="Shapley方法测算DEA模型变量重要性">Shapley方法测算DEA模型变量重要性</a><time datetime="2024-10-18T05:58:29.000Z" title="发表于 2024-10-18 13:58:29">2024-10-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/" title="非平衡面板Malquist指数计算工具">非平衡面板Malquist指数计算工具</a><time datetime="2024-10-17T05:58:29.000Z" title="发表于 2024-10-17 13:58:29">2024-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/29/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-09-30%E5%A4%8D%E5%90%88%E7%B3%BB%E7%BB%9F%E6%8E%A8%E6%96%87/" title="复合系统协调度工具">复合系统协调度工具</a><time datetime="2024-09-29T14:55:29.000Z" title="发表于 2024-09-29 22:55:29">2024-09-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/10/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DEA0510/" title="存在共享投入的两阶段博弈交叉DEA模型">存在共享投入的两阶段博弈交叉DEA模型</a><time datetime="2024-05-10T10:04:57.000Z" title="发表于 2024-05-10 18:04:57">2024-05-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/22/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DO%E6%8C%87%E6%95%B0%E6%8E%A8%E6%96%87/" title="度量空间集聚的DO指数计算工具">度量空间集聚的DO指数计算工具</a><time datetime="2024-04-22T00:00:00.000Z" title="发表于 2024-04-22 08:00:00">2024-04-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2024  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'gongju128/gongju128.github.io',
+      'data-repo-id': 'R_kgDOLZkzyw',
+      'data-category-id': 'DIC_kwDOLZkzy84Cdncw',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"mapping":"https://gongju128.github.io","reactions-enabled":1,"input-position":"end"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
