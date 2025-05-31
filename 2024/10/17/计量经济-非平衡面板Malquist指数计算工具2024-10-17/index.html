@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>非平衡面板Malquist指数计算工具 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天推出的工具是非平衡面板的malquist指数计算 参考文献：《非平衡面板数据的全要素生产率测算方法》马占新，苏日古嘎 下面是该理论部分的主要内容。 1. 传统 DEA-Malmquist 指数方法及其 RD 分解模型 假设共有 $n$ 个决策单元，每个决策单元在第 $t$ 期 $(t&#x3D;1,2,\cdots,T)$ 均用 $m$ 种投入获得 $s$ 种产出。其中，第 $j$ 个决策单元">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>非平衡面板Malquist指数计算工具 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天推出的工具是非平衡面板的malquist指数计算 参考文献：《非平衡面板数据的全要素生产率测算方法》马占新，苏日古嘎 下面是该理论部分的主要内容。 1. 传统 DEA-Malmquist 指数方法及其 RD 分解模型 假设共有 \(n\) 个决策单元，每个决策单元在第 \(t\) 期 \((t&#x3D;1,2,\cdots,T)\) 均用 \(m\) 种投入获得 \(s\) 种产出。其中，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="非平衡面板Malquist指数计算工具">
 <meta property="og:url" content="http://gongju128.github.io/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/index.html">
 <meta property="og:site_name" content="工具视界">
-<meta property="og:description" content="今天推出的工具是非平衡面板的malquist指数计算 参考文献：《非平衡面板数据的全要素生产率测算方法》马占新，苏日古嘎 下面是该理论部分的主要内容。 1. 传统 DEA-Malmquist 指数方法及其 RD 分解模型 假设共有 $n$ 个决策单元，每个决策单元在第 $t$ 期 $(t&#x3D;1,2,\cdots,T)$ 均用 $m$ 种投入获得 $s$ 种产出。其中，第 $j$ 个决策单元">
+<meta property="og:description" content="今天推出的工具是非平衡面板的malquist指数计算 参考文献：《非平衡面板数据的全要素生产率测算方法》马占新，苏日古嘎 下面是该理论部分的主要内容。 1. 传统 DEA-Malmquist 指数方法及其 RD 分解模型 假设共有 \(n\) 个决策单元，每个决策单元在第 \(t\) 期 \((t&#x3D;1,2,\cdots,T)\) 均用 \(m\) 种投入获得 \(s\) 种产出。其中，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
 <meta property="article:published_time" content="2024-10-17T05:58:29.000Z">
-<meta property="article:modified_time" content="2024-10-17T05:58:54.495Z">
+<meta property="article:modified_time" content="2025-05-31T12:58:19.572Z">
 <meta property="article:author" content="任公子">
 <meta property="article:tag" content="非平衡面板">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-10-17 13:58:54'
+  postUpdate: '2025-05-31 20:58:19'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -153,259 +153,573 @@
         }
       }
       detectApple()
-    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">102</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">非平衡面板Malquist指数计算工具</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-17T05:58:29.000Z" title="发表于 2024-10-17 13:58:29">2024-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-17T05:58:54.495Z" title="更新于 2024-10-17 13:58:54">2024-10-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="非平衡面板Malquist指数计算工具"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>今天推出的工具是非平衡面板的malquist指数计算</p>
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">103</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">非平衡面板Malquist指数计算工具</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-17T05:58:29.000Z" title="发表于 2024-10-17 13:58:29">2024-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-31T12:58:19.572Z" title="更新于 2025-05-31 20:58:19">2025-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/">计量经济</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="非平衡面板Malquist指数计算工具"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>今天推出的工具是非平衡面板的malquist指数计算</p>
 <p>参考文献：《非平衡面板数据的全要素生产率测算方法》马占新，苏日古嘎</p>
 <p>下面是该理论部分的主要内容。</p>
 <p><strong>1. 传统 DEA-Malmquist 指数方法及其 RD 分解模型</strong></p>
-<p>假设共有 $n$ 个决策单元，每个决策单元在第 $t$ 期 $(t&#x3D;1,2,\cdots,T)$ 均用 $m$ 种投入获得 $s$ 种产出。其中，第 $j$ 个决策单元在第 $t$ 期的投入产出值为 $(x_j^t, y_j^t) &gt; 0$。则根据 DEA 方法的基本原理 (Charnes 等, 1978; Banker 等, 1984)，可以给出第 $t$ 期的生产可能集如下：</p>
-<p>$$<br>S_c^t &#x3D; {(x^t,y^t)|\sum_{j&#x3D;1}^n \lambda_jx_j^t \leq x^t, \sum_{j&#x3D;1}^n \lambda_jy_j^t \geq y^t, \sum_{j&#x3D;1}^n \lambda_j &#x3D; \delta, \lambda_j \geq 0, j &#x3D; 1,2,\cdots,n} \quad (1)<br>$$</p>
-<p>当 $\delta &#x3D; 0$ 时，$S_c^t$ 为满足规模收益不变 (CRS) 的生产可能集；当 $\delta &#x3D; 1$ 时，$S_c^t$ 为满足规模收益可变 (VRS) 的生产可能集 $S_v^t$。</p>
-<p>由于 Malmquist 指数的构造基础是距离函数，因此，根据 Shephard 距离函数 (Shephard, 1970) 和 Caves 等 (Caves 等, 1982) 的研究，可以将第 $t$ 个决策单元从第 $t$ 期到第 $t+1$ 期的相邻两期交叉参比 Malmquist 指数定义为：</p>
-<p>$$<br>M(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) &#x3D; \left[\frac{D_c^{t}(x_t^{t+1}, y_t^{t+1})}{D_c^t(x_t^t, y_t^t)} \times \frac{D_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{D_c^{t+1}(x_t^t, y_t^t)}\right]^{\frac{1}{2}} \quad (2)<br>$$</p>
+<p>假设共有 <span class="math inline">\(n\)</span>
+个决策单元，每个决策单元在第 <span class="math inline">\(t\)</span> 期
+<span class="math inline">\((t=1,2,\cdots,T)\)</span> 均用 <span
+class="math inline">\(m\)</span> 种投入获得 <span
+class="math inline">\(s\)</span> 种产出。其中，第 <span
+class="math inline">\(j\)</span> 个决策单元在第 <span
+class="math inline">\(t\)</span> 期的投入产出值为 <span
+class="math inline">\((x_j^t, y_j^t) &gt; 0\)</span>。则根据 DEA
+方法的基本原理 (Charnes 等, 1978; Banker 等, 1984)，可以给出第 <span
+class="math inline">\(t\)</span> 期的生产可能集如下：</p>
+<p><span class="math display">\[
+S_c^t = \{(x^t,y^t)|\sum_{j=1}^n \lambda_jx_j^t \leq x^t, \sum_{j=1}^n
+\lambda_jy_j^t \geq y^t, \sum_{j=1}^n \lambda_j = \delta, \lambda_j \geq
+0, j = 1,2,\cdots,n\} \quad (1)
+\]</span></p>
+<p>当 <span class="math inline">\(\delta = 0\)</span> 时，<span
+class="math inline">\(S_c^t\)</span> 为满足规模收益不变 (CRS)
+的生产可能集；当 <span class="math inline">\(\delta = 1\)</span>
+时，<span class="math inline">\(S_c^t\)</span> 为满足规模收益可变 (VRS)
+的生产可能集 <span class="math inline">\(S_v^t\)</span>。</p>
+<p>由于 Malmquist 指数的构造基础是距离函数，因此，根据 Shephard 距离函数
+(Shephard, 1970) 和 Caves 等 (Caves 等, 1982) 的研究，可以将第 <span
+class="math inline">\(t\)</span> 个决策单元从第 <span
+class="math inline">\(t\)</span> 期到第 <span
+class="math inline">\(t+1\)</span> 期的相邻两期交叉参比 Malmquist
+指数定义为：</p>
+<p><span class="math display">\[
+M(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) = \left[\frac{D_c^{t}(x_t^{t+1},
+y_t^{t+1})}{D_c^t(x_t^t, y_t^t)} \times \frac{D_c^{t+1}(x_t^{t+1},
+y_t^{t+1})}{D_c^{t+1}(x_t^t, y_t^t)}\right]^{\frac{1}{2}} \quad (2)
+\]</span></p>
 <p>其中</p>
-<p>$$<br>D_c^t(x^t, y^t) &#x3D; \inf{\theta|(x^t, y^t&#x2F;\theta) \in S_c^t} \quad (3)<br>$$</p>
-<p>式 (3) 为产出距离函数，即 $D_c^t(x_t^t, y_t^t)$ 和 $D_c^t(x_t^{t+1}, y_t^{t+1})$ 表示 $(x_t^t, y_t^t)$ 和 $(x_t^{t+1}, y_t^{t+1})$ 相对于第 $t$ 期的产出距离函数，$D_c^{t+1}(x_t^t, y_t^t)$ 和 $D_c^{t+1}(x_t^{t+1}, y_t^{t+1})$ 表示 $(x_t^t, y_t^t)$ 和 $(x_t^{t+1}, y_t^{t+1})$ 相对于第 $t+1$ 期的产出距离函数。基于此，可以将 DEA-Malmquist 指数的 RD 分解模型表示如下 (Ray 和 Desli, 1997)：</p>
-<p>$$<br>M_{RD}(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) &#x3D; PTEC_t^{t+1} \times SEC_t^{t+1} \times TC_t^{t+1} \quad (4)<br>$$</p>
+<p><span class="math display">\[
+D_c^t(x^t, y^t) = \inf\{\theta|(x^t, y^t/\theta) \in S_c^t\} \quad (3)
+\]</span></p>
+<p>式 (3) 为产出距离函数，即 <span class="math inline">\(D_c^t(x_t^t,
+y_t^t)\)</span> 和 <span class="math inline">\(D_c^t(x_t^{t+1},
+y_t^{t+1})\)</span> 表示 <span class="math inline">\((x_t^t,
+y_t^t)\)</span> 和 <span class="math inline">\((x_t^{t+1},
+y_t^{t+1})\)</span> 相对于第 <span class="math inline">\(t\)</span>
+期的产出距离函数，<span class="math inline">\(D_c^{t+1}(x_t^t,
+y_t^t)\)</span> 和 <span class="math inline">\(D_c^{t+1}(x_t^{t+1},
+y_t^{t+1})\)</span> 表示 <span class="math inline">\((x_t^t,
+y_t^t)\)</span> 和 <span class="math inline">\((x_t^{t+1},
+y_t^{t+1})\)</span> 相对于第 <span class="math inline">\(t+1\)</span>
+期的产出距离函数。基于此，可以将 DEA-Malmquist 指数的 RD
+分解模型表示如下 (Ray 和 Desli, 1997)：</p>
+<p><span class="math display">\[
+M_{RD}(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) = PTEC_t^{t+1} \times
+SEC_t^{t+1} \times TC_t^{t+1} \quad (4)
+\]</span></p>
 <p>其中</p>
-<p>$$<br>PTEC_t^{t+1} &#x3D; \frac{D_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{D_v^t(x_t^t, y_t^t)} \quad (5)<br>$$</p>
-<p>$$<br>SEC_t^{t+1} &#x3D; \left[\frac{D_c^{t}(x_t^{t+1}, y_t^{t+1})&#x2F;D_v^{t}(x_t^{t+1}, y_t^{t+1})}{D_c^t(x_t^t, y_t^t)&#x2F;D_v^t(x_t^t, y_t^t)} \times \frac{D_c^{t+1}(x_t^{t+1}, y_t^{t+1})&#x2F;D_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{D_c^{t+1}(x_t^t, y_t^t)&#x2F;D_v^{t+1}(x_t^t, y_t^t)}\right]^{\frac{1}{2}} \quad (6)<br>$$</p>
-<p>$$<br>TC_t^{t+1} &#x3D; \left[\frac{D_v^t(x_t^t, y_t^t)}{D_v^{t+1}(x_t^t, y_t^t)} \times \frac{D_v^t(x_t^{t+1}, y_t^{t+1})}{D_v^{t+1}(x_t^{t+1}, y_t^{t+1})}\right]^{\frac{1}{2}} \quad (7)<br>$$</p>
-<p>这里，$PTEC$ 代表技术效率变化指数，$SEC$ 代表规模效率变化指数，$TC$ 代表技术变化指数。</p>
-<p><strong>2. 传统 DEA-Malmquist 指数方法在分析非平衡面板数据时存在的问题</strong></p>
-<p>应用传统 DEA-Malmquist 指数方法对非平衡面板数据进行分析时，由于数据的缺失无法构造各期完整的生产前沿面，这必将导致与其相关的效率测算结果发生系统性偏差。从而对 DEA-Malmquist 指数的测算与分解产生重大影响。下面通过一个例子加以说明。</p>
+<p><span class="math display">\[
+PTEC_t^{t+1} = \frac{D_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{D_v^t(x_t^t,
+y_t^t)} \quad (5)
+\]</span></p>
+<p><span class="math display">\[
+SEC_t^{t+1} = \left[\frac{D_c^{t}(x_t^{t+1},
+y_t^{t+1})/D_v^{t}(x_t^{t+1}, y_t^{t+1})}{D_c^t(x_t^t,
+y_t^t)/D_v^t(x_t^t, y_t^t)} \times \frac{D_c^{t+1}(x_t^{t+1},
+y_t^{t+1})/D_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{D_c^{t+1}(x_t^t,
+y_t^t)/D_v^{t+1}(x_t^t, y_t^t)}\right]^{\frac{1}{2}} \quad (6)
+\]</span></p>
+<p><span class="math display">\[
+TC_t^{t+1} = \left[\frac{D_v^t(x_t^t, y_t^t)}{D_v^{t+1}(x_t^t, y_t^t)}
+\times \frac{D_v^t(x_t^{t+1}, y_t^{t+1})}{D_v^{t+1}(x_t^{t+1},
+y_t^{t+1})}\right]^{\frac{1}{2}} \quad (7)
+\]</span></p>
+<p>这里，<span class="math inline">\(PTEC\)</span>
+代表技术效率变化指数，<span class="math inline">\(SEC\)</span>
+代表规模效率变化指数，<span class="math inline">\(TC\)</span>
+代表技术变化指数。</p>
+<p><strong>2. 传统 DEA-Malmquist
+指数方法在分析非平衡面板数据时存在的问题</strong></p>
+<p>应用传统 DEA-Malmquist
+指数方法对非平衡面板数据进行分析时，由于数据的缺失无法构造各期完整的生产前沿面，这必将导致与其相关的效率测算结果发生系统性偏差。从而对
+DEA-Malmquist
+指数的测算与分解产生重大影响。下面通过一个例子加以说明。</p>
 <p>例１　假设共有５个决策单元，每个决策单元都有２种投入指标和１种产出指标，相应的投入产出指标数据如表１所示。</p>
 <p><strong>表1 各决策单元的投入产出指标数据</strong></p>
 <table>
 <thead>
 <tr>
-<th align="center">DMU</th>
-<th align="center">第t期</th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center">第t+1期</th>
-<th align="center"></th>
-<th align="center"></th>
+<th style="text-align: center;">DMU</th>
+<th style="text-align: center;">第t期</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">第t+1期</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"></td>
-<td align="center">投入1</td>
-<td align="center">投入2</td>
-<td align="center">产出</td>
-<td align="center">投入1</td>
-<td align="center">投入2</td>
-<td align="center">产出</td>
+<tbody>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">投入1</td>
+<td style="text-align: center;">投入2</td>
+<td style="text-align: center;">产出</td>
+<td style="text-align: center;">投入1</td>
+<td style="text-align: center;">投入2</td>
+<td style="text-align: center;">产出</td>
 </tr>
 <tr>
-<td align="center">A</td>
-<td align="center">2.00</td>
-<td align="center">2.00</td>
-<td align="center">2.50</td>
-<td align="center">1.00</td>
-<td align="center">2.00</td>
-<td align="center">3.00</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">2.00</td>
+<td style="text-align: center;">2.00</td>
+<td style="text-align: center;">2.50</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">2.00</td>
+<td style="text-align: center;">3.00</td>
 </tr>
 <tr>
-<td align="center">B</td>
-<td align="center">4.0</td>
-<td align="center">3.00</td>
-<td align="center">10.50</td>
-<td align="center">2.00</td>
-<td align="center">3.00</td>
-<td align="center">10.50</td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: center;">3.00</td>
+<td style="text-align: center;">10.50</td>
+<td style="text-align: center;">2.00</td>
+<td style="text-align: center;">3.00</td>
+<td style="text-align: center;">10.50</td>
 </tr>
 <tr>
-<td align="center">C</td>
-<td align="center">6.00</td>
-<td align="center">4.00</td>
-<td align="center">1.50</td>
-<td align="center">3.00</td>
-<td align="center">4.00</td>
-<td align="center">2.00</td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">6.00</td>
+<td style="text-align: center;">4.00</td>
+<td style="text-align: center;">1.50</td>
+<td style="text-align: center;">3.00</td>
+<td style="text-align: center;">4.00</td>
+<td style="text-align: center;">2.00</td>
 </tr>
 <tr>
-<td align="center">D</td>
-<td align="center">8.00</td>
-<td align="center">5.00</td>
-<td align="center">1.00</td>
-<td align="center">4.00</td>
-<td align="center">5.00</td>
-<td align="center">1.50</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">8.00</td>
+<td style="text-align: center;">5.00</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">4.00</td>
+<td style="text-align: center;">5.00</td>
+<td style="text-align: center;">1.50</td>
 </tr>
 <tr>
-<td align="center">E</td>
-<td align="center">10.00</td>
-<td align="center">6.00</td>
-<td align="center">0.50</td>
-<td align="center">5.00</td>
-<td align="center">6.00</td>
-<td align="center">1.00</td>
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">10.00</td>
+<td style="text-align: center;">6.00</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">5.00</td>
+<td style="text-align: center;">6.00</td>
+<td style="text-align: center;">1.00</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>首先，应用式(2)和式(5)~(7)可以测得各决策单元的DEA-Malmquist指数及其分解指数。然后，假设决策单元B在第t期的数据缺失，并对相应指数进行重新测算（这时需要应用单元A、C、D、E的数据构造第t期的生产前沿面）。两种情况下的测算结果如表2所示：</p>
-<h6 id="表2-平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果"><a href="#表2-平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果" class="headerlink" title="表2 平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果"></a><strong>表2 平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果</strong></h6><table>
+<h6
+id="表2-平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果"><strong>表2
+平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果</strong></h6>
+<table>
 <thead>
 <tr>
-<th align="center">DMU</th>
-<th align="center">单元B第t期的数据可获得</th>
-<th align="center">单元B第t期的数据缺失</th>
+<th style="text-align: center;">DMU</th>
+<th style="text-align: center;">单元B第t期的数据可获得</th>
+<th style="text-align: center;">单元B第t期的数据缺失</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"></td>
-<td align="center">$M_0^{t+1}$</td>
-<td align="center">$PTEC^{t+1}$</td>
+<tbody>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span
+class="math inline">\(M_0^{t+1}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(PTEC^{t+1}\)</span></td>
 </tr>
 <tr>
-<td align="center">A</td>
-<td align="center">1.960</td>
-<td align="center">1.000</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">1.960</td>
+<td style="text-align: center;">1.000</td>
 </tr>
 <tr>
-<td align="center">B</td>
-<td align="center">1.414</td>
-<td align="center">1.000</td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">1.414</td>
+<td style="text-align: center;">1.000</td>
 </tr>
 <tr>
-<td align="center">C</td>
-<td align="center">1.778</td>
-<td align="center">1.333</td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">1.778</td>
+<td style="text-align: center;">1.333</td>
 </tr>
 <tr>
-<td align="center">D</td>
-<td align="center">1.937</td>
-<td align="center">1.500</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">1.937</td>
+<td style="text-align: center;">1.500</td>
 </tr>
 <tr>
-<td align="center">E</td>
-<td align="center">2.530</td>
-<td align="center">2.000</td>
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">2.530</td>
+<td style="text-align: center;">2.000</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>从表2可以看出：第一，尽管非平衡面板数据中仅缺失第t期一个决策单元的数据，但它所带来的影响却是全面的。在表2中，除决策单元A外，其他所有决策单元的测算结果均发生了改变。由此可见，即便非平衡面板数据中缺失的数据很少，也有可能对DEA-Malmquist指数的测算结果带来全面的影响，并造成测算结果的系统性偏差。第二，尽管非平衡面板数据中仅缺失第t期一个决策单元的数据，但这可能会导致获得的结果与实际结果相反。在表2中，当第t期所有决策单元的数据均可获得时，决策单元C、D、E的PTEC指数均大于1，表明这三个单元的纯技术效率在两期间均有所提高，特别是决策单元E的纯技术效率增长率为100%。但当单元B第t期的数据缺失时，决策单元C、D、E的PTEC指数均小于1，表明这三个单元的纯技术效率在两期间的推移在不断恶化，特别是决策单元E的纯技术效率增长率为-52.4%。</p>
 <p>由此可见，即便非平衡面板数据中缺失的数据很少，也有可能导致DEA-Malmquist指数方法给出的结果不准确，甚至带来与实际结果相反的结果。因此，以下将探讨如何更加准确地测算非平衡面板数据下决策单元的全要素生产率。</p>
 <p><strong>二、非平衡面板数据下决策单元的全要素生产率测算与分解方法</strong></p>
 <p>当数据为非平衡面板数据时，由例１可知，应用传统ＤEA-Malquist指数方法测算</p>
 <p>全要素生产率可能会产生重大偏差，两产生这种偏差的主要原因在于：应用缺失数据构造的生产可能集不够完整。为解决这一问题，以下采从理论上给出缺失数据对影响DEA-Malmquist指数测算的判定定理，然后，给出修正非平衡面板数据下DEA-Malmquist指数的测算方法。</p>
 <p><strong>1. 数据缺失对影响DEA-Malmquist指数测算的判定定理</strong></p>
-<p>从式(4)~(7)可知，在DEA-Malmquist指数的RD分解模型中，纯技术效率变化指数、规模效率变化指数和技术变化指数的测算只涉及距离函数$D_v^t(x_t^t,y_t^t)$、$D_v^t(x_t^{t+1},y_t^{t+1})$、$D_v^{t+1}(x_t^t,y_t^t)$、$D_v^{t+1}(x_t^{t+1},y_t^{t+1})$、$D_c^t(x_t^t,y_t^t)$、$D_c^t(x_t^{t+1},y_t^{t+1})$、$D_c^{t+1}(x_t^t,y_t^t)$、$D_c^{t+1}(x_t^{t+1},y_t^{t+1})$的取值大小。因此，只需考虑这8个距离函数的取值变化，就可以确知相应的效率指数是否发生变化。下面给出判定缺失数据对DEA-Malmquist指数测算结果产生影响的定理。</p>
-<p>定理1 假设共有n个决策单元A、B、C、D，各决策单元在第t期和第t+1期的生产情况如图1所示：</p>
-<p><img src="https://github.com/gongju128/picx-images-hosting/raw/master/image.9dcybpfyu4.webp" alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.9dcybpfyu4.webp"></p>
+<p>从式(4)~(7)可知，在DEA-Malmquist指数的RD分解模型中，纯技术效率变化指数、规模效率变化指数和技术变化指数的测算只涉及距离函数<span
+class="math inline">\(D_v^t(x_t^t,y_t^t)\)</span>、<span
+class="math inline">\(D_v^t(x_t^{t+1},y_t^{t+1})\)</span>、<span
+class="math inline">\(D_v^{t+1}(x_t^t,y_t^t)\)</span>、<span
+class="math inline">\(D_v^{t+1}(x_t^{t+1},y_t^{t+1})\)</span>、<span
+class="math inline">\(D_c^t(x_t^t,y_t^t)\)</span>、<span
+class="math inline">\(D_c^t(x_t^{t+1},y_t^{t+1})\)</span>、<span
+class="math inline">\(D_c^{t+1}(x_t^t,y_t^t)\)</span>、<span
+class="math inline">\(D_c^{t+1}(x_t^{t+1},y_t^{t+1})\)</span>的取值大小。因此，只需考虑这8个距离函数的取值变化，就可以确知相应的效率指数是否发生变化。下面给出判定缺失数据对DEA-Malmquist指数测算结果产生影响的定理。</p>
+<p>定理1
+假设共有n个决策单元A、B、C、D，各决策单元在第t期和第t+1期的生产情况如图1所示：</p>
+<figure>
+<img
+src="https://github.com/gongju128/picx-images-hosting/raw/master/image.9dcybpfyu4.webp"
+alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.9dcybpfyu4.webp" />
+<figcaption
+aria-hidden="true">https://github.com/gongju128/picx-images-hosting/raw/master/image.9dcybpfyu4.webp</figcaption>
+</figure>
 <p>首先，从图1(a)可以看出，在规模收益不变(CRS)的情况下，除单元B外，第t+1期其他三个单元的数据缺失都不会影响第t期和第t+1期的生产可能集。其次，从图1(b)可以看出，在规模收益可变(VRS)的情况下，除单元A和单元D外，第t+1期中任何一个单元的数据缺失都不会影响第t+1期的生产可能集生成结果。可见，无效率的数据缺失不会对DEA-Malmquist指数及其分解结果产生影响。对于上述情况，可以给出以下定理加以判断。</p>
-<p>定理1 假设第j个决策单元在第t期的数据缺失不会影响其他决策单元的DEA-Malmquist指数及其分解结果，则：</p>
-<p>$(x_j^t,y_j^t) \in S_v^t$，即存在<br>$$\lambda_i \geq 0，i&#x3D;1,2,\cdots,n$$，使得<br>$$\sum_{i&#x3D;1}^n \lambda_ix_i^t \leq x_j^t，\sum_{i&#x3D;1}^n \lambda_iy_i^t \geq y_j^t，\sum_{i&#x3D;1}^n \lambda_i &#x3D; 1$$</p>
+<p>定理1
+假设第j个决策单元在第t期的数据缺失不会影响其他决策单元的DEA-Malmquist指数及其分解结果，则：</p>
+<p><span class="math inline">\((x_j^t,y_j^t) \in S_v^t\)</span>，即存在
+<span class="math display">\[\lambda_i \geq
+0，i=1,2,\cdots,n\]</span>，使得 <span
+class="math display">\[\sum_{i=1}^n \lambda_ix_i^t \leq
+x_j^t，\sum_{i=1}^n \lambda_iy_i^t \geq y_j^t，\sum_{i=1}^n \lambda_i =
+1\]</span></p>
 <p>定理1表明，若是第j个决策单元的数据缺失，将不会影响其他决策单元的DEA-Malmquist指数及其分解结果。</p>
-<p>定理2 对于决策单元j，若其不属于集合 $D_{v,j}^t$，则该决策单元在第t期的数据缺失不会影响决策单元j的DEA-Malmquist指数及其分解结果。</p>
+<p>定理2 对于决策单元j，若其不属于集合 <span
+class="math inline">\(D_{v,j}^t\)</span>，则该决策单元在第t期的数据缺失不会影响决策单元j的DEA-Malmquist指数及其分解结果。</p>
 <p>三、非平衡面板数据下生产前沿面的修正方法</p>
 <p>由定理1可知，数据缺失会对决策单元的DEA-Malmquist指数及其分解结果产生重要影响，但这种影响可以通过生产前沿面的修正来消除。下面给出非平衡面板数据下生产前沿面的修正方法。</p>
-<p>(1) 扩大生产前沿面的方法。对于扩大生产前沿面的方法，采用如下定理3。</p>
-<p>定理3 假设第 $j_0$ 个决策单元在第 $t$ 期的投入产出值为 $(x_{j_0}^t, y_{j_0}^t)$，若能找到一个新单元 DMU’，它的投入产出值 $(x_t’, y_t’)$ 满足 $x_{j_0}^t \geqslant x_t’$, $y_{j_0}^t \leqslant y_t’$，则由决策单元集<br>$$&lt;!–swig￼0–&gt;{x_{j_0}^{t-1}} + \sum_{r&#x3D;1}^s \frac{y_{j_0}^{t-1} - y_j^{t-1}}{y_{j_0}^{t-1}} \geq 0, 1 \leq j \leq n} (8)$$</p>
-<p>$$R_k &#x3D; \min{R_j | R_j &#x3D; \sum_{i&#x3D;1}^m \frac{x_j^{t+1} - x_{j_0}^{t-1}}{x_{j_0}^{t-1}} + \sum_{r&#x3D;1}^s \frac{y_j^{t+1} - y_{j_0}^{t-1}}{y_{j_0}^{t-1}} \geq 0, 1 \leq j \leq n} (9)$$</p>
+<ol type="1">
+<li>扩大生产前沿面的方法。对于扩大生产前沿面的方法，采用如下定理3。</li>
+</ol>
+<p>假设在图2中，曲线OG为全国各省份经济发展的前沿面，曲线OR为西部各省份经济</p>
+<p>发展的前沿面。当西部某些省份的数据缺失时，生产前沿面OR退化为OD。根据定理1可知，这种数据的缺失可能会使西部省份的全要素生产率指标产生较大偏差。甚至会得到相反的结论。但是，如果在评价集中采用他评体系，评价参考集由西部各省份扩大至全国各省份（对应的生产前沿面为OG）时，由定理3可知，西部省份的数据缺失不会对生产前沿面OG产生影响，依据前沿面OG获得的他评结果更为可靠。并且，以全国各省份为参考集评价西部省份的经济全要素生产率在DEA理论上也是非常合理的。</p>
+<figure>
+<img
+src="https://github.com/gongju128/picx-images-hosting/raw/master/image.77djpxwwzx.webp"
+alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.77djpxwwzx.webp" />
+<figcaption
+aria-hidden="true">https://github.com/gongju128/picx-images-hosting/raw/master/image.77djpxwwzx.webp</figcaption>
+</figure>
+<p>对于更一般的情况，假设： <span class="math display">\[S = \{(x, y) |
+\sum_{i=1}^n \lambda_ix_i \leq x, \sum_{i=1}^n \lambda_iy_i \geq
+y\}，(i, j) \in S\]</span> 若能找到一个面板数据集 <span
+class="math inline">\(S_1\)</span> 满足对任意的 <span
+class="math inline">\((t, j) \in S_1\)</span> 均存在 <span
+class="math inline">\((t, l) \in S_1\)</span>，满足 <span
+class="math inline">\(x_j^t \geqslant x_l^t\)</span>, <span
+class="math inline">\(y_j^t \leqslant y_l^t\)</span>。则令 <span
+class="math inline">\(S_e = S \cup S_1\)</span>。由定理3可知，应用 <span
+class="math inline">\(S_e\)</span> 构造的生产可能集不受 <span
+class="math inline">\(S_1\)</span>
+数据缺失的影响。因此，通过上述方法增加更有效的单元，可以消除数据缺失对
+DEA-Malmquist 指数及其分解结果产生的影响。</p>
+<ol start="2" type="1">
+<li>预测缺失数据的方法。如果非平衡面板数据的缺失数据较少，而且无法获得额外的数据信息时，可以通过预测缺失数据的方法修正生产前沿面（见图3），进而减少数据缺失对
+DEA-Malmquist 指数及其分解结果产生的影响。</li>
+</ol>
+<p>假设第 <span class="math inline">\(t\)</span> 期有效决策单元 <span
+class="math inline">\(j_0\)</span>
+的数据缺失，则可以通过以下方法，应用已获数据对缺失数据进行预测，进而修正生产前沿面：</p>
+<figure>
+<img
+src="https://github.com/gongju128/picx-images-hosting/raw/master/image.77djpxxeip.webp"
+alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.77djpxxeip.webp" />
+<figcaption
+aria-hidden="true">https://github.com/gongju128/picx-images-hosting/raw/master/image.77djpxxeip.webp</figcaption>
+</figure>
+<p>图3：缩小缺失数据的方法分析</p>
+<ol type="1">
+<li>对数据缺失单元的投入指标 <span class="math inline">\(x_j^t\)</span>
+的预测：</li>
+</ol>
+<p>首先，找到投入指标数据比较接近 <span
+class="math inline">\(x_{j_0}^{t-1}\)</span> 的两个单元：</p>
+<p><span class="math display">\[L_l = \min\{L_j | L_j = \sum_{i=1}^m
+\frac{x_{j_0}^{t-1} - x_j^{t-1}}{x_{j_0}^{t-1}} + \sum_{r=1}^s
+\frac{y_{j_0}^{t-1} - y_j^{t-1}}{y_{j_0}^{t-1}} \geq 0, 1 \leq j \leq
+n\} (8)\]</span></p>
+<p><span class="math display">\[R_k = \min\{R_j | R_j = \sum_{i=1}^m
+\frac{x_j^{t+1} - x_{j_0}^{t-1}}{x_{j_0}^{t-1}} + \sum_{r=1}^s
+\frac{y_j^{t+1} - y_{j_0}^{t-1}}{y_{j_0}^{t-1}} \geq 0, 1 \leq j \leq
+n\} (9)\]</span></p>
 <p>令</p>
-<p>$$\Delta x_l &#x3D; x_l^t - x_l^{t-1}, \Delta x_k &#x3D; x_k^t - x_k^{t-1} (10)$$</p>
-<p>则可以将数据缺失单元的投入指标值 $x_{j_0}^t$ 估计为：</p>
-<p>$x_{j_0}^t &#x3D; x_{j_0}^{t-1} + \frac{(\Delta x_l + \Delta x_k)}{2}$ (11)</p>
-<p>② 对数据缺失单元产出指标 $y_{j_0}^t$ 的预测。</p>
+<p><span class="math display">\[\Delta x_l = x_l^t - x_l^{t-1}, \Delta
+x_k = x_k^t - x_k^{t-1} (10)\]</span></p>
+<p>则可以将数据缺失单元的投入指标值 <span
+class="math inline">\(x_{j_0}^t\)</span> 估计为：</p>
+<p><span class="math inline">\(x_{j_0}^t = x_{j_0}^{t-1} + \frac{(\Delta
+x_l + \Delta x_k)}{2}\)</span> (11)</p>
+<p>② 对数据缺失单元产出指标 <span
+class="math inline">\(y_{j_0}^t\)</span> 的预测。</p>
 <p>首先，令</p>
-<p>$$\Delta y_l &#x3D; y_l^t - y_l^{t-1}, \Delta y_k &#x3D; y_k^t - y_k^{t-1} (12)$$</p>
-<p>则可以将数据缺失单元的产出值 $y_{j_0}^t$ 估计为：</p>
-<p>$$y_{j_0}^t &#x3D; y_{j_0}^{t-1} + \frac{(\Delta y_l + \Delta y_k)}{2} (13)$$</p>
-<p>(3) 替代评价参考集的方法。如果非平衡面板数据的数据缺失严重，应用这种缺失数据预测方法可能会造成较大的偏差。此时，可以考虑采用替代评价参考集的方法。例如，在图2中，将线AG和AR分别为中国中部地区和西部地区的经济发展前沿面。当对西部地区的经济发展效率进行评价时，如果西部地区的数据缺失较为严重，生产前沿面退化为AD，根据前面的分析，依然可能会产生较大的偏差。因此，可以采用”它评体系”，即以中部地区的生产前沿面AG替代缺失数据下的生产前沿面AD，则可能会得到更有意义的结果。</p>
+<p><span class="math display">\[\Delta y_l = y_l^t - y_l^{t-1}, \Delta
+y_k = y_k^t - y_k^{t-1} (12)\]</span></p>
+<p>则可以将数据缺失单元的产出值 <span
+class="math inline">\(y_{j_0}^t\)</span> 估计为：</p>
+<p><span class="math display">\[y_{j_0}^t = y_{j_0}^{t-1} +
+\frac{(\Delta y_l + \Delta y_k)}{2} (13)\]</span></p>
+<ol start="3" type="1">
+<li>替代评价参考集的方法。如果非平衡面板数据的数据缺失严重，应用这种缺失数据预测方法可能会造成较大的偏差。此时，可以考虑采用替代评价参考集的方法。例如，在图2中，将线AG和AR分别为中国中部地区和西部地区的经济发展前沿面。当对西部地区的经济发展效率进行评价时，如果西部地区的数据缺失较为严重，生产前沿面退化为AD，根据前面的分析，依然可能会产生较大的偏差。因此，可以采用"它评体系"，即以中部地区的生产前沿面AG替代缺失数据下的生产前沿面AD，则可能会得到更有意义的结果。</li>
+</ol>
 <p>对于更一般的情况，假设：</p>
-<p>$$S &#x3D; {(t, j) | 1 \leq t \leq T, 1 \leq j \leq n}, S_q &#x3D; {(t, j) | x_j^t  (t, j) \in S}$$</p>
-<p>由于 $S_l &#x3D; S \backslash S_q$ 中的数据无法构造较为合理的评价参考集，因此，若能找到一组同类决策单元的面板数据 $S_H &#x3D; {(\tilde{x}_h^t, \tilde{y}_h^t) | h &#x3D; 1, 2, \cdots, H}$ 来构造生产可能集，即采用”他评体系”评价 $S_l$ 中的决策单元，也能给出有意义的结果。</p>
+<p><span class="math display">\[S = \{(t, j) | 1 \leq t \leq T, 1 \leq j
+\leq n\}, S_q = \{(t, j) | x_j^t  (t, j) \in S\}\]</span></p>
+<p>由于 <span class="math inline">\(S_l = S \backslash S_q\)</span>
+中的数据无法构造较为合理的评价参考集，因此，若能找到一组同类决策单元的面板数据
+<span class="math inline">\(S_H = \{(\tilde{x}_h^t, \tilde{y}_h^t) | h =
+1, 2, \cdots, H\}\)</span> 来构造生产可能集，即采用"他评体系"评价 <span
+class="math inline">\(S_l\)</span>
+中的决策单元，也能给出有意义的结果。</p>
 <p>为进一步从理论上探讨替代参考集方法对评价结果的影响，先给出如下定理4。</p>
-<p>定理4 假设由替代数据集 $S_H$ 确定的第 $t$ 期生产可能集为 $S_{w,H}^t$，并且 $S_{w,H}^t &#x3D; aS_w^t$，$t &#x3D; 1, 2, \cdots, T$，$a$ 是一个大于0的常数，则应用 $S_{w,H}^t$ 替代 $S_w^t$ 后，获得的 DEA-Malmquist 指数及其分解结果保持不变。</p>
-<p>证明：应用 $S_{w,H}^t$ 替代 $S_w^t$ 后，相应的距离函数变为：</p>
-<p>$$\tilde{D}<em>w^t(x^t, y^t) &#x3D; \inf{\theta | (x^t, y^t&#x2F;\theta) \in S</em>{w,H}^t} (14)$$</p>
-<p><img src="https://github.com/gongju128/picx-images-hosting/raw/master/image.wijs2ekyn.webp" alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.wijs2ekyn.webp"></p>
+<p>定理4 假设由替代数据集 <span class="math inline">\(S_H\)</span>
+确定的第 <span class="math inline">\(t\)</span> 期生产可能集为 <span
+class="math inline">\(S_{w,H}^t\)</span>，并且 <span
+class="math inline">\(S_{w,H}^t = aS_w^t\)</span>，<span
+class="math inline">\(t = 1, 2, \cdots, T\)</span>，<span
+class="math inline">\(a\)</span> 是一个大于0的常数，则应用 <span
+class="math inline">\(S_{w,H}^t\)</span> 替代 <span
+class="math inline">\(S_w^t\)</span> 后，获得的 DEA-Malmquist
+指数及其分解结果保持不变。</p>
+<p>证明：应用 <span class="math inline">\(S_{w,H}^t\)</span> 替代 <span
+class="math inline">\(S_w^t\)</span> 后，相应的距离函数变为：</p>
+<p><span class="math display">\[\tilde{D}_w^t(x^t, y^t) = \inf\{\theta |
+(x^t, y^t/\theta) \in S_{w,H}^t\} (14)\]</span></p>
+<figure>
+<img
+src="https://github.com/gongju128/picx-images-hosting/raw/master/image.wijs2ekyn.webp"
+alt="https://github.com/gongju128/picx-images-hosting/raw/master/image.wijs2ekyn.webp" />
+<figcaption
+aria-hidden="true">https://github.com/gongju128/picx-images-hosting/raw/master/image.wijs2ekyn.webp</figcaption>
+</figure>
 <p>图4 替代评价参考集的方法分析</p>
-<p>由于 $S_{\omega,H}^{t} \subseteq aS_{\omega}^{t}$，因此：</p>
-<p>$$\tilde{D}<em>c^t(x^t, y^t) &#x3D; \inf{\theta | (x^t, y^t&#x2F;\theta) \in aS</em>{\omega}^{t}} &#x3D; a\inf{\theta | (x^t, y^t&#x2F;\theta) \in S_{\omega}^{t}} &#x3D; aD_{\omega}^t(x^t, y^t)$$</p>
+<p>由于 <span class="math inline">\(S_{\omega,H}^{t} \subseteq
+aS_{\omega}^{t}\)</span>，因此：</p>
+<p><span class="math display">\[\tilde{D}_c^t(x^t, y^t) = \inf\{\theta |
+(x^t, y^t/\theta) \in aS_{\omega}^{t}\} = a\inf\{\theta | (x^t,
+y^t/\theta) \in S_{\omega}^{t}\} = aD_{\omega}^t(x^t, y^t)\]</span></p>
 <p>根据式 (2) 和式 (4) ~ 式 (7) 可知：</p>
-<p>$$\tilde{M}_0(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) &#x3D; (\frac{\tilde{D}_c^{t}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_c^t(x_t^t, y_t^t)} \times \frac{\tilde{D}_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_c^{t+1}(x_t^t, y_t^t)})^{\frac{1}{2}}<br>&#x3D; (\frac{aD_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_c^t(x_t^t, y_t^t)} \times \frac{aD_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_c^{t+1}(x_t^t, y_t^t)})^{\frac{1}{2}}<br>&#x3D; M_0(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) (15)$$</p>
-<p>$$\widetilde{PTEC}^{t+1} &#x3D; \frac{\tilde{D}_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_v^t(x_t^t, y_t^t)} &#x3D; \frac{aD_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_v^t(x_t^t, y_t^t)} &#x3D; PTEC^{t+1} (16)$$</p>
-<p>$$ \widetilde{SEC}^{t+1} &#x3D; (\frac{\tilde{D}_c^{t+1}(x_t^{t+1}, y_t^{t+1})&#x2F;\tilde{D}_v^{t}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_c^t(x_t^t, y_t^t)&#x2F;\tilde{D}_v^t(x_t^t, y_t^t)} \times \frac{\tilde{D}_c^{t+1}(x_t^{t+1}, y_t^{t+1})&#x2F;\tilde{D}_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_c^{t+1}(x_t^t, y_t^t)&#x2F;\tilde{D}_v^{t+1}(x_t^t, y_t^t)})^{\frac{1}{2}}&#x3D; (\frac{aD_c^{t}(x_t^{t+1}, y_t^{t+1})&#x2F;aD_v^{t}(x_t^{t+1}, y_t^{t+1})}{aD_c^t(x_t^t, y_t^t)&#x2F;aD_v^t(x_t^t, y_t^t)} \times \frac{aD_c^{t+1}(x_t^{t+1}, y_t^{t+1})&#x2F;aD_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_c^{t+1}(x_t^t, y_t^t)&#x2F;aD_v^{t+1}(x_t^t, y_t^t)})^{\frac{1}{2}}&#x3D; SEC^{t+1}(17) $$</p>
-<p>$$\widetilde{TC}^{t+1} &#x3D; (\frac{\tilde{D}_v^t(x_t^t, y_t^t)}{\tilde{D}_v^{t+1}(x_t^t, y_t^t)} \times \frac{\tilde{D}_v^t(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_v^{t+1}(x_t^{t+1}, y_t^{t+1})})^{\frac{1}{2}} &#x3D; (\frac{aD_v^t(x_t^t, y_t^t)}{aD_v^{t+1}(x_t^t, y_t^t)} \times \frac{aD_v^t(x_t^{t+1}, y_t^{t+1})}{aD_v^{t+1}(x_t^{t+1}, y_t^{t+1})})^{\frac{1}{2}} &#x3D; TC^{t+1} (18)$$</p>
+<p><span class="math display">\[\tilde{M}_0(x_t^t, y_t^t, x_t^{t+1},
+y_t^{t+1}) = (\frac{\tilde{D}_c^{t}(x_t^{t+1},
+y_t^{t+1})}{\tilde{D}_c^t(x_t^t, y_t^t)} \times
+\frac{\tilde{D}_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_c^{t+1}(x_t^t,
+y_t^t)})^{\frac{1}{2}}
+= (\frac{aD_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_c^t(x_t^t, y_t^t)} \times
+\frac{aD_c^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_c^{t+1}(x_t^t,
+y_t^t)})^{\frac{1}{2}}
+= M_0(x_t^t, y_t^t, x_t^{t+1}, y_t^{t+1}) (15)\]</span></p>
+<p><span class="math display">\[\widetilde{PTEC}^{t+1} =
+\frac{\tilde{D}_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_v^t(x_t^t,
+y_t^t)} = \frac{aD_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_v^t(x_t^t, y_t^t)}
+= PTEC^{t+1} (16)\]</span></p>
+<p><span class="math display">\[ \widetilde{SEC}^{t+1} =
+(\frac{\tilde{D}_c^{t+1}(x_t^{t+1},
+y_t^{t+1})/\tilde{D}_v^{t}(x_t^{t+1}, y_t^{t+1})}{\tilde{D}_c^t(x_t^t,
+y_t^t)/\tilde{D}_v^t(x_t^t, y_t^t)} \times
+\frac{\tilde{D}_c^{t+1}(x_t^{t+1},
+y_t^{t+1})/\tilde{D}_v^{t+1}(x_t^{t+1},
+y_t^{t+1})}{\tilde{D}_c^{t+1}(x_t^t, y_t^t)/\tilde{D}_v^{t+1}(x_t^t,
+y_t^t)})^{\frac{1}{2}}= (\frac{aD_c^{t}(x_t^{t+1},
+y_t^{t+1})/aD_v^{t}(x_t^{t+1}, y_t^{t+1})}{aD_c^t(x_t^t,
+y_t^t)/aD_v^t(x_t^t, y_t^t)} \times \frac{aD_c^{t+1}(x_t^{t+1},
+y_t^{t+1})/aD_v^{t+1}(x_t^{t+1}, y_t^{t+1})}{aD_c^{t+1}(x_t^t,
+y_t^t)/aD_v^{t+1}(x_t^t, y_t^t)})^{\frac{1}{2}}= SEC^{t+1}(17)
+\]</span></p>
+<p><span class="math display">\[\widetilde{TC}^{t+1} =
+(\frac{\tilde{D}_v^t(x_t^t, y_t^t)}{\tilde{D}_v^{t+1}(x_t^t, y_t^t)}
+\times \frac{\tilde{D}_v^t(x_t^{t+1},
+y_t^{t+1})}{\tilde{D}_v^{t+1}(x_t^{t+1}, y_t^{t+1})})^{\frac{1}{2}} =
+(\frac{aD_v^t(x_t^t, y_t^t)}{aD_v^{t+1}(x_t^t, y_t^t)} \times
+\frac{aD_v^t(x_t^{t+1}, y_t^{t+1})}{aD_v^{t+1}(x_t^{t+1},
+y_t^{t+1})})^{\frac{1}{2}} = TC^{t+1} (18)\]</span></p>
 <p>证毕。</p>
 <p>定理4表明，尽管替代性参考集存在一定技术差异，但这种差异不会对全要素生产率指数分解结果产生太大的影响。</p>
-<ol start="3">
+<ol start="3" type="1">
 <li><strong>非平衡面板数据下决策单元的全要素生产率测算具体方法</strong></li>
 </ol>
 <p>扩大生产前沿面的方法和替代评价参考集的方法实质上都是在扩大DEA方法的基本</p>
-<p>原理，将评价集和参考集分离。从本质上来看，是将传统 DEA-Malmquist 指数方法的理论基础从”自评体系”拓展到了”他评体系”，因而更具广泛的应用前景。下面将给出基于”他评体系”的修正 DEA-Malmquist 指数方法的一般理论模型。</p>
-<p>(1) 基于”他评体系”的修正 DEA-Malmquist 指数方法。假设共有 n 个单元的数据可用于构建评价参考集，其中，第 j 个单元在第 t 期的投入产出值为 $(\bar{x}^t,\bar{y}^t) &gt; 0$，则根据广义 DEA 方法的基本原理（马占新，2002，2003；马占新和马生的，2011），可以给出第 t 期的参考集如下：</p>
-<p>$$\bar{S}<em>c^t &#x3D; {(\bar{x}^t,\bar{y}^t)|\sum</em>{j&#x3D;1}^n \lambda_jx_j^t \leq \bar{x}^t, \sum_{j&#x3D;1}^n \lambda_jy_j^t \geq \bar{y}^t,\delta \sum_{j&#x3D;1}^n \lambda_j &#x3D; \delta,\lambda_j \geq 0,j &#x3D; 1,2,\cdots,n} (19)$$</p>
-<p>其中，δ 和 ω 的取值含义与式 (1) 相同。这里，用于构建评价参考集的单元与被评价单元可以不同。</p>
-<p>基于 Malmquist 指数的构造原理及式 (3) 和式 (14)，可以定义决策单元 $(x^t, y^t)$ 基于”他评体系”的产出距离函数如下：</p>
-<p>$$\bar{D}_c^t(x^t,y^t) &#x3D; \inf{\theta|(x^t,y^t&#x2F;\theta) \in \bar{S}_c^t} (20)$$</p>
-<p>类似式 (2)，可以给出第 p 个决策单元从第 t 期到第 t+1 期的基于”他评体系”的修正 DEA-Malmquist 指数计算公式如下：</p>
-<p>$$\bar{M}(x_p^t,y_p^t,x_p^{t+1},y_p^{t+1}) &#x3D; (\frac{\bar{D}_c^{t}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^t(x_p^t,y_p^t)} \times \frac{\bar{D}_c^{t+1}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^{t+1}(x_p^t,y_p^t)})^{\frac{1}{2}}(21)$$ </p>
-<p>进一步地，可以将基于”他评体系”的修正 DEA-Malmquist 指数的 RD 分解模型表示如下：</p>
-<p>$$ \bar{M}_{RD}(x_p^t,y_p^t,x_p^{t+1},y_p^{t+1}) &#x3D; \overline{PTEC}_p^{t+1} \times \overline{SEC}_p^{t+1} \times \overline{TC}_p^{t+1}(22)$$ </p>
+<p>原理，将评价集和参考集分离。从本质上来看，是将传统 DEA-Malmquist
+指数方法的理论基础从"自评体系"拓展到了"他评体系"，因而更具广泛的应用前景。下面将给出基于"他评体系"的修正
+DEA-Malmquist 指数方法的一般理论模型。</p>
+<ol type="1">
+<li>基于"他评体系"的修正 DEA-Malmquist 指数方法。假设共有 n
+个单元的数据可用于构建评价参考集，其中，第 j 个单元在第 t
+期的投入产出值为 <span class="math inline">\((\bar{x}^t,\bar{y}^t) &gt;
+0\)</span>，则根据广义 DEA
+方法的基本原理（马占新，2002，2003；马占新和马生的，2011），可以给出第 t
+期的参考集如下：</li>
+</ol>
+<p><span class="math display">\[\bar{S}_c^t =
+\{(\bar{x}^t,\bar{y}^t)|\sum_{j=1}^n \lambda_jx_j^t \leq \bar{x}^t,
+\sum_{j=1}^n \lambda_jy_j^t \geq \bar{y}^t,\delta \sum_{j=1}^n \lambda_j
+= \delta,\lambda_j \geq 0,j = 1,2,\cdots,n\} (19)\]</span></p>
+<p>其中，δ 和 ω 的取值含义与式 (1)
+相同。这里，用于构建评价参考集的单元与被评价单元可以不同。</p>
+<p>基于 Malmquist 指数的构造原理及式 (3) 和式 (14)，可以定义决策单元
+<span class="math inline">\((x^t, y^t)\)</span>
+基于"他评体系"的产出距离函数如下：</p>
+<p><span class="math display">\[\bar{D}_c^t(x^t,y^t) =
+\inf\{\theta|(x^t,y^t/\theta) \in \bar{S}_c^t\} (20)\]</span></p>
+<p>类似式 (2)，可以给出第 p 个决策单元从第 t 期到第 t+1
+期的基于"他评体系"的修正 DEA-Malmquist 指数计算公式如下：</p>
+<p><span class="math display">\[\bar{M}(x_p^t,y_p^t,x_p^{t+1},y_p^{t+1})
+= (\frac{\bar{D}_c^{t}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^t(x_p^t,y_p^t)}
+\times
+\frac{\bar{D}_c^{t+1}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^{t+1}(x_p^t,y_p^t)})^{\frac{1}{2}}(21)\]</span></p>
+<p>进一步地，可以将基于"他评体系"的修正 DEA-Malmquist 指数的 RD
+分解模型表示如下：</p>
+<p><span class="math display">\[
+\bar{M}_{RD}(x_p^t,y_p^t,x_p^{t+1},y_p^{t+1}) = \overline{PTEC}_p^{t+1}
+\times \overline{SEC}_p^{t+1} \times
+\overline{TC}_p^{t+1}(22)\]</span></p>
 <p>其中</p>
-<p>$$ \overline{PTEC}_p^{t+1} &#x3D; \frac{\bar{D}_v^{t+1}(x_p^{t+1},y_p^{t+1})}{\bar{D}_v^t(x_p^t,y_p^t)} (23)$$</p>
-<p>$$\overline{SEC}_p^{t+1} &#x3D; (\frac{\bar{D}_c^{t}(x_p^{t+1},y_p^{t+1})&#x2F;\bar{D}_v^{t}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^t(x_p^t,y_p^t)&#x2F;\bar{D}_v^t(x_p^t,y_p^t)} \times \frac{\bar{D}_c^{t+1}(x_p^{t+1},y_p^{t+1})&#x2F;\bar{D}_v^{t+1}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^{t+1}(x_p^t,y_p^t)&#x2F;\bar{D}_v^{t+1}(x_p^t,y_p^t)})^{\frac{1}{2}} (24)$$</p>
-<p>$$\overline{TC}_p^{t+1} &#x3D; (\frac{\bar{D}_v^t(x_p^t,y_p^t)}{\bar{D}_v^{t+1}(x_p^t,y_p^t)} \times \frac{\bar{D}_v^t(x_p^{t+1},y_p^{t+1})}{\bar{D}_v^{t+1}(x_p^{t+1},y_p^{t+1})})^{\frac{1}{2}} (25)$$</p>
-<p>这里，$\overline{PTEC}$ 代表他评体系下的纯技术效率变化指数，$\overline{SEC}$ 代表他评体系下的规模效率变化指数，$\overline{TC}$ 代表他评体系下的技术变化指数。</p>
+<p><span class="math display">\[ \overline{PTEC}_p^{t+1} =
+\frac{\bar{D}_v^{t+1}(x_p^{t+1},y_p^{t+1})}{\bar{D}_v^t(x_p^t,y_p^t)}
+(23)\]</span></p>
+<p><span class="math display">\[\overline{SEC}_p^{t+1} =
+(\frac{\bar{D}_c^{t}(x_p^{t+1},y_p^{t+1})/\bar{D}_v^{t}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^t(x_p^t,y_p^t)/\bar{D}_v^t(x_p^t,y_p^t)}
+\times
+\frac{\bar{D}_c^{t+1}(x_p^{t+1},y_p^{t+1})/\bar{D}_v^{t+1}(x_p^{t+1},y_p^{t+1})}{\bar{D}_c^{t+1}(x_p^t,y_p^t)/\bar{D}_v^{t+1}(x_p^t,y_p^t)})^{\frac{1}{2}}
+(24)\]</span></p>
+<p><span class="math display">\[\overline{TC}_p^{t+1} =
+(\frac{\bar{D}_v^t(x_p^t,y_p^t)}{\bar{D}_v^{t+1}(x_p^t,y_p^t)} \times
+\frac{\bar{D}_v^t(x_p^{t+1},y_p^{t+1})}{\bar{D}_v^{t+1}(x_p^{t+1},y_p^{t+1})})^{\frac{1}{2}}
+(25)\]</span></p>
+<p>这里，<span class="math inline">\(\overline{PTEC}\)</span>
+代表他评体系下的纯技术效率变化指数，<span
+class="math inline">\(\overline{SEC}\)</span>
+代表他评体系下的规模效率变化指数，<span
+class="math inline">\(\overline{TC}\)</span>
+代表他评体系下的技术变化指数。</p>
 <p>作者在文中举了一个例子，具体说明修正DEA-Maluqist指数方法的优点:</p>
 <p>① 他评体系下决策单元的评价结果更加趋于合理，具有更强的参考价值。</p>
-<p>首先，当被评价单元数量较少时，传统 DEA-Malmquist 指数方法的区分度较差，很难反映各单元的实际发展情况。比如，在问题1中，陕西、甘肃、宁夏的 PTEC 指数取值均为1，说明2005~2006年这3个省份的纯技术效率没有发生变化。但当被评价单元数量逐渐增多时，陕西、甘肃、宁夏的 PTEC 指数出现了明显差异。</p>
-<p>其次，基于自评体系的传统 DEA-Malmquist 指数方法给出的结果自相矛盾，难以保证</p>
-<p>测算结果的真实性。比如，在问题1中陕西和宁夏的 SEC 指数取值均大于1，说明2005~2006年这2个省份的规模效率得到了改善。但在问题2到问题4中这2个省份的 SEC 指数取值均小于1，即呈现规模效率恶化的态势，这与问题1的结果明显矛盾。</p>
-<p>与此相比，本文提出的基于他评体系的修正 DEA-Malmquist 指数方法很好地解决了上述问题，该方法不仅区分度高、评价结果具有一致性，而且评价结果更加趋于合理。</p>
-<p>② 他评体系下获得的 DEA-Malmquist 指数及其分解结果不随评价问题的变化而变化，具有较好的稳定性。比如，陕西、甘肃、宁夏的 DEA-Malmquist 指数及分解结果在问题1~问题4中均保持一致，未随评价问题的变化而发生变化。</p>
-<p>③ 基于他评体系的修正 DEA-Malmquist 指数方法为本文提出的扩大生产前沿面的方法提供了较好的理论支持。实际上，可以将问题1~问题4视为是一个评价问题中数据信息逐渐增多的过程。并从上面的分析可以看出，当评价参考集包含的单元越多时，其蕴含的生产信息越全面，给出的结果越趋合理。因此，这也在一定程度上说明了扩大生产前沿面方法给出的结果更具合理性。</p>
+<p>首先，当被评价单元数量较少时，传统 DEA-Malmquist
+指数方法的区分度较差，很难反映各单元的实际发展情况。比如，在问题1中，陕西、甘肃、宁夏的
+PTEC
+指数取值均为1，说明2005~2006年这3个省份的纯技术效率没有发生变化。但当被评价单元数量逐渐增多时，陕西、甘肃、宁夏的
+PTEC 指数出现了明显差异。</p>
+<p>其次，基于自评体系的传统 DEA-Malmquist
+指数方法给出的结果自相矛盾，难以保证</p>
+<p>测算结果的真实性。比如，在问题1中陕西和宁夏的 SEC
+指数取值均大于1，说明2005~2006年这2个省份的规模效率得到了改善。但在问题2到问题4中这2个省份的
+SEC
+指数取值均小于1，即呈现规模效率恶化的态势，这与问题1的结果明显矛盾。</p>
+<p>与此相比，本文提出的基于他评体系的修正 DEA-Malmquist
+指数方法很好地解决了上述问题，该方法不仅区分度高、评价结果具有一致性，而且评价结果更加趋于合理。</p>
+<p>② 他评体系下获得的 DEA-Malmquist
+指数及其分解结果不随评价问题的变化而变化，具有较好的稳定性。比如，陕西、甘肃、宁夏的
+DEA-Malmquist
+指数及分解结果在问题1~问题4中均保持一致，未随评价问题的变化而发生变化。</p>
+<p>③ 基于他评体系的修正 DEA-Malmquist
+指数方法为本文提出的扩大生产前沿面的方法提供了较好的理论支持。实际上，可以将问题1~问题4视为是一个评价问题中数据信息逐渐增多的过程。并从上面的分析可以看出，当评价参考集包含的单元越多时，其蕴含的生产信息越全面，给出的结果越趋合理。因此，这也在一定程度上说明了扩大生产前沿面方法给出的结果更具合理性。</p>
 <p><strong>根据马老师这篇文献，我们开发出了非平衡面板Malquist指数的计算工具，可以使用文中提到的预测缺失数据，采用他评体系两种方法测算非平衡面板下的Malquist指数。</strong></p>
 <p>有需要欢迎联系 <strong>canglang12002</strong></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484292&idx=1&sn=ead4cc6a7ed0e7822e6d339f3b0a0a2d&chksm=fd2f05b2ca588ca49a3892a0c18a190ebc983800d7d3cd8eae63797c69d76a8daa6196c87100&scene=21#wechat_redirect">Panda_DEA更新</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484277&idx=1&sn=cf28e9ab55e7b24905b601f17a903edf&chksm=fd2f0543ca588c55b9cc3dc18f93301424dba598ac06a9f0084941b6ad473b62abcdd5013ede&scene=21#wechat_redirect">三阶段DEA之SFA回归</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484269&idx=1&sn=53eab62797c565a16c5fe589c08a91cb&chksm=fd2f055bca588c4d30d70938610b3f4fd2fefe259801693cb99eb243b6267157fb58a69a9623&scene=21#wechat_redirect">产业空间聚集DO指数计算工具更新</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484258&idx=1&sn=eeb4f41d41009058558e1330e1187091&chksm=fd2f0554ca588c420024204fc43e641ea8310ccfb7d634196caa7d57c4c0beb070f279d1394a&scene=21#wechat_redirect">存在共享投入的两阶段博弈交叉DEA模型</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484246&idx=1&sn=354da2dfa48c0847a848ba03cb5c4773&chksm=fd2f0560ca588c766b95d485ca1537a30c09f22504f66c9c9226e6e74e4e4ea4332d78de6086&scene=21#wechat_redirect">产业空间聚集DO指数计算工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484200&idx=1&sn=f121f558bc1f7a5c07deca417e9d13a7&chksm=fd2f051eca588c081e24a4fbf5c678681ae7da78f4fd763aedd2440bca81ed6fcc19dd63df47&scene=21#wechat_redirect">网络SBM模型（NSBM)复现</a></p>
-<p>**<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484189&idx=1&sn=d80e8d2d3d07ebeaacdabd52856fd09c&chksm=fd2f052bca588c3d17e8425e44a54b86baede3e3df3da23396fe827ebcf1316c809dae978521&scene=21#wechat_redirect">团体机构持股比例代码更新</a><br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484183&idx=1&sn=a55cc955f5bd06c58f47f5e576e6935d&chksm=fd2f0521ca588c379a14bce2caa13432b44927fabf6650900a2a8ad0bc1104f8796b82767800&scene=21#wechat_redirect">空间马尔科夫工具更新</a>**<br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484177&idx=1&sn=274fb011231edee0381f35be48e6180a&chksm=fd2f0527ca588c31afd91da37630d44ef2c2a3d4e734580cfd6af3dfd7cea83fe9f0bf715282&scene=21#wechat_redirect">共享投入型关联两阶段生产系统的网络DEA效率测度与分解复现</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484164&idx=1&sn=3858fae1ff809b3353b1629bee3aff41&chksm=fd2f0532ca588c24188059db70811a1bf42c3b99ebbc0040b8111df80b0c5cc37f4f2bf34891&scene=21#wechat_redirect">基尼系数双维度分解计算工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484135&idx=1&sn=0c0b5a237d0c8c6b89acc8cdc8d56e4e&chksm=fd2f04d1ca588dc75b18b5d5f134b6b6d5f33980fbeff61b8c1a5512d6d0f2372bd333d20509&scene=21#wechat_redirect">动态SBM模型（DSBM)复现</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484126&idx=1&sn=fc54e19a7ff9e8d644c5ac310b25e18d&chksm=fd2f04e8ca588dfedb166486836a54dc97ed4968fabad9455bd05e1c17a181a1d1d80bab84e6&scene=21#wechat_redirect">共享投入的两阶段DEA模型复现</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484114&idx=1&sn=22f1880c59ad04e5e83e7b10b98a4ebe&chksm=fd2f04e4ca588df2c1739e69b96f8b9691e8602f1a027784f30abc75dca06ee711414c2862ac&scene=21#wechat_redirect">基于凸分位数回归的影子价格计算工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484107&idx=1&sn=bbb9442f963aa2fa22605f3c174a1a13&chksm=fd2f04fdca588debe2d86ff2f2f210162bd268e0f8f995c52d06475ce5abde0e0ecb66332f61&scene=21#wechat_redirect">Doyle和Green(1994)的对抗性和仁慈性DEA</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484096&idx=1&sn=b0feb447ed44eb0917dfbc579b1a27cc&chksm=fd2f04f6ca588de00abafc9bb2c4c9aa5af0a3e6c98bd54107fbe8df1e2e989cc5a6c8af6eb6&scene=21#wechat_redirect">一种新的两阶段网络DEA模型</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484085&idx=1&sn=5d05cd43c8340e161d26aaa0f6ba9476&chksm=fd2f0483ca588d95bd08ef47b5fb678cc1d691c26f85d161a2e92aeac648826cbda2c1969d43&scene=21#wechat_redirect">适用于面板数据的动态StoNED模型计算工具</a>**<br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484072&idx=1&sn=7baad0f87e5a1706b9aade2026dcc31f&chksm=fd2f049eca588d88d78a8745b62bc262ced153a08823b51bffc9663d886052b4c59559a80879&scene=21#wechat_redirect">零和博弈SBM模型（ZSG-SBM）模型</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484065&idx=1&sn=ce11d3b8f3233427bbfda73b37c641e9&chksm=fd2f0497ca588d81740807845942d0373fb09c4fdd167175fb6da0c8acf35ba7d8689cb5ec2b&scene=21#wechat_redirect">三阶段动态网络DEA(DNSBM)模型的实现</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484053&idx=1&sn=f3d4450b381df801a82af1c903616a95&chksm=fd2f04a3ca588db518fd4b5573207ce091809c02e7d75a82039384653382059b56f28bcd324e&scene=21#wechat_redirect">计算相对资源承载力模型的工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484042&idx=1&sn=2893ea55cdd727a9de4a31c8076f1ac4&chksm=fd2f04bcca588daa58910619bdb904a2bb8d6be292db35bdc1aa9a42aa752b5c8eb4fc9c1716&scene=21#wechat_redirect">基于参数化的方向性距离函数（DDF)估算污染物影子价格的工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484017&idx=1&sn=88ebe176df7e6f7e8ad011f1549d2db4&chksm=fd2f0447ca588d5193bc16509bd5f55171bded8ff835eb97bfee28df85edf562796ba92641fd&scene=21#wechat_redirect">基于非期望产出的RAM 碳环境效率模型</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247484028&idx=1&sn=54e16f8a31f3d7af2d6a298701196db7&chksm=fd2f044aca588d5c72667248701da28e99188cb726857d0805e9e31a4f6004dd1c14294ef078&scene=21#wechat_redirect">使用遗传算法或NSGA2算法解决多式联运问题</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483999&idx=1&sn=e53ea529a08101c86c1ae1a4f6abb27d&chksm=fd2f0469ca588d7fe68617195fd1aade17903cd5d821c54140eb630df27d0e5fbaeef3354f28&scene=21#wechat_redirect">莫兰指数计算小工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483993&idx=1&sn=30f1d7fbe59e8380b084e0da62f311ee&chksm=fd2f046fca588d79648cafe2bbe7cfac75bdfeb7abfb39ed503e8798b165875e1c1d82d2f7a5&scene=21#wechat_redirect">Panda_DEA增加至强有效前沿最近距离-MinDS模型</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483984&idx=1&sn=d54bb58a4c4cd15437232eb0747d89e8&chksm=fd2f0466ca588d702b8cab63ef061ffcec2f851f60ac537f26420cf9fa216d6f5d39c1f6768c&scene=21#wechat_redirect">QLab增加耦合协调度模型</a>**<br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483976&idx=1&sn=d1d02cd8ab9133fb0209cde77076d4be&chksm=fd2f047eca588d68204016e1d2bb2a0d482a9916d115ac3daec228f7ce20a8a3442f198f7323&scene=21#wechat_redirect">广义SBM模型的matlab代码</a>**<br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483935&idx=1&sn=53b59c1fce81c886f42f3a3539f83b0b&chksm=fd2f0429ca588d3f880a3302adbf42834abf7adaaa3ff66e9db6e6e03b3a0883592d0c1de8b1&scene=21#wechat_redirect">QLab1.4正式发布！增加全排列多边形图示指标法</a>**<br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483924&idx=1&sn=ff0565b5c751c701627e1bb6ed39a307&chksm=fd2f0422ca588d34eb68bfdca08b214d7f184f1996215ddc31aff11d80e85c7de56b6ded4fa4&scene=21#wechat_redirect">大量数据时的Dagum基尼系数分解工具</a>**<br>**</p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483908&idx=1&sn=c3410d846b17c7a4ab86d87b9aabaf71&chksm=fd2f0432ca588d24cc6ef2bb3a27a77f5f2776d20ea6daf764179c99580345f4de27bb10b51e&scene=21#wechat_redirect">Panda-DEA_1.0正式发布！</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483878&idx=1&sn=2e676de5f515492757ebdd5c051162e0&chksm=fd2f07d0ca588ec6bf1fcf1608d4b16352dc4368c0b3d6d3f2d830a403a0275c5348c849293c&scene=21#wechat_redirect">含有非期望产出的ZSG-DEA模型</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483868&idx=1&sn=14e07f2cc9b1efaa655106faddda05fa&chksm=fd2f07eaca588efc30d9f126d8f1a423e50df54bb6674cb2b4da774b3636783f2961b1d7d344&scene=21#wechat_redirect">两阶段网络DEA模型及其计算</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483857&idx=1&sn=092e4b0ce69579777b19b06c9e2e8d59&chksm=fd2f07e7ca588ef185aac309159929a3a2bacf868c39175dbe3ff103722d0e01525ec74248e6&scene=21#wechat_redirect">Panda-DEA，一款新的DEA模型软件</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483847&idx=1&sn=e581c0d77fd4d7cb2a7f226adb0d033c&chksm=fd2f07f1ca588ee7a4f5e15aef18444d75d6da8f740f66ca52a49e657548801305c34e34f9ec&scene=21#wechat_redirect">DKM_1.3更新—CCM收敛交叉映射</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483827&idx=1&sn=8554eda1a7595d2ec83612dc030e9baa&chksm=fd2f0785ca588e930a3b101f008ad9ab520163beb250bd903c9e4e0e775c4f74b3310e321c3a&scene=21#wechat_redirect">DKM_1.2:两阶段嵌套泰尔指数工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483817&idx=1&sn=612d8555d743b4274ca7e50f9912e1b7&chksm=fd2f079fca588e89f5babb27b4bb880bbafd563829e35534eb2d13edb8e7efe022b892982f2d&scene=21#wechat_redirect">DKM_1.1–新增熵值法功能</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483808&idx=1&sn=46e213b0e0a16c4d03901f91eb256353&chksm=fd2f0796ca588e80e60d267fd2fecadf727e81c119b11abcd3685ec8f0ce5aca1603930a2f65&scene=21#wechat_redirect">数量经济学工具DKM_1.0</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483801&idx=1&sn=be569284186256129d00223bf162e951&chksm=fd2f07afca588eb925b3e1261948238a22df35cc3427973d148dbf9644b46465a99c49143c7b&scene=21#wechat_redirect">空间马尔科夫链工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483791&idx=1&sn=405dfd42be6387db6f56cb5a53d8885f&chksm=fd2f07b9ca588eafc2ca9779ea9e31efab5cae00646fc15d4b2992f06ccdd008c15384ae0a12&scene=21#wechat_redirect">空间静态kernel核密度、空间动态kernel核密度工具更新</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483786&idx=1&sn=cafde88006a876e27883749094e2149f&chksm=fd2f07bcca588eaa8d167c20fe37e2b02cccc65fa035e089ee5a482d611312273606713ddb79&scene=21#wechat_redirect">马尔科夫链之传统马尔可夫链</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483778&idx=1&sn=096c3ae6529666292103c4b051efc16d&chksm=fd2f07b4ca588ea2ef52f3571ad29654d32d44db873819380ee0ebd0e35ea00d3c23cdbd0e6c&scene=21#wechat_redirect">Dagum基尼系数分解工具更新</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483773&idx=1&sn=926665b79c22fe5c0deffbb1f32191bc&chksm=fd2f074bca588e5deed9f46c29686be25759ad21413c31900f20a8f75ec75134e40e260836fc&scene=21#wechat_redirect">无条件、空间静态、空间动态kernel核密度工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483762&idx=1&sn=8cfe17735470d3a4bc8e42f0d616cbcf&chksm=fd2f0744ca588e52e0270ca460811ad724c3896ae58ff3d26272442d8c836be7abed4546fec7&scene=21#wechat_redirect">基于共同前沿下含非期望产出SBM模型的影子价格测算</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483757&idx=1&sn=52b653c647cde10deea4e48410aa43f2&chksm=fd2f075bca588e4d4a2ac8ca5f70c85e85ed69ff2466a03c7cd45d099ffa42b5c0f31a5b0860&scene=21#wechat_redirect">基于非期望产出SBM模型的群组前沿和共同前沿的DEA效率</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483747&idx=1&sn=45321676f283e782319cbcdaa31fd1ae&chksm=fd2f0755ca588e43e1c0aa25fe1cf0c7fdcef17398d4beb28b41a336553ad587c76f8ede94f2&scene=21#wechat_redirect">零和收益ZSG-DEA模型的求解程序</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483737&idx=1&sn=b22ace1dec3db5a3985f64091af1c33f&chksm=fd2f076fca588e797e154566fc15525fc1844d8b1e25b8e8283ce6f99baebe03f877c418b7a3&scene=21#wechat_redirect">三阶嵌套泰尔指数计算工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483728&idx=1&sn=703a49585627131782a77f51834e60dd&chksm=fd2f0766ca588e700bef7117ca0a75937e1795819203f0dc02bfdd74b767b3747bbf263b6085&scene=21#wechat_redirect">dagum基尼系数分解工具</a></p>
-<p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&mid=2247483714&idx=1&sn=8c5d4b6011d0b158f5c6dcf19c22752e&chksm=fd2f0774ca588e62afe9e03a7fdf98220eaf41a0cfd6a55510b00abc09639c358326375f51a5&scene=21#wechat_redirect">《机构投资者抱团与股价崩盘风险》数据处理代码</a></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/">http://gongju128.github.io/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BF/">非平衡面板</a></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/" title="Shapley方法测算DEA模型变量重要性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Shapley方法测算DEA模型变量重要性</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/29/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-09-30%E5%A4%8D%E5%90%88%E7%B3%BB%E7%BB%9F%E6%8E%A8%E6%96%87/" title="复合系统协调度工具"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">复合系统协调度工具</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">102</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%A1%A82-%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BF%E6%95%B0%E6%8D%AE%E5%92%8C%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BF%E6%95%B0%E6%8D%AE%E4%B8%8B%E5%90%84%E5%86%B3%E7%AD%96%E5%8D%95%E5%85%83%E7%9A%84%E5%85%A8%E8%A6%81%E7%B4%A0%E7%94%9F%E4%BA%A7%E7%8E%87%E6%B5%8B%E7%AE%97%E7%BB%93%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">表2 平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/20/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EBM%E6%8E%A8%E6%96%87/" title="含有非期望产出EBM及其改进模型">含有非期望产出EBM及其改进模型</a><time datetime="2024-11-20T14:28:29.000Z" title="发表于 2024-11-20 22:28:29">2024-11-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/05/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E4%B8%AD%E7%AB%8B%E6%80%A7DEA%E4%BA%A4%E5%8F%89%E6%95%88%E7%8E%87%E8%AF%84%E4%BB%B7%E6%96%B9%E6%B3%95/" title="中立性DEA交叉效率评价方法">中立性DEA交叉效率评价方法</a><time datetime="2024-11-05T05:51:29.000Z" title="发表于 2024-11-05 13:51:29">2024-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/" title="Shapley方法测算DEA模型变量重要性">Shapley方法测算DEA模型变量重要性</a><time datetime="2024-10-18T05:58:29.000Z" title="发表于 2024-10-18 13:58:29">2024-10-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/" title="非平衡面板Malquist指数计算工具">非平衡面板Malquist指数计算工具</a><time datetime="2024-10-17T05:58:29.000Z" title="发表于 2024-10-17 13:58:29">2024-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/29/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-09-30%E5%A4%8D%E5%90%88%E7%B3%BB%E7%BB%9F%E6%8E%A8%E6%96%87/" title="复合系统协调度工具">复合系统协调度工具</a><time datetime="2024-09-29T14:55:29.000Z" title="发表于 2024-09-29 22:55:29">2024-09-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2024  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484292&amp;idx=1&amp;sn=ead4cc6a7ed0e7822e6d339f3b0a0a2d&amp;chksm=fd2f05b2ca588ca49a3892a0c18a190ebc983800d7d3cd8eae63797c69d76a8daa6196c87100&amp;scene=21#wechat_redirect">Panda_DEA更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484277&amp;idx=1&amp;sn=cf28e9ab55e7b24905b601f17a903edf&amp;chksm=fd2f0543ca588c55b9cc3dc18f93301424dba598ac06a9f0084941b6ad473b62abcdd5013ede&amp;scene=21#wechat_redirect">三阶段DEA之SFA回归</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484269&amp;idx=1&amp;sn=53eab62797c565a16c5fe589c08a91cb&amp;chksm=fd2f055bca588c4d30d70938610b3f4fd2fefe259801693cb99eb243b6267157fb58a69a9623&amp;scene=21#wechat_redirect">产业空间聚集DO指数计算工具更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484258&amp;idx=1&amp;sn=eeb4f41d41009058558e1330e1187091&amp;chksm=fd2f0554ca588c420024204fc43e641ea8310ccfb7d634196caa7d57c4c0beb070f279d1394a&amp;scene=21#wechat_redirect">存在共享投入的两阶段博弈交叉DEA模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484246&amp;idx=1&amp;sn=354da2dfa48c0847a848ba03cb5c4773&amp;chksm=fd2f0560ca588c766b95d485ca1537a30c09f22504f66c9c9226e6e74e4e4ea4332d78de6086&amp;scene=21#wechat_redirect">产业空间聚集DO指数计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484200&amp;idx=1&amp;sn=f121f558bc1f7a5c07deca417e9d13a7&amp;chksm=fd2f051eca588c081e24a4fbf5c678681ae7da78f4fd763aedd2440bca81ed6fcc19dd63df47&amp;scene=21#wechat_redirect">网络SBM模型（NSBM)复现</a></p>
+<p><strong><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484189&amp;idx=1&amp;sn=d80e8d2d3d07ebeaacdabd52856fd09c&amp;chksm=fd2f052bca588c3d17e8425e44a54b86baede3e3df3da23396fe827ebcf1316c809dae978521&amp;scene=21#wechat_redirect">团体机构持股比例代码更新</a>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484183&amp;idx=1&amp;sn=a55cc955f5bd06c58f47f5e576e6935d&amp;chksm=fd2f0521ca588c379a14bce2caa13432b44927fabf6650900a2a8ad0bc1104f8796b82767800&amp;scene=21#wechat_redirect">空间马尔科夫工具更新</a><strong>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484177&amp;idx=1&amp;sn=274fb011231edee0381f35be48e6180a&amp;chksm=fd2f0527ca588c31afd91da37630d44ef2c2a3d4e734580cfd6af3dfd7cea83fe9f0bf715282&amp;scene=21#wechat_redirect">共享投入型关联两阶段生产系统的网络DEA效率测度与分解复现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484164&amp;idx=1&amp;sn=3858fae1ff809b3353b1629bee3aff41&amp;chksm=fd2f0532ca588c24188059db70811a1bf42c3b99ebbc0040b8111df80b0c5cc37f4f2bf34891&amp;scene=21#wechat_redirect">基尼系数双维度分解计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484135&amp;idx=1&amp;sn=0c0b5a237d0c8c6b89acc8cdc8d56e4e&amp;chksm=fd2f04d1ca588dc75b18b5d5f134b6b6d5f33980fbeff61b8c1a5512d6d0f2372bd333d20509&amp;scene=21#wechat_redirect">动态SBM模型（DSBM)复现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484126&amp;idx=1&amp;sn=fc54e19a7ff9e8d644c5ac310b25e18d&amp;chksm=fd2f04e8ca588dfedb166486836a54dc97ed4968fabad9455bd05e1c17a181a1d1d80bab84e6&amp;scene=21#wechat_redirect">共享投入的两阶段DEA模型复现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484114&amp;idx=1&amp;sn=22f1880c59ad04e5e83e7b10b98a4ebe&amp;chksm=fd2f04e4ca588df2c1739e69b96f8b9691e8602f1a027784f30abc75dca06ee711414c2862ac&amp;scene=21#wechat_redirect">基于凸分位数回归的影子价格计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484107&amp;idx=1&amp;sn=bbb9442f963aa2fa22605f3c174a1a13&amp;chksm=fd2f04fdca588debe2d86ff2f2f210162bd268e0f8f995c52d06475ce5abde0e0ecb66332f61&amp;scene=21#wechat_redirect">Doyle和Green(1994)的对抗性和仁慈性DEA</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484096&amp;idx=1&amp;sn=b0feb447ed44eb0917dfbc579b1a27cc&amp;chksm=fd2f04f6ca588de00abafc9bb2c4c9aa5af0a3e6c98bd54107fbe8df1e2e989cc5a6c8af6eb6&amp;scene=21#wechat_redirect">一种新的两阶段网络DEA模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484085&amp;idx=1&amp;sn=5d05cd43c8340e161d26aaa0f6ba9476&amp;chksm=fd2f0483ca588d95bd08ef47b5fb678cc1d691c26f85d161a2e92aeac648826cbda2c1969d43&amp;scene=21#wechat_redirect">适用于面板数据的动态StoNED模型计算工具</a><strong>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484072&amp;idx=1&amp;sn=7baad0f87e5a1706b9aade2026dcc31f&amp;chksm=fd2f049eca588d88d78a8745b62bc262ced153a08823b51bffc9663d886052b4c59559a80879&amp;scene=21#wechat_redirect">零和博弈SBM模型（ZSG-SBM）模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484065&amp;idx=1&amp;sn=ce11d3b8f3233427bbfda73b37c641e9&amp;chksm=fd2f0497ca588d81740807845942d0373fb09c4fdd167175fb6da0c8acf35ba7d8689cb5ec2b&amp;scene=21#wechat_redirect">三阶段动态网络DEA(DNSBM)模型的实现</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484053&amp;idx=1&amp;sn=f3d4450b381df801a82af1c903616a95&amp;chksm=fd2f04a3ca588db518fd4b5573207ce091809c02e7d75a82039384653382059b56f28bcd324e&amp;scene=21#wechat_redirect">计算相对资源承载力模型的工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484042&amp;idx=1&amp;sn=2893ea55cdd727a9de4a31c8076f1ac4&amp;chksm=fd2f04bcca588daa58910619bdb904a2bb8d6be292db35bdc1aa9a42aa752b5c8eb4fc9c1716&amp;scene=21#wechat_redirect">基于参数化的方向性距离函数（DDF)估算污染物影子价格的工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484017&amp;idx=1&amp;sn=88ebe176df7e6f7e8ad011f1549d2db4&amp;chksm=fd2f0447ca588d5193bc16509bd5f55171bded8ff835eb97bfee28df85edf562796ba92641fd&amp;scene=21#wechat_redirect">基于非期望产出的RAM
+碳环境效率模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247484028&amp;idx=1&amp;sn=54e16f8a31f3d7af2d6a298701196db7&amp;chksm=fd2f044aca588d5c72667248701da28e99188cb726857d0805e9e31a4f6004dd1c14294ef078&amp;scene=21#wechat_redirect">使用遗传算法或NSGA2算法解决多式联运问题</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483999&amp;idx=1&amp;sn=e53ea529a08101c86c1ae1a4f6abb27d&amp;chksm=fd2f0469ca588d7fe68617195fd1aade17903cd5d821c54140eb630df27d0e5fbaeef3354f28&amp;scene=21#wechat_redirect">莫兰指数计算小工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483993&amp;idx=1&amp;sn=30f1d7fbe59e8380b084e0da62f311ee&amp;chksm=fd2f046fca588d79648cafe2bbe7cfac75bdfeb7abfb39ed503e8798b165875e1c1d82d2f7a5&amp;scene=21#wechat_redirect">Panda_DEA增加至强有效前沿最近距离-MinDS模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483984&amp;idx=1&amp;sn=d54bb58a4c4cd15437232eb0747d89e8&amp;chksm=fd2f0466ca588d702b8cab63ef061ffcec2f851f60ac537f26420cf9fa216d6f5d39c1f6768c&amp;scene=21#wechat_redirect">QLab增加耦合协调度模型</a><strong>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483976&amp;idx=1&amp;sn=d1d02cd8ab9133fb0209cde77076d4be&amp;chksm=fd2f047eca588d68204016e1d2bb2a0d482a9916d115ac3daec228f7ce20a8a3442f198f7323&amp;scene=21#wechat_redirect">广义SBM模型的matlab代码</a><strong>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483935&amp;idx=1&amp;sn=53b59c1fce81c886f42f3a3539f83b0b&amp;chksm=fd2f0429ca588d3f880a3302adbf42834abf7adaaa3ff66e9db6e6e03b3a0883592d0c1de8b1&amp;scene=21#wechat_redirect">QLab1.4正式发布！增加全排列多边形图示指标法</a><strong>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483924&amp;idx=1&amp;sn=ff0565b5c751c701627e1bb6ed39a307&amp;chksm=fd2f0422ca588d34eb68bfdca08b214d7f184f1996215ddc31aff11d80e85c7de56b6ded4fa4&amp;scene=21#wechat_redirect">大量数据时的Dagum基尼系数分解工具</a><strong>
+</strong></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483908&amp;idx=1&amp;sn=c3410d846b17c7a4ab86d87b9aabaf71&amp;chksm=fd2f0432ca588d24cc6ef2bb3a27a77f5f2776d20ea6daf764179c99580345f4de27bb10b51e&amp;scene=21#wechat_redirect">Panda-DEA_1.0正式发布！</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483878&amp;idx=1&amp;sn=2e676de5f515492757ebdd5c051162e0&amp;chksm=fd2f07d0ca588ec6bf1fcf1608d4b16352dc4368c0b3d6d3f2d830a403a0275c5348c849293c&amp;scene=21#wechat_redirect">含有非期望产出的ZSG-DEA模型</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483868&amp;idx=1&amp;sn=14e07f2cc9b1efaa655106faddda05fa&amp;chksm=fd2f07eaca588efc30d9f126d8f1a423e50df54bb6674cb2b4da774b3636783f2961b1d7d344&amp;scene=21#wechat_redirect">两阶段网络DEA模型及其计算</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483857&amp;idx=1&amp;sn=092e4b0ce69579777b19b06c9e2e8d59&amp;chksm=fd2f07e7ca588ef185aac309159929a3a2bacf868c39175dbe3ff103722d0e01525ec74248e6&amp;scene=21#wechat_redirect">Panda-DEA，一款新的DEA模型软件</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483847&amp;idx=1&amp;sn=e581c0d77fd4d7cb2a7f226adb0d033c&amp;chksm=fd2f07f1ca588ee7a4f5e15aef18444d75d6da8f740f66ca52a49e657548801305c34e34f9ec&amp;scene=21#wechat_redirect">DKM_1.3更新---CCM收敛交叉映射</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483827&amp;idx=1&amp;sn=8554eda1a7595d2ec83612dc030e9baa&amp;chksm=fd2f0785ca588e930a3b101f008ad9ab520163beb250bd903c9e4e0e775c4f74b3310e321c3a&amp;scene=21#wechat_redirect">DKM_1.2:两阶段嵌套泰尔指数工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483817&amp;idx=1&amp;sn=612d8555d743b4274ca7e50f9912e1b7&amp;chksm=fd2f079fca588e89f5babb27b4bb880bbafd563829e35534eb2d13edb8e7efe022b892982f2d&amp;scene=21#wechat_redirect">DKM_1.1--新增熵值法功能</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483808&amp;idx=1&amp;sn=46e213b0e0a16c4d03901f91eb256353&amp;chksm=fd2f0796ca588e80e60d267fd2fecadf727e81c119b11abcd3685ec8f0ce5aca1603930a2f65&amp;scene=21#wechat_redirect">数量经济学工具DKM_1.0</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483801&amp;idx=1&amp;sn=be569284186256129d00223bf162e951&amp;chksm=fd2f07afca588eb925b3e1261948238a22df35cc3427973d148dbf9644b46465a99c49143c7b&amp;scene=21#wechat_redirect">空间马尔科夫链工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483791&amp;idx=1&amp;sn=405dfd42be6387db6f56cb5a53d8885f&amp;chksm=fd2f07b9ca588eafc2ca9779ea9e31efab5cae00646fc15d4b2992f06ccdd008c15384ae0a12&amp;scene=21#wechat_redirect">空间静态kernel核密度、空间动态kernel核密度工具更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483786&amp;idx=1&amp;sn=cafde88006a876e27883749094e2149f&amp;chksm=fd2f07bcca588eaa8d167c20fe37e2b02cccc65fa035e089ee5a482d611312273606713ddb79&amp;scene=21#wechat_redirect">马尔科夫链之传统马尔可夫链</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483778&amp;idx=1&amp;sn=096c3ae6529666292103c4b051efc16d&amp;chksm=fd2f07b4ca588ea2ef52f3571ad29654d32d44db873819380ee0ebd0e35ea00d3c23cdbd0e6c&amp;scene=21#wechat_redirect">Dagum基尼系数分解工具更新</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483773&amp;idx=1&amp;sn=926665b79c22fe5c0deffbb1f32191bc&amp;chksm=fd2f074bca588e5deed9f46c29686be25759ad21413c31900f20a8f75ec75134e40e260836fc&amp;scene=21#wechat_redirect">无条件、空间静态、空间动态kernel核密度工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483762&amp;idx=1&amp;sn=8cfe17735470d3a4bc8e42f0d616cbcf&amp;chksm=fd2f0744ca588e52e0270ca460811ad724c3896ae58ff3d26272442d8c836be7abed4546fec7&amp;scene=21#wechat_redirect">基于共同前沿下含非期望产出SBM模型的影子价格测算</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483757&amp;idx=1&amp;sn=52b653c647cde10deea4e48410aa43f2&amp;chksm=fd2f075bca588e4d4a2ac8ca5f70c85e85ed69ff2466a03c7cd45d099ffa42b5c0f31a5b0860&amp;scene=21#wechat_redirect">基于非期望产出SBM模型的群组前沿和共同前沿的DEA效率</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483747&amp;idx=1&amp;sn=45321676f283e782319cbcdaa31fd1ae&amp;chksm=fd2f0755ca588e43e1c0aa25fe1cf0c7fdcef17398d4beb28b41a336553ad587c76f8ede94f2&amp;scene=21#wechat_redirect">零和收益ZSG-DEA模型的求解程序</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483737&amp;idx=1&amp;sn=b22ace1dec3db5a3985f64091af1c33f&amp;chksm=fd2f076fca588e797e154566fc15525fc1844d8b1e25b8e8283ce6f99baebe03f877c418b7a3&amp;scene=21#wechat_redirect">三阶嵌套泰尔指数计算工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483728&amp;idx=1&amp;sn=703a49585627131782a77f51834e60dd&amp;chksm=fd2f0766ca588e700bef7117ca0a75937e1795819203f0dc02bfdd74b767b3747bbf263b6085&amp;scene=21#wechat_redirect">dagum基尼系数分解工具</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3NDcwNjUyMQ==&amp;mid=2247483714&amp;idx=1&amp;sn=8c5d4b6011d0b158f5c6dcf19c22752e&amp;chksm=fd2f0774ca588e62afe9e03a7fdf98220eaf41a0cfd6a55510b00abc09639c358326375f51a5&amp;scene=21#wechat_redirect">《机构投资者抱团与股价崩盘风险》数据处理代码</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/">http://gongju128.github.io/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BF/">非平衡面板</a></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/" title="Shapley方法测算DEA模型变量重要性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Shapley方法测算DEA模型变量重要性</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/29/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-2024-09-30%E5%A4%8D%E5%90%88%E7%B3%BB%E7%BB%9F%E6%8E%A8%E6%96%87/" title="复合系统协调度工具"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">复合系统协调度工具</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">103</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%A1%A82-%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BF%E6%95%B0%E6%8D%AE%E5%92%8C%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BF%E6%95%B0%E6%8D%AE%E4%B8%8B%E5%90%84%E5%86%B3%E7%AD%96%E5%8D%95%E5%85%83%E7%9A%84%E5%85%A8%E8%A6%81%E7%B4%A0%E7%94%9F%E4%BA%A7%E7%8E%87%E6%B5%8B%E7%AE%97%E7%BB%93%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">表2
+平衡面板数据和非平衡面板数据下各决策单元的全要素生产率测算结果</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/31/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-DO%E6%8C%87%E6%95%B0GPU%E7%89%88%E6%9C%AC/" title="大指数下DO指数模型计算优化">大指数下DO指数模型计算优化</a><time datetime="2025-05-31T12:21:29.000Z" title="发表于 2025-05-31 20:21:29">2025-05-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/20/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-EBM%E6%8E%A8%E6%96%87/" title="含有非期望产出EBM及其改进模型">含有非期望产出EBM及其改进模型</a><time datetime="2024-11-20T14:28:29.000Z" title="发表于 2024-11-20 22:28:29">2024-11-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/05/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E4%B8%AD%E7%AB%8B%E6%80%A7DEA%E4%BA%A4%E5%8F%89%E6%95%88%E7%8E%87%E8%AF%84%E4%BB%B7%E6%96%B9%E6%B3%95/" title="中立性DEA交叉效率评价方法">中立性DEA交叉效率评价方法</a><time datetime="2024-11-05T05:51:29.000Z" title="发表于 2024-11-05 13:51:29">2024-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/18/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E5%8F%98%E9%87%8F%E8%B4%A1%E7%8C%AE%E5%BA%A6shapley/" title="Shapley方法测算DEA模型变量重要性">Shapley方法测算DEA模型变量重要性</a><time datetime="2024-10-18T05:58:29.000Z" title="发表于 2024-10-18 13:58:29">2024-10-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/17/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E-%E9%9D%9E%E5%B9%B3%E8%A1%A1%E9%9D%A2%E6%9D%BFMalquist%E6%8C%87%E6%95%B0%E8%AE%A1%E7%AE%97%E5%B7%A5%E5%85%B72024-10-17/" title="非平衡面板Malquist指数计算工具">非平衡面板Malquist指数计算工具</a><time datetime="2024-10-17T05:58:29.000Z" title="发表于 2024-10-17 13:58:29">2024-10-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2025  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
