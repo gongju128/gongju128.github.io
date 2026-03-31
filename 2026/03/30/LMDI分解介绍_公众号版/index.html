@@ -1,0 +1,557 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？ | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="介绍 LMDI 分解模型的基本思想、适用场景、方法优势，以及 PyLMDI 软件的特点和使用方式，适合作为公众号发布稿。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？">
+<meta property="og:url" content="http://gongju128.github.io/2026/03/30/LMDI%E5%88%86%E8%A7%A3%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/index.html">
+<meta property="og:site_name" content="工具视界">
+<meta property="og:description" content="介绍 LMDI 分解模型的基本思想、适用场景、方法优势，以及 PyLMDI 软件的特点和使用方式，适合作为公众号发布稿。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
+<meta property="article:published_time" content="2026-03-30T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-30T14:28:18.489Z">
+<meta property="article:author" content="任公子">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="LMDI">
+<meta property="article:tag" content="指数分解分析">
+<meta property="article:tag" content="能源经济">
+<meta property="article:tag" content="碳排放分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://gongju128.github.io/img/zhuang.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://gongju128.github.io/2026/03/30/LMDI%E5%88%86%E8%A7%A3%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-30 22:28:18'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">97</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">137</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-30T00:00:00.000Z" title="发表于 2026-03-30 08:00:00">2026-03-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-30T14:28:18.489Z" title="更新于 2026-03-30 22:28:18">2026-03-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/LMDI%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D/">LMDI模型介绍</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1
+id="lmdi分解模型介绍为什么很多能源与碳排放研究都在用它">LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？</h1>
+<h2
+id="一为什么很多总量变化分析最后只看到了结果却看不清原因">一、为什么很多“总量变化分析”，最后只看到了结果，却看不清原因？</h2>
+<p>在很多研究和项目里，我们经常会遇到这样一种问题：</p>
+<ul>
+<li>能源消费为什么变了？</li>
+<li>碳排放为什么上升了或者下降了？</li>
+<li>产出增长背后，到底是效率改善在起作用，还是结构变化在起作用？</li>
+<li>同样是总量变化，不同因素各自贡献了多少？</li>
+</ul>
+<p>如果只看期初和期末的总量差异，我们当然能知道“变了多少”，但往往很难进一步回答：</p>
+<blockquote>
+<p><strong>这部分变化，究竟是谁造成的？</strong></p>
+</blockquote>
+<p>这正是分解分析方法存在的意义。</p>
+<p>而在众多分解方法里，<strong>LMDI（Logarithmic Mean Divisia
+Index，对数平均迪氏指数分解）</strong>之所以被广泛使用，一个很重要的原因就在于：</p>
+<blockquote>
+<p><strong>它不仅能把总变化拆解到各个驱动因素上，而且分解结果通常更稳定、解释也更清晰。</strong></p>
+</blockquote>
+<p>所以在能源、环境、碳排放、产业结构、技术进步等研究里，LMDI
+一直都是非常常见的一类工具。</p>
+<hr />
+<h2 id="二lmdi-到底是在解决什么问题">二、LMDI
+到底是在解决什么问题？</h2>
+<p>如果用一句话来概括，LMDI 解决的是这样一类问题：</p>
+<blockquote>
+<p><strong>当一个指标在两个时期之间发生变化时，如何把这种变化合理分解为若干驱动因素的贡献。</strong></p>
+</blockquote>
+<p>比如说，一个指标 <code>V</code>
+的变化，可能同时受到以下因素影响：</p>
+<ul>
+<li>人口规模变化；</li>
+<li>经济活动水平变化；</li>
+<li>产业结构变化；</li>
+<li>能源强度变化；</li>
+<li>碳排放系数变化。</li>
+</ul>
+<p>这时候，研究者通常并不满足于只知道“最终变了多少”，而是更关心：</p>
+<ul>
+<li>哪个因素是主要驱动力；</li>
+<li>哪个因素起到了抑制作用；</li>
+<li>各因素贡献是否可以相加、是否容易解释；</li>
+<li>结果能不能直接写进论文、报告或决策分析中。</li>
+</ul>
+<p>LMDI 的作用，就是把这件事做得更规范。</p>
+<p>从代码实现上看，这个项目里的 PyLMDI，核心输入包括：</p>
+<ul>
+<li>基准期指标值 <code>V0</code></li>
+<li>报告期指标值 <code>Vt</code></li>
+<li>基准期各驱动因子 <code>X0</code></li>
+<li>报告期各驱动因子 <code>Xt</code></li>
+</ul>
+<p>然后输出两类结果：</p>
+<ol type="1">
+<li><strong>Additive decomposition（加法分解）</strong></li>
+<li><strong>Multiplicative decomposition（乘法分解）</strong></li>
+</ol>
+<p>也就是说，它既可以告诉你“每个因素贡献了多少绝对变化量”，也可以告诉你“每个因素带来了多大的相对变化倍数”。</p>
+<hr />
+<h2 id="三为什么-lmdi-这个方法值得关注">三、为什么 LMDI
+这个方法值得关注？</h2>
+<p>我觉得，LMDI 之所以常用，至少有四个很实际的原因。</p>
+<h3 id="它特别适合回答变化从哪里来">1）它特别适合回答“变化从哪里来”</h3>
+<p>很多统计分析更擅长描述状态，比如谁高谁低、谁多谁少。</p>
+<p>但一旦进入“变化分析”，问题就不一样了。</p>
+<p>因为管理者和研究者真正关心的，往往不是某个时点的数据本身，而是：</p>
+<ul>
+<li>为什么变了；</li>
+<li>是哪些因素共同推动了变化；</li>
+<li>哪些因素在拉高，哪些因素在拉低。</li>
+</ul>
+<p>LMDI
+的价值，恰恰就在于它能够把总变化进一步拆开，让结果更接近分析和解释的需要。</p>
+<h3
+id="它的结果形式很适合论文和报告表达">2）它的结果形式很适合论文和报告表达</h3>
+<p>LMDI 的输出通常非常适合直接展示。</p>
+<p>比如你可以清楚地写出：</p>
+<ul>
+<li>经济规模因素贡献了多少；</li>
+<li>结构因素贡献了多少；</li>
+<li>强度因素抵消了多少增长；</li>
+<li>最终各项贡献加总后，正好对应总变化。</li>
+</ul>
+<p>这种表达方式，不管是做学术论文，还是做项目汇报、政策分析、企业研究，都很自然。</p>
+<h3
+id="它既能做加法分解也能做乘法分解">3）它既能做加法分解，也能做乘法分解</h3>
+<p>这也是这个工具的一个重要特点。</p>
+<p>在一些场景里，研究者更习惯看绝对变化量；
+在另一些场景里，又更希望看比率、倍数或相对变化。</p>
+<p>这个工具 同时提供：</p>
+<ul>
+<li><strong>Add</strong>：用于加法分解；</li>
+<li><strong>Mul</strong>：用于乘法分解。</li>
+</ul>
+<p>这样在不同写作口径和分析需求下，就更灵活。</p>
+<h3 id="它适合工具化流程化使用">4）它适合工具化、流程化使用</h3>
+<p>很多方法在论文里看起来很清楚，但一旦落到实际使用上，就会出现两个问题：</p>
+<ul>
+<li>输入格式不统一；</li>
+<li>结果输出不方便复用。</li>
+</ul>
+<p>而这个 PyLMDI 项目已经把基础计算流程整理成了：</p>
+<ul>
+<li>Python 类调用；</li>
+<li>Excel 数据读取；</li>
+<li>GUI 界面操作；</li>
+<li>结果导出 Excel。</li>
+</ul>
+<p>这就意味着，它不只是“能看懂的公式”，而是更接近“能真正拿来用的工具”。</p>
+<hr />
+<h2 id="四pylmdi-这个软件做了什么">四、PyLMDI 这个软件做了什么？</h2>
+<p>从当前项目内容来看，PyLMDI 可以理解为一个面向 LMDI 分解分析的 Python
+工具箱。</p>
+<p>它当前已经实现了几个非常关键的部分：</p>
+<h3 id="核心分解计算模块">1）核心分解计算模块</h3>
+<p>项目中的 <code>PyLMDI.py</code> 提供了核心类
+<code>PyLMDI</code>，主要完成两类计算：</p>
+<ul>
+<li><code>Add()</code>：返回加法分解结果；</li>
+<li><code>Mul()</code>：返回乘法分解结果。</li>
+</ul>
+<p>从实现逻辑看，它基于对数平均函数来计算各因素贡献，并将总量变化与各驱动项变化联系起来。</p>
+<h3 id="可直接上手的-gui-界面">2）可直接上手的 GUI 界面</h3>
+<p>项目中的 <code>gui_app.py</code>
+提供了一个图形界面版本，用户不必手动写代码，也可以完成基础分析流程。</p>
+<p>界面功能包括：</p>
+<ul>
+<li>选择 Excel 文件；</li>
+<li>预览输入数据；</li>
+<li>一键执行 LMDI 计算；</li>
+<li>显示 Additive 结果；</li>
+<li>显示 Multiplicative 结果；</li>
+<li>导出结果到 Excel；</li>
+<li>生成输入模板。</li>
+</ul>
+<p>对于不想直接接触 Python 脚本的用户来说，这一点很实用。</p>
+<h3 id="excel-驱动的数据输入方式">3）Excel 驱动的数据输入方式</h3>
+<p>软件采用了相对清晰的 Excel 输入规则。</p>
+<p>根据当前界面程序，可以确认它要求：</p>
+<ul>
+<li>必须包含 <code>V0</code> 和 <code>Vt</code> 两列；</li>
+<li>驱动因子按成对列命名，例如：<code>P0/Pt</code>、<code>g0/gt</code>、<code>s0/st</code>；</li>
+<li>每一行可以代表一个部门或对象；</li>
+<li>所有值必须为正数。</li>
+</ul>
+<p>这种输入方式的好处在于，上手门槛比较低，也便于后续替换数据。</p>
+<hr />
+<h2
+id="五这个工具有哪些适合实际使用的特点">五、这个工具有哪些适合实际使用的特点？</h2>
+<p>如果从“能不能直接拿来做事”的角度看，我觉得这个工具至少有以下几个特点。</p>
+<h3 id="模型逻辑相对清晰">1）模型逻辑相对清晰</h3>
+<p>对于很多分解分析任务来说，最重要的不是界面有多复杂，而是：</p>
+<ul>
+<li>输入是什么；</li>
+<li>输出是什么；</li>
+<li>因素贡献怎么对应。</li>
+</ul>
+<p>PyLMDI
+在这方面比较直接：输入期初期末值和驱动因子，输出各因素分解结果，逻辑清晰，便于理解。</p>
+<h3
+id="既适合代码调用也适合界面操作">2）既适合代码调用，也适合界面操作</h3>
+<p>有些用户更喜欢在 Python 环境里批量处理数据；
+也有些用户更习惯“打开软件—导入 Excel—点击计算”的方式。</p>
+<p>这个项目两种路径都提供了：</p>
+<ul>
+<li>可以通过脚本调用 <code>PyLMDI</code> 类；</li>
+<li>也可以通过 GUI 完成常规计算。</li>
+</ul>
+<p>这使得它既适合研究人员，也适合日常分析应用。</p>
+<h3 id="结果便于二次整理">3）结果便于二次整理</h3>
+<p>当前 GUI 支持将输入数据、加法分解结果和乘法分解结果导出为 Excel。</p>
+<p>这意味着后续你可以很方便地继续做：</p>
+<ul>
+<li>图表绘制；</li>
+<li>报告整理；</li>
+<li>论文表格制作；</li>
+<li>与其他模型结果联动分析。</li>
+</ul>
+<h3
+id="自带模板思路降低首次使用成本">4）自带模板思路，降低首次使用成本</h3>
+<p>对于很多工具来说，第一次使用最容易卡住的地方，不是计算本身，而是：</p>
+<blockquote>
+<p><strong>数据到底该怎么摆？列名到底该怎么命？</strong></p>
+</blockquote>
+<p>这个项目在 GUI 中提供了模板导出功能，这一点对首次上手非常友好。</p>
+<hr />
+<h2 id="六怎么使用这个软件">六、怎么使用这个软件？</h2>
+<p>如果按当前项目的使用方式来理解，基本流程并不复杂。</p>
+<h3 id="先准备-excel-数据">1）先准备 Excel 数据</h3>
+<p>首先需要整理输入数据表。</p>
+<p>至少包括：</p>
+<ul>
+<li><code>V0</code>：基准期指标值</li>
+<li><code>Vt</code>：报告期指标值</li>
+</ul>
+<p>如果有驱动因子，则按“基准期/报告期”成对命名，例如：</p>
+<ul>
+<li><code>P0</code> / <code>Pt</code></li>
+<li><code>g0</code> / <code>gt</code></li>
+<li><code>s0</code> / <code>st</code></li>
+<li><code>i0</code> / <code>it</code></li>
+</ul>
+<p>如果是一组部门或多个对象的数据，可以一行放一个对象。</p>
+<p>需要注意的是：</p>
+<ul>
+<li>数据必须是数值型；</li>
+<li>不能有缺失；</li>
+<li>不能出现小于等于 0 的值。</li>
+</ul>
+<h3 id="打开-gui选择-excel-文件">2）打开 GUI，选择 Excel 文件</h3>
+<p>在图形界面中选择准备好的 Excel
+文件后，软件会先对输入数据进行读取和预览。</p>
+<p>如果列名不符合要求，或者存在空值、非数值、非正数，程序会给出提示。</p>
+<h3 id="点击计算生成两类结果">3）点击计算，生成两类结果</h3>
+<p>点击“计算”之后，程序会调用 LMDI 模型并输出：</p>
+<ul>
+<li><strong>Additive decomposition 结果</strong></li>
+<li><strong>Multiplicative decomposition 结果</strong></li>
+</ul>
+<p>从界面设计看，结果会直接显示在表格中，便于快速核对。</p>
+<h3 id="导出结果到-excel">4）导出结果到 Excel</h3>
+<p>如果结果符合预期，可以继续导出。</p>
+<p>导出的 Excel 通常包括：</p>
+<ul>
+<li>输入数据表；</li>
+<li>additive 结果表；</li>
+<li>multiplicative 结果表。</li>
+</ul>
+<p>这样后续无论是继续分析，还是整理成图表、报告，都会更方便。</p>
+<h3 id="也可以通过-python-脚本调用">5）也可以通过 Python 脚本调用</h3>
+<p>如果你更习惯代码方式，也可以像示例脚本那样：</p>
+<ol type="1">
+<li>导入 <code>PyLMDI</code>；</li>
+<li>传入 <code>Vt、V0、Xt、X0</code>；</li>
+<li>调用 <code>Add()</code> 和 <code>Mul()</code> 获取结果。</li>
+</ol>
+<p>对于需要批处理、多组数据重复计算的用户，这种方式会更灵活。</p>
+<hr />
+<h2 id="七软件界面截图">七、软件界面截图</h2>
+<p><img
+src="https://github.com/cmyf122/picx-images-hosting/raw/master/image.lwazkvksj.png" /></p>
+<p>建议放置内容：</p>
+<ul>
+<li>Excel 导入界面；</li>
+<li>输入数据预览区；</li>
+<li>Additive / Multiplicative 结果区；</li>
+<li>导出按钮所在位置。</li>
+</ul>
+<p>这样读者一眼就能理解软件是“怎么用”的。</p>
+<hr />
+<h2 id="八这类工具适合哪些人">八、这类工具适合哪些人？</h2>
+<p>如果你属于以下几类需求，这个工具会比较有价值。</p>
+<h3 id="做论文和课题研究的人">1）做论文和课题研究的人</h3>
+<p>如果你正在研究：</p>
+<ul>
+<li>能源消费变化；</li>
+<li>碳排放驱动因素；</li>
+<li>产业结构调整；</li>
+<li>效率改善与结构效应；</li>
+<li>指数分解分析方法；</li>
+</ul>
+<p>那么一套已经封装好的 LMDI
+工具，能明显降低从“看懂方法”到“实际出结果”的成本。</p>
+<h3 id="做数据分析和项目报告的人">2）做数据分析和项目报告的人</h3>
+<p>很多项目需要的不是复杂炫技，而是：</p>
+<ul>
+<li>数据能顺利导入；</li>
+<li>结果能快速生成；</li>
+<li>输出能直接进报告；</li>
+<li>方法解释相对规范。</li>
+</ul>
+<p>在这种场景下，LMDI 这种结构清晰、输出明确的工具就很合适。</p>
+<h3 id="想把方法进一步工具化的人">3）想把方法进一步工具化的人</h3>
+<p>如果后续你还希望把 LMDI 嵌入：</p>
+<ul>
+<li>内部分析流程；</li>
+<li>小型评价系统；</li>
+<li>自动化报表；</li>
+<li>教学演示工具；</li>
+</ul>
+<p>那么这个项目现有的 Python + GUI + Excel
+输入输出框架，也很适合作为继续扩展的基础。</p>
+<hr />
+<h2
+id="九为什么把方法做成可用软件本身就很有价值">九、为什么“把方法做成可用软件”本身就很有价值？</h2>
+<p>很多时候，真正拉开差距的，并不是“有没有听说过这个模型”，而是：</p>
+<blockquote>
+<p><strong>能不能把模型稳定地用起来。</strong></p>
+</blockquote>
+<p>因为从论文里的方法，到实际可交付、可复用、可解释的分析工具，中间往往隔着很多细节：</p>
+<ul>
+<li>数据格式怎么统一；</li>
+<li>输入规则怎么控制；</li>
+<li>错误怎么提示；</li>
+<li>结果怎么导出；</li>
+<li>后续怎么复用到不同任务里。</li>
+</ul>
+<p>而一旦这些问题被整理成一个可运行的软件流程，方法才真正从“概念”变成了“工具”。</p>
+<p>这也是为什么我一直觉得，像 PyLMDI
+这样的项目，价值不只在于公式本身，更在于它把 LMDI
+从理论方法进一步推进到了可直接使用的实现层面。</p>
+<hr />
+<p>如果你平时做的正好是：</p>
+<ul>
+<li>能源经济与碳排放研究；</li>
+<li>指数分解分析；</li>
+<li>结构变化驱动分析；</li>
+<li>模型工具开发与交付；</li>
+</ul>
+<p>那么 LMDI 确实是一个非常值得放进工具箱的方法。</p>
+<p>如果有需要，请联系微信<strong>canglang12002</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2026/03/30/LMDI%E5%88%86%E8%A7%A3%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/">http://gongju128.github.io/2026/03/30/LMDI%E5%88%86%E8%A7%A3%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/LMDI/">LMDI</a><a class="post-meta__tags" href="/tags/%E6%8C%87%E6%95%B0%E5%88%86%E8%A7%A3%E5%88%86%E6%9E%90/">指数分解分析</a><a class="post-meta__tags" href="/tags/%E8%83%BD%E6%BA%90%E7%BB%8F%E6%B5%8E/">能源经济</a><a class="post-meta__tags" href="/tags/%E7%A2%B3%E6%8E%92%E6%94%BE%E5%88%86%E6%9E%90/">碳排放分析</a></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/03/27/%E5%8F%8C%E8%BE%B9%E7%95%8C%E7%BD%91%E7%BB%9CDEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="双边界网络DEA模型复现介绍：为什么它更适合评估供应链的可持续效率？"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">双边界网络DEA模型复现介绍：为什么它更适合评估供应链的可持续效率？</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/11/30/LISA%E5%88%86%E6%9E%90%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C_%E7%AE%80%E5%8C%96%E7%89%88/" title="LISA 空间自相关分析系统 v2.0 - 完整用户手册"><img class="cover" src="https://github.com/cmyf122/picx-images-hosting/raw/master/image.64eanu34r0.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-30</div><div class="title">LISA 空间自相关分析系统 v2.0 - 完整用户手册</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">97</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">137</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#lmdi%E5%88%86%E8%A7%A3%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E5%A4%9A%E8%83%BD%E6%BA%90%E4%B8%8E%E7%A2%B3%E6%8E%92%E6%94%BE%E7%A0%94%E7%A9%B6%E9%83%BD%E5%9C%A8%E7%94%A8%E5%AE%83"><span class="toc-number">1.</span> <span class="toc-text">LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E5%A4%9A%E6%80%BB%E9%87%8F%E5%8F%98%E5%8C%96%E5%88%86%E6%9E%90%E6%9C%80%E5%90%8E%E5%8F%AA%E7%9C%8B%E5%88%B0%E4%BA%86%E7%BB%93%E6%9E%9C%E5%8D%B4%E7%9C%8B%E4%B8%8D%E6%B8%85%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">一、为什么很多“总量变化分析”，最后只看到了结果，却看不清原因？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8Clmdi-%E5%88%B0%E5%BA%95%E6%98%AF%E5%9C%A8%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">二、LMDI
+到底是在解决什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%BA%E4%BB%80%E4%B9%88-lmdi-%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8"><span class="toc-number">1.3.</span> <span class="toc-text">三、为什么 LMDI
+这个方法值得关注？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E7%89%B9%E5%88%AB%E9%80%82%E5%90%88%E5%9B%9E%E7%AD%94%E5%8F%98%E5%8C%96%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5"><span class="toc-number">1.3.1.</span> <span class="toc-text">1）它特别适合回答“变化从哪里来”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E7%9A%84%E7%BB%93%E6%9E%9C%E5%BD%A2%E5%BC%8F%E5%BE%88%E9%80%82%E5%90%88%E8%AE%BA%E6%96%87%E5%92%8C%E6%8A%A5%E5%91%8A%E8%A1%A8%E8%BE%BE"><span class="toc-number">1.3.2.</span> <span class="toc-text">2）它的结果形式很适合论文和报告表达</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E6%97%A2%E8%83%BD%E5%81%9A%E5%8A%A0%E6%B3%95%E5%88%86%E8%A7%A3%E4%B9%9F%E8%83%BD%E5%81%9A%E4%B9%98%E6%B3%95%E5%88%86%E8%A7%A3"><span class="toc-number">1.3.3.</span> <span class="toc-text">3）它既能做加法分解，也能做乘法分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E9%80%82%E5%90%88%E5%B7%A5%E5%85%B7%E5%8C%96%E6%B5%81%E7%A8%8B%E5%8C%96%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.4.</span> <span class="toc-text">4）它适合工具化、流程化使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9Bpylmdi-%E8%BF%99%E4%B8%AA%E8%BD%AF%E4%BB%B6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.4.</span> <span class="toc-text">四、PyLMDI 这个软件做了什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%88%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%9D%97"><span class="toc-number">1.4.1.</span> <span class="toc-text">1）核心分解计算模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%9B%B4%E6%8E%A5%E4%B8%8A%E6%89%8B%E7%9A%84-gui-%E7%95%8C%E9%9D%A2"><span class="toc-number">1.4.2.</span> <span class="toc-text">2）可直接上手的 GUI 界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#excel-%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">1.4.3.</span> <span class="toc-text">3）Excel 驱动的数据输入方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E8%BF%99%E4%B8%AA%E5%B7%A5%E5%85%B7%E6%9C%89%E5%93%AA%E4%BA%9B%E9%80%82%E5%90%88%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">1.5.</span> <span class="toc-text">五、这个工具有哪些适合实际使用的特点？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%BB%E8%BE%91%E7%9B%B8%E5%AF%B9%E6%B8%85%E6%99%B0"><span class="toc-number">1.5.1.</span> <span class="toc-text">1）模型逻辑相对清晰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A2%E9%80%82%E5%90%88%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8%E4%B9%9F%E9%80%82%E5%90%88%E7%95%8C%E9%9D%A2%E6%93%8D%E4%BD%9C"><span class="toc-number">1.5.2.</span> <span class="toc-text">2）既适合代码调用，也适合界面操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E4%BE%BF%E4%BA%8E%E4%BA%8C%E6%AC%A1%E6%95%B4%E7%90%86"><span class="toc-number">1.5.3.</span> <span class="toc-text">3）结果便于二次整理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%B8%A6%E6%A8%A1%E6%9D%BF%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8E%E9%A6%96%E6%AC%A1%E4%BD%BF%E7%94%A8%E6%88%90%E6%9C%AC"><span class="toc-number">1.5.4.</span> <span class="toc-text">4）自带模板思路，降低首次使用成本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8%E8%BF%99%E4%B8%AA%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">六、怎么使用这个软件？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E5%87%86%E5%A4%87-excel-%E6%95%B0%E6%8D%AE"><span class="toc-number">1.6.1.</span> <span class="toc-text">1）先准备 Excel 数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80-gui%E9%80%89%E6%8B%A9-excel-%E6%96%87%E4%BB%B6"><span class="toc-number">1.6.2.</span> <span class="toc-text">2）打开 GUI，选择 Excel 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E8%AE%A1%E7%AE%97%E7%94%9F%E6%88%90%E4%B8%A4%E7%B1%BB%E7%BB%93%E6%9E%9C"><span class="toc-number">1.6.3.</span> <span class="toc-text">3）点击计算，生成两类结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E7%BB%93%E6%9E%9C%E5%88%B0-excel"><span class="toc-number">1.6.4.</span> <span class="toc-text">4）导出结果到 Excel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%9F%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87-python-%E8%84%9A%E6%9C%AC%E8%B0%83%E7%94%A8"><span class="toc-number">1.6.5.</span> <span class="toc-text">5）也可以通过 Python 脚本调用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E8%BD%AF%E4%BB%B6%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE"><span class="toc-number">1.7.</span> <span class="toc-text">七、软件界面截图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E8%BF%99%E7%B1%BB%E5%B7%A5%E5%85%B7%E9%80%82%E5%90%88%E5%93%AA%E4%BA%9B%E4%BA%BA"><span class="toc-number">1.8.</span> <span class="toc-text">八、这类工具适合哪些人？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9A%E8%AE%BA%E6%96%87%E5%92%8C%E8%AF%BE%E9%A2%98%E7%A0%94%E7%A9%B6%E7%9A%84%E4%BA%BA"><span class="toc-number">1.8.1.</span> <span class="toc-text">1）做论文和课题研究的人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%92%8C%E9%A1%B9%E7%9B%AE%E6%8A%A5%E5%91%8A%E7%9A%84%E4%BA%BA"><span class="toc-number">1.8.2.</span> <span class="toc-text">2）做数据分析和项目报告的人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%B3%E6%8A%8A%E6%96%B9%E6%B3%95%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%B7%A5%E5%85%B7%E5%8C%96%E7%9A%84%E4%BA%BA"><span class="toc-number">1.8.3.</span> <span class="toc-text">3）想把方法进一步工具化的人</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8A%8A%E6%96%B9%E6%B3%95%E5%81%9A%E6%88%90%E5%8F%AF%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%9C%AC%E8%BA%AB%E5%B0%B1%E5%BE%88%E6%9C%89%E4%BB%B7%E5%80%BC"><span class="toc-number">1.9.</span> <span class="toc-text">九、为什么“把方法做成可用软件”本身就很有价值？</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/30/LMDI%E5%88%86%E8%A7%A3%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？">LMDI分解模型介绍：为什么很多能源与碳排放研究都在用它？</a><time datetime="2026-03-30T00:00:00.000Z" title="发表于 2026-03-30 08:00:00">2026-03-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/27/%E5%8F%8C%E8%BE%B9%E7%95%8C%E7%BD%91%E7%BB%9CDEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="双边界网络DEA模型复现介绍：为什么它更适合评估供应链的可持续效率？">双边界网络DEA模型复现介绍：为什么它更适合评估供应链的可持续效率？</a><time datetime="2026-03-27T00:00:00.000Z" title="发表于 2026-03-27 08:00:00">2026-03-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/26/%E7%BA%B5%E6%A8%AA%E5%90%91%E6%8B%89%E5%BC%80%E6%A1%A3%E6%AC%A1%E6%B3%95%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="动态综合评价模型复现介绍：为什么‘纵横向拉开档次法’更适合做连续年份评价？">动态综合评价模型复现介绍：为什么‘纵横向拉开档次法’更适合做连续年份评价？</a><time datetime="2026-03-26T00:00:00.000Z" title="发表于 2026-03-26 08:00:00">2026-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/G1%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="DEA模型复现介绍：随机双层DEA如何同时做好资源配置、目标设定与效率管理？">DEA模型复现介绍：随机双层DEA如何同时做好资源配置、目标设定与效率管理？</a><time datetime="2026-03-25T00:00:00.000Z" title="发表于 2026-03-25 08:00:00">2026-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/24/MEMR%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="MEMR模型复现介绍：最大熵-最小残差权重法的Julia通用实现">MEMR模型复现介绍：最大熵-最小残差权重法的Julia通用实现</a><time datetime="2026-03-24T00:00:00.000Z" title="发表于 2026-03-24 08:00:00">2026-03-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2026  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'gongju128/gongju128.github.io',
+      'data-repo-id': 'R_kgDOLZkzyw',
+      'data-category-id': 'DIC_kwDOLZkzy84Cdncw',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"mapping":"https://gongju128.github.io","reactions-enabled":1,"input-position":"end"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
