@@ -1,0 +1,826 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HHFS-ORESTE + GRA-DEMATEL 低碳供应链供应商选择模型复现，包含权重、GPS、GGPS、API 对比，以及 B-bar 矩阵披露一致性审计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择">
+<meta property="og:url" content="http://gongju128.github.io/2026/08/23/HHFS_ORESTE_GRA_DEMATEL%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/index.html">
+<meta property="og:site_name" content="工具视界">
+<meta property="og:description" content="HHFS-ORESTE + GRA-DEMATEL 低碳供应链供应商选择模型复现，包含权重、GPS、GGPS、API 对比，以及 B-bar 矩阵披露一致性审计。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
+<meta property="article:published_time" content="2026-08-23T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-23T07:11:54.963Z">
+<meta property="article:author" content="任公子">
+<meta property="article:tag" content="模型复现">
+<meta property="article:tag" content="HHFS">
+<meta property="article:tag" content="ORESTE">
+<meta property="article:tag" content="GRA-DEMATEL">
+<meta property="article:tag" content="多准则决策">
+<meta property="article:tag" content="低碳供应链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://gongju128.github.io/img/zhuang.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://gongju128.github.io/2026/08/23/HHFS_ORESTE_GRA_DEMATEL%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-08-23 15:11:54'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">104</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">165</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-23T00:00:00.000Z" title="发表于 2026-08-23 08:00:00">2026-08-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-23T07:11:54.963Z" title="更新于 2026-08-23 15:11:54">2026-08-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%9A%E5%87%86%E5%88%99%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/">多准则决策模型复现</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1
+id="多源异构模糊决策模型复现介绍hhfs-oreste-gra-dematel-低碳供应链合作伙伴选择">多源异构模糊决策模型复现介绍：HHFS-ORESTE
++ GRA-DEMATEL 低碳供应链合作伙伴选择</h1>
+<h2 id="一论文基本信息">一、论文基本信息</h2>
+<p><strong>论文题目：</strong> <em>Blockchain-driven cooperative
+decision-making for low-carbon supply chain under multi-source
+heterogeneous decision information</em><br />
+<strong>期刊：</strong> <em>Socio-Economic Planning Sciences</em><br />
+<strong>年份：</strong> 2026<br />
+<strong>DOI：</strong> <code>10.1016/j.seps.2026.102555</code><br />
+<strong>文中案例数据位置：</strong> Table 2--Table 8</p>
+<p>这篇文章研究的是区块链驱动低碳供应链合作中的供应商选择问题。</p>
+<p>它面对的不是一张全部由精确数值组成的普通评价表，而是下面这种更接近实际业务的数据环境：</p>
+<ul>
+<li>区块链上的碳排放记录可以给出相对客观的数值；</li>
+<li>供应商提供的信息可能是区间；</li>
+<li>消费者或专家评价可能是模糊语言；</li>
+<li>同一个指标下，决策者还可能存在犹豫，给出多个可能评价。</li>
+</ul>
+<p>论文的核心问题可以概括为：</p>
+<blockquote>
+<p><strong>当供应商评价同时包含精确值、区间值、三角模糊数和犹豫信息时，怎样在保留原始信息结构的基础上确定指标权重，并完成供应商排序？</strong></p>
+</blockquote>
+<hr />
+<h2 id="二这篇文章解决了什么问题">二、这篇文章解决了什么问题？</h2>
+<p>传统供应商选择模型通常默认所有评价都能直接写成一个分数，例如 80
+分、0.75 或 4.2 分。</p>
+<p>但在低碳供应链、ESG
+评价、绿色采购、碳足迹核算等场景中，数据往往不是这样整齐：</p>
+<ul>
+<li>碳排放数据可能来自不同链上记录和不同核算口径；</li>
+<li>碳信息透明度难以精确量化；</li>
+<li>生命周期碳足迹会存在区间波动；</li>
+<li>绿色供应链管理能力常常来自专家语言评价；</li>
+<li>不同来源的信息粒度和表达形式并不相同。</li>
+</ul>
+<p>如果先把这些数据全部粗暴转换成单个数值，虽然计算会更简单，但会丢掉区间、不确定性和犹豫信息。</p>
+<p>论文因此构造了 <strong>HHFS（Hybrid Hesitant Fuzzy
+Set，混合犹豫模糊集）</strong>，将以下三类信息放入同一个计算框架：</p>
+<ol type="1">
+<li>普通犹豫模糊信息；</li>
+<li>区间犹豫模糊信息；</li>
+<li>犹豫三角模糊信息。</li>
+</ol>
+<p>随后，文章将 HHFS 距离、改进 ORESTE 和 GRA-DEMATEL
+组合起来，形成一套从“异构评价信息”到“权重、弱排序、强排序”的完整多准则决策流程。</p>
+<hr />
+<h2 id="三模型的核心思路">三、模型的核心思路</h2>
+<p>这套方法可以理解为三个层次。</p>
+<h3 id="第一步用-hhfs-统一不同形式的评价信息">第一步：用 HHFS
+统一不同形式的评价信息</h3>
+<p>论文中的每个评价单元不一定是一个数，而可能是：</p>
+<ul>
+<li>标量，例如 <code>0.7</code>；</li>
+<li>区间，例如 <code>[0.6, 0.8]</code>；</li>
+<li>三角模糊数，例如 <code>(0.5, 0.7, 0.9)</code>；</li>
+<li>上述信息的多个候选值组成的犹豫集合。</li>
+</ul>
+<p>模型先将这些不同形式统一为三元组结构：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">标量 x            -&gt; (x, x, x)</span><br><span class="line">区间 [l, u]        -&gt; (l, (l + u) / 2, u)</span><br><span class="line">三角数 (l, m, u)   -&gt; (l, m, u)</span><br></pre></td></tr></table></figure>
+<p>对于不同供应商之间犹豫元素数量不一致的情况，再按照论文设定的中性风险偏好规则补齐中间元素。</p>
+<p>这一步的意义在于：</p>
+<blockquote>
+<p><strong>不必在建模前强行把“区间”“语言评价”“多个候选判断”压缩成一个点值。</strong></p>
+</blockquote>
+<h3 id="第二步用改进-gra-dematel-确定指标权重">第二步：用改进
+GRA-DEMATEL 确定指标权重</h3>
+<p>普通 DEMATEL
+往往依赖专家两两判断指标之间的影响关系，指标多时工作量大，也会带来一致性问题。</p>
+<p>本文使用 HHFS Ochiai-Barkman 系数构造指标间的直接关系矩阵
+<code>B</code>，再通过 GRA-DEMATEL 得到总关系矩阵 <code>Q</code>
+和指标权重。</p>
+<p>公式主线是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B -&gt; B-bar -&gt; Q -&gt; 行和/列和 -&gt; 指标权重 w</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><code>B</code>：指标之间的直接关系矩阵；</li>
+<li><code>B-bar</code>：归一化后的直接关系矩阵；</li>
+<li><code>Q</code>：总关系矩阵；</li>
+<li><code>w</code>：考虑指标相互影响后的客观权重。</li>
+</ul>
+<p>与直接指定权重相比，这一部分的优势是：</p>
+<blockquote>
+<p><strong>权重不只是由主观打分决定，而是从供应商的实际异构评价结构中识别指标之间的关系和重要性。</strong></p>
+</blockquote>
+<h3 id="第三步用改进-hhfs-oreste-完成弱排序和强排序">第三步：用改进
+HHFS-ORESTE 完成弱排序和强排序</h3>
+<p>权重得到后，模型使用 HHFS-Canberra
+距离计算每个供应商到正理想解、负理想解的距离。</p>
+<p>然后构造全局偏好得分 <code>GPSF</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPSF = 距离项 + 权重位置项</span><br></pre></td></tr></table></figure>
+<p>这里不是简单地把“离正理想解越近”作为唯一标准，而是同时考虑：</p>
+<ul>
+<li>到正理想解的距离；</li>
+<li>到负理想解的距离；</li>
+<li>当前指标权重；</li>
+<li>最大权重和最小权重的相对位置。</li>
+</ul>
+<p>六个指标的 <code>GPSF</code> 相加得到供应商总分
+<code>GGPS</code>，形成 <strong>弱排序</strong>。</p>
+<p>之后，再计算：</p>
+<ul>
+<li><code>API</code>：平均偏好强度；</li>
+<li><code>NAPI</code>：净偏好强度；</li>
+<li><code>PIR</code>：偏好、无差异、不可比关系结构。</li>
+</ul>
+<p>这一步形成
+<strong>强排序</strong>。它不仅回答“谁排第几”，还回答“两个方案之间到底是显著偏好、近似无差异，还是不可比”。</p>
+<hr />
+<h2 id="四这个方法的优势在哪里">四、这个方法的优势在哪里？</h2>
+<h3 id="能处理真正异构的评价数据">1. 能处理真正异构的评价数据</h3>
+<p>很多模糊决策方法只支持一种信息形式：要么是犹豫模糊数，要么是区间数，要么是三角模糊数。</p>
+<p>HHFS 的优势在于，它允许同一个决策矩阵里同时保留：</p>
+<ul>
+<li>链上可核验的精确记录；</li>
+<li>运营或风险区间；</li>
+<li>消费者和专家的语言评价；</li>
+<li>多人判断不一致带来的犹豫信息。</li>
+</ul>
+<p>因此，它比先统一打分再排序的方式更适合现实业务数据。</p>
+<h3 id="同时考虑指标之间的关系和方案之间的差异">2.
+同时考虑“指标之间的关系”和“方案之间的差异”</h3>
+<p>GRA-DEMATEL
+解决的是指标权重问题，重点在于识别指标间的影响关系；ORESTE
+解决的是方案排序问题，重点在于方案之间的偏好关系。</p>
+<p>二者组合后，模型不会把权重和排序割裂开来：</p>
+<blockquote>
+<p><strong>先识别什么指标更关键，再判断哪个方案更接近理想选择。</strong></p>
+</blockquote>
+<h3 id="不只给出一条简单排名">3. 不只给出一条简单排名</h3>
+<p>普通 TOPSIS、加权求和或单一得分模型通常只能给出：A 排第一，B
+排第二，C 排第三。</p>
+<p>本文还通过 PIR 结构补充强排序，使结果能够区分：</p>
+<ul>
+<li>明确偏好；</li>
+<li>无显著差异；</li>
+<li>不可比关系。</li>
+</ul>
+<p>这对实际采购决策非常重要。两个供应商总分非常接近时，直接强行排序可能会造成“看起来精确，实际上并不稳健”的错觉；强排序可以把这种差别标注出来。</p>
+<h3 id="适合存在信息不完整和主观判断的场景">4.
+适合存在信息不完整和主观判断的场景</h3>
+<p>ORESTE
+本身面向信息有限的多准则决策问题。本文的改进进一步减少了传统排序式
+ORESTE 中的信息损失，并加强了权重在全局偏好得分中的作用。</p>
+<p>因此，这个模型特别适合：</p>
+<ul>
+<li>低碳供应商选择；</li>
+<li>ESG 供应链评价；</li>
+<li>绿色采购与绿色物流合作伙伴筛选；</li>
+<li>区块链溯源下的产品或企业评价；</li>
+<li>智慧制造供应商准入；</li>
+<li>政府绿色项目评审；</li>
+<li>医疗、金融、能源等多源数据不确定性较高的选择问题。</li>
+</ul>
+<hr />
+<h2 id="五案例中评价了什么">五、案例中评价了什么？</h2>
+<p>论文以 7 个候选低碳供应商为例，从 6 个准则进行评价：</p>
+<ol type="1">
+<li><strong>Cri1：碳排放水平</strong>；</li>
+<li><strong>Cri2：碳信息透明度</strong>；</li>
+<li><strong>Cri3：产品碳足迹</strong>；</li>
+<li><strong>Cri4：绿色供应链管理</strong>；</li>
+<li><strong>Cri5：市场竞争力</strong>；</li>
+<li><strong>Cri6：消费者环境反馈</strong>。</li>
+</ol>
+<p>这些准则分别混合使用标量、区间和三角模糊信息，正是 HHFS
+最有价值的应用场景。</p>
+<hr />
+<h2 id="六本次复现做了什么">六、本次复现做了什么？</h2>
+<p>本次基于论文 Table 2--Table 8 的公开案例数据，使用 Python 和 NumPy
+完成了模型计算与逐表核对。</p>
+<p>论文公开了案例决策表、公式和中间结果，但没有附带可下载的作者代码或完整原始业务数据集；文末数据声明为
+<strong>“Data will be made available on
+request”</strong>。因此，本次属于基于公开案例表格的计算复现，而不是对企业原始链上数据的外部验证。</p>
+<p>复现内容包括：</p>
+<ol type="1">
+<li>将 Table 2、Table 3 的 HHFE 单元逐项录入；</li>
+<li>实现 HHFS 的统一三角化、排序和中性风险扩展；</li>
+<li>实现 HHFS-Canberra 距离；</li>
+<li>实现论文公式(9)--(16)的 GPSF、GGPS、API、NAPI 和 PIR 计算；</li>
+<li>实现论文公式(20)--(23)的 GRA-DEMATEL 权重计算；</li>
+<li>录入并核对论文给出的
+<code>B</code>、<code>B-bar</code>、权重、GPS、GGPS、API；</li>
+<li>对“按论文披露中间矩阵续算”和“严格按论文公式从 <code>B</code>
+重算”两条路径分别进行审计。</li>
+</ol>
+<p>这不是只看最终排序是否一致，而是对权重、单指标得分、总分和偏好强度进行逐层复核。</p>
+<hr />
+<h2 id="七按论文披露的-b-bar-续算结果如何">七、按论文披露的 B-bar
+续算，结果如何？</h2>
+<p>论文第 14 页披露了归一化直接关系矩阵
+<code>B-bar</code>。将这张矩阵作为后续 DEMATEL
+输入，可以高度复现论文的权重结果：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">复现权重</th>
+<th style="text-align: right;">论文权重</th>
+<th style="text-align: right;">绝对误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cri1</td>
+<td style="text-align: right;">0.171745</td>
+<td style="text-align: right;">0.171740</td>
+<td style="text-align: right;">0.000005</td>
+</tr>
+<tr>
+<td>Cri2</td>
+<td style="text-align: right;">0.170659</td>
+<td style="text-align: right;">0.170660</td>
+<td style="text-align: right;">0.000001</td>
+</tr>
+<tr>
+<td>Cri3</td>
+<td style="text-align: right;">0.172112</td>
+<td style="text-align: right;">0.172110</td>
+<td style="text-align: right;">0.000002</td>
+</tr>
+<tr>
+<td>Cri4</td>
+<td style="text-align: right;">0.172975</td>
+<td style="text-align: right;">0.172980</td>
+<td style="text-align: right;">0.000005</td>
+</tr>
+<tr>
+<td>Cri5</td>
+<td style="text-align: right;">0.155807</td>
+<td style="text-align: right;">0.155810</td>
+<td style="text-align: right;">0.000003</td>
+</tr>
+<tr>
+<td>Cri6</td>
+<td style="text-align: right;">0.156702</td>
+<td style="text-align: right;">0.156700</td>
+<td style="text-align: right;">0.000002</td>
+</tr>
+</tbody>
+</table>
+<p>最大误差约为 <code>0.000005</code>，即已经对齐到论文打印精度。</p>
+<p>进一步使用论文报告权重计算 ORESTE 部分，得到：</p>
+<table>
+<thead>
+<tr>
+<th>对比项目</th>
+<th style="text-align: right;">平均绝对误差</th>
+<th style="text-align: right;">最大绝对误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPSF（42 个单元）</td>
+<td style="text-align: right;">0.000106</td>
+<td style="text-align: right;">0.000494</td>
+</tr>
+<tr>
+<td>GGPS（7 个供应商）</td>
+<td style="text-align: right;">0.000404</td>
+<td style="text-align: right;">0.000665</td>
+</tr>
+<tr>
+<td>API（7×7 矩阵）</td>
+<td style="text-align: right;">0.000049</td>
+<td style="text-align: right;">0.000256</td>
+</tr>
+</tbody>
+</table>
+<p>复现的 GGPS 和论文结果对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>供应商</th>
+<th style="text-align: right;">复现 GGPS</th>
+<th style="text-align: right;">论文 GGPS</th>
+<th style="text-align: right;">绝对误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sch1</td>
+<td style="text-align: right;">2.859267</td>
+<td style="text-align: right;">2.859300</td>
+<td style="text-align: right;">0.000033</td>
+</tr>
+<tr>
+<td>Sch2</td>
+<td style="text-align: right;">2.773842</td>
+<td style="text-align: right;">2.774300</td>
+<td style="text-align: right;">0.000458</td>
+</tr>
+<tr>
+<td>Sch3</td>
+<td style="text-align: right;">2.817942</td>
+<td style="text-align: right;">2.818600</td>
+<td style="text-align: right;">0.000658</td>
+</tr>
+<tr>
+<td>Sch4</td>
+<td style="text-align: right;">2.766695</td>
+<td style="text-align: right;">2.766500</td>
+<td style="text-align: right;">0.000195</td>
+</tr>
+<tr>
+<td>Sch5</td>
+<td style="text-align: right;">2.838265</td>
+<td style="text-align: right;">2.837600</td>
+<td style="text-align: right;">0.000665</td>
+</tr>
+<tr>
+<td>Sch6</td>
+<td style="text-align: right;">2.823045</td>
+<td style="text-align: right;">2.823700</td>
+<td style="text-align: right;">0.000655</td>
+</tr>
+<tr>
+<td>Sch7</td>
+<td style="text-align: right;">2.703660</td>
+<td style="text-align: right;">2.703500</td>
+<td style="text-align: right;">0.000160</td>
+</tr>
+</tbody>
+</table>
+<p>按 GGPS 从高到低得到的弱排序为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sch1 &gt; Sch5 &gt; Sch6 &gt; Sch3 &gt; Sch2 &gt; Sch4 &gt; Sch7</span><br></pre></td></tr></table></figure>
+<p>这与论文 Table 5 的分数重新排序结果一致。</p>
+<hr />
+<h2 id="八论文中-b-bar-存在什么瑕疵">八、论文中 B-bar
+存在什么瑕疵？</h2>
+<p>这次复现发现，论文的 DEMATEL 中间矩阵披露存在一个需要说明的问题。</p>
+<p>论文公式(20)给出的归一化方式是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B-bar = B / max(最大列和, 最大行和)</span><br></pre></td></tr></table></figure>
+<p>也就是说，<code>B</code> 的每个元素都应除以同一个全局缩放值。</p>
+<p>但是，使用论文公开的原始 <code>B</code> 严格按公式(20)计算，得到的
+<code>B-bar</code> 与论文打印的 <code>B-bar</code> 并不一致：</p>
+<ul>
+<li>前四行的论文 <code>B-bar</code> 大致接近逐行归一化；</li>
+<li>后两行又无法通过同一种逐行归一化或公式(20)从公开 <code>B</code>
+推导出来；</li>
+<li>差异显著超过正常四舍五入误差。</li>
+</ul>
+<p>因此，最严谨的判断是：</p>
+<blockquote>
+<p><strong>论文打印的 <code>B-bar</code>
+与论文公式(20)、以及论文打印的原始 <code>B</code>
+之间存在披露不一致。</strong></p>
+</blockquote>
+<p>可能的原因包括：</p>
+<ol type="1">
+<li><code>B-bar</code> 的表格录入或排版存在误差；</li>
+<li>作者实际使用了未公开的更高精度或不同版本的 <code>B</code>；</li>
+<li>案例计算时采用了与公式(20)不同的归一化过程，但未在文中说明。</li>
+</ol>
+<p>目前公开材料不足以判定具体属于哪一种，但可以确认：这不是一个可以仅用“显示小数位不同”解释的问题。</p>
+<p>需要强调的是，这个瑕疵位于 <strong>DEMATEL
+中间矩阵的可追溯性</strong>，并不意味着 HHFS-ORESTE 或 GRA-DEMATEL
+的整体方法无效。</p>
+<hr />
+<h2
+id="九严格按论文公式从-b-重算和论文最终结果差多少">九、严格按论文公式从
+B 重算，和论文最终结果差多少？</h2>
+<p>为了区分“复现论文披露的结果”和“严格执行论文公式”，本次还从论文打印的原始
+<code>B</code> 出发，严格按照公式(20)重新计算
+<code>B-bar</code>、权重和后续结果。</p>
+<h3 id="权重会发生可见变化">1. 权重会发生可见变化</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">严格按公式重算</th>
+<th style="text-align: right;">论文披露</th>
+<th style="text-align: right;">绝对差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cri1</td>
+<td style="text-align: right;">0.172208</td>
+<td style="text-align: right;">0.171740</td>
+<td style="text-align: right;">0.000468</td>
+</tr>
+<tr>
+<td>Cri2</td>
+<td style="text-align: right;">0.167979</td>
+<td style="text-align: right;">0.170660</td>
+<td style="text-align: right;">0.002681</td>
+</tr>
+<tr>
+<td>Cri3</td>
+<td style="text-align: right;">0.173937</td>
+<td style="text-align: right;">0.172110</td>
+<td style="text-align: right;">0.001827</td>
+</tr>
+<tr>
+<td>Cri4</td>
+<td style="text-align: right;">0.180221</td>
+<td style="text-align: right;">0.172980</td>
+<td style="text-align: right;">0.007241</td>
+</tr>
+<tr>
+<td>Cri5</td>
+<td style="text-align: right;">0.152581</td>
+<td style="text-align: right;">0.155810</td>
+<td style="text-align: right;">0.003229</td>
+</tr>
+<tr>
+<td>Cri6</td>
+<td style="text-align: right;">0.153073</td>
+<td style="text-align: right;">0.156700</td>
+<td style="text-align: right;">0.003627</td>
+</tr>
+</tbody>
+</table>
+<p>其中 <code>Cri4</code> 的差异最大，约为 <code>0.00724</code>。这说明
+<code>B-bar</code>
+的不一致已经会影响到指标权重，不是完全无关紧要的中间数字问题。</p>
+<h3 id="gps-和-ggps-会产生系统性偏移">2. GPS 和 GGPS
+会产生系统性偏移</h3>
+<p>严格公式路径下：</p>
+<table>
+<thead>
+<tr>
+<th>对比项目</th>
+<th style="text-align: right;">平均绝对误差</th>
+<th style="text-align: right;">最大绝对误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPSF</td>
+<td style="text-align: right;">0.006077</td>
+<td style="text-align: right;">0.011578</td>
+</tr>
+<tr>
+<td>GGPS</td>
+<td style="text-align: right;">0.022883</td>
+<td style="text-align: right;">0.025358</td>
+</tr>
+<tr>
+<td>API</td>
+<td style="text-align: right;">0.000241</td>
+<td style="text-align: right;">0.000763</td>
+</tr>
+</tbody>
+</table>
+<p>严格按公式计算的 GGPS 为：</p>
+<table>
+<thead>
+<tr>
+<th>供应商</th>
+<th style="text-align: right;">严格公式 GGPS</th>
+<th style="text-align: right;">论文 GGPS</th>
+<th style="text-align: right;">绝对差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sch1</td>
+<td style="text-align: right;">2.836609</td>
+<td style="text-align: right;">2.859300</td>
+<td style="text-align: right;">0.022691</td>
+</tr>
+<tr>
+<td>Sch2</td>
+<td style="text-align: right;">2.748942</td>
+<td style="text-align: right;">2.774300</td>
+<td style="text-align: right;">0.025358</td>
+</tr>
+<tr>
+<td>Sch3</td>
+<td style="text-align: right;">2.795716</td>
+<td style="text-align: right;">2.818600</td>
+<td style="text-align: right;">0.022884</td>
+</tr>
+<tr>
+<td>Sch4</td>
+<td style="text-align: right;">2.744777</td>
+<td style="text-align: right;">2.766500</td>
+<td style="text-align: right;">0.021723</td>
+</tr>
+<tr>
+<td>Sch5</td>
+<td style="text-align: right;">2.817556</td>
+<td style="text-align: right;">2.837600</td>
+<td style="text-align: right;">0.020044</td>
+</tr>
+<tr>
+<td>Sch6</td>
+<td style="text-align: right;">2.800279</td>
+<td style="text-align: right;">2.823700</td>
+<td style="text-align: right;">0.023421</td>
+</tr>
+<tr>
+<td>Sch7</td>
+<td style="text-align: right;">2.679439</td>
+<td style="text-align: right;">2.703500</td>
+<td style="text-align: right;">0.024061</td>
+</tr>
+</tbody>
+</table>
+<p>GGPS 的相对差异大约在
+<code>0.7%--0.9%</code>，整体表现为严格公式路径的得分普遍低于论文披露值。</p>
+<h3 id="最终弱排序没有改变">3. 最终弱排序没有改变</h3>
+<p>尽管权重和评分出现了偏移，严格按公式(20)得到的排序仍然是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sch1 &gt; Sch5 &gt; Sch6 &gt; Sch3 &gt; Sch2 &gt; Sch4 &gt; Sch7</span><br></pre></td></tr></table></figure>
+<p>因此可以得到一个很清楚的结论：</p>
+<blockquote>
+<p><strong>B-bar
+披露不一致会影响权重和具体得分，但在本文案例中没有改变最终供应商弱排序。</strong></p>
+</blockquote>
+<hr />
+<h2 id="十当前复现可以下什么结论">十、当前复现可以下什么结论？</h2>
+<p>从“论文案例能否复现”的角度，这篇文章可以给出分层结论：</p>
+<h3 id="结果级复现可以实现">1. 结果级复现：可以实现</h3>
+<p>将论文打印的 <code>B-bar</code> 作为输入，后续权重、GPSF、GGPS、API
+和弱排序均能复现到论文四舍五入精度。</p>
+<h3 id="公式级独立复现存在披露障碍">2. 公式级独立复现：存在披露障碍</h3>
+<p>仅根据论文公开的 <code>B</code> 和公式(20)，无法独立推导出论文打印的
+<code>B-bar</code>。</p>
+<p>因此，论文案例在 DEMATEL 的中间矩阵层面存在可追溯性缺口。</p>
+<h3 id="业务结论当前案例下保持稳定">3. 业务结论：当前案例下保持稳定</h3>
+<p>无论采用论文披露的 <code>B-bar</code>，还是严格按公式从
+<code>B</code> 重算，供应商弱排序都没有改变，首位方案仍是
+<code>Sch1</code>，前列方案仍为
+<code>Sch1</code>、<code>Sch5</code>、<code>Sch6</code>，末位仍为
+<code>Sch7</code>。</p>
+<hr />
+<h2 id="十一这个模型适合谁使用">十一、这个模型适合谁使用？</h2>
+<p>如果你的研究或业务数据具备下面任一特征，这个模型值得考虑：</p>
+<ul>
+<li>数据来自系统记录、问卷、专家判断和用户反馈等多个来源；</li>
+<li>一部分指标有精确值，另一部分只能提供范围或模糊描述；</li>
+<li>需要选择供应商、合作伙伴、项目、设备、方案或服务商；</li>
+<li>不希望过早把不确定信息压缩成一个单点分数；</li>
+<li>需要同时输出权重、总排序和方案之间的偏好关系；</li>
+<li>希望结果具有绿色供应链、ESG、碳管理或区块链溯源方面的应用解释。</li>
+</ul>
+<p>特别是在论文选题中，这套方法具备很强的扩展空间：</p>
+<ul>
+<li>可以替换为你的行业指标；</li>
+<li>可以替换为你的专家评价或问卷数据；</li>
+<li>可以替换 Canberra 距离为 Bray-Curtis、Dice 或 Jaccard 距离；</li>
+<li>可以对 <code>alpha</code>、<code>Q</code>、<code>kappa</code>
+等参数做敏感性分析；</li>
+<li>可以将最终结果扩展为供应商准入、绿色评级、风险预警和采购组合决策。</li>
+</ul>
+<hr />
+<h2 id="十二复现小结">十二、复现小结</h2>
+<p>这篇文章最值得把握的主线，可以概括为一句话：</p>
+<blockquote>
+<p><strong>先用 HHFS 保留多源异构和犹豫信息，再用 GRA-DEMATEL
+从指标关系中确定权重，最后用改进 ORESTE
+完成供应商的弱排序和强排序。</strong></p>
+</blockquote>
+<p>它的真正价值不只是“给出一个排序”，而是解决了现实决策中最常见的困难：</p>
+<ul>
+<li>数据不统一；</li>
+<li>信息不完整；</li>
+<li>专家判断存在犹豫；</li>
+<li>指标权重不能只靠主观指定；</li>
+<li>排名接近时需要判断是否真的存在显著优劣。</li>
+</ul>
+<p>本次复现已经完成 HHFS 标准化、距离、GPSF、GGPS、API/NAPI、PIR 和
+GRA-DEMATEL
+权重计算，并提供了论文披露路径与严格公式路径的双重结果核对。</p>
+<p>同时，复现也明确识别出论文 <code>B-bar</code> 与公式(20)、原始
+<code>B</code> 的披露不一致。这类审计正是模型复现的价值：</p>
+<blockquote>
+<p><strong>不仅看最终结果能否对上，也检查中间计算是否真正可追溯。</strong></p>
+</blockquote>
+<p>如需获取本模型的完整复现代码、原始表格录入、结果对比文件及基于自己数据的模型替换服务，请联系微信
+<strong>canglang12002 任公子</strong>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2026/08/23/HHFS_ORESTE_GRA_DEMATEL%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/">http://gongju128.github.io/2026/08/23/HHFS_ORESTE_GRA_DEMATEL%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/">模型复现</a><a class="post-meta__tags" href="/tags/HHFS/">HHFS</a><a class="post-meta__tags" href="/tags/ORESTE/">ORESTE</a><a class="post-meta__tags" href="/tags/GRA-DEMATEL/">GRA-DEMATEL</a><a class="post-meta__tags" href="/tags/%E5%A4%9A%E5%87%86%E5%88%99%E5%86%B3%E7%AD%96/">多准则决策</a><a class="post-meta__tags" href="/tags/%E4%BD%8E%E7%A2%B3%E4%BE%9B%E5%BA%94%E9%93%BE/">低碳供应链</a></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/04/24/%E5%9B%A0%E6%9E%9C%E6%A3%AE%E6%9E%97%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="因果森林可视化工作台介绍：为什么它比平均效应分析更适合发现异质性影响、识别人群差异与做结果可视化展示"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">因果森林可视化工作台介绍：为什么它比平均效应分析更适合发现异质性影响、识别人群差异与做结果可视化展示</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/03/13/B2_DEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_next%E5%8D%9A%E5%AE%A2%E7%89%88/" title="DEA模型复现介绍：部分集中化资源配置模型（Partial Centralization DEA）"><img class="cover" src="https://github.com/cmyf122/picx-images-hosting/raw/master/image.6m4gfmxddh.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-13</div><div class="title">DEA模型复现介绍：部分集中化资源配置模型（Partial Centralization DEA）</div></div></a></div><div><a href="/2026/03/15/C2_DEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_next%E5%8D%9A%E5%AE%A2%E7%89%88/" title="DEA模型复现介绍：共享权重逆向 DEA 合并分析模型（CSW-Inverse DEA）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-15</div><div class="title">DEA模型复现介绍：共享权重逆向 DEA 合并分析模型（CSW-Inverse DEA）</div></div></a></div><div><a href="/2026/03/24/MEMR%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="MEMR模型复现介绍：最大熵-最小残差权重法的Julia通用实现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-24</div><div class="title">MEMR模型复现介绍：最大熵-最小残差权重法的Julia通用实现</div></div></a></div><div><a href="/2026/03/22/F1%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="DEA模型复现介绍：NEEFDEA with bargaining-based selection 固定总和产出效率评价模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-22</div><div class="title">DEA模型复现介绍：NEEFDEA with bargaining-based selection 固定总和产出效率评价模型</div></div></a></div><div><a href="/2026/03/19/GEEFDEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="DEA模型复现介绍：GEEFDEA固定总和产出效率评价模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-19</div><div class="title">DEA模型复现介绍：GEEFDEA固定总和产出效率评价模型</div></div></a></div><div><a href="/2026/03/25/G1%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="DEA模型复现介绍：随机双层DEA如何同时做好资源配置、目标设定与效率管理？"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-25</div><div class="title">DEA模型复现介绍：随机双层DEA如何同时做好资源配置、目标设定与效率管理？</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">104</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">165</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E6%BA%90%E5%BC%82%E6%9E%84%E6%A8%A1%E7%B3%8A%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8Dhhfs-oreste-gra-dematel-%E4%BD%8E%E7%A2%B3%E4%BE%9B%E5%BA%94%E9%93%BE%E5%90%88%E4%BD%9C%E4%BC%99%E4%BC%B4%E9%80%89%E6%8B%A9"><span class="toc-number">1.</span> <span class="toc-text">多源异构模糊决策模型复现介绍：HHFS-ORESTE
++ GRA-DEMATEL 低碳供应链合作伙伴选择</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%AE%BA%E6%96%87%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">一、论文基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">二、这篇文章解决了什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.</span> <span class="toc-text">三、模型的核心思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E7%94%A8-hhfs-%E7%BB%9F%E4%B8%80%E4%B8%8D%E5%90%8C%E5%BD%A2%E5%BC%8F%E7%9A%84%E8%AF%84%E4%BB%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一步：用 HHFS
+统一不同形式的评价信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%94%A8%E6%94%B9%E8%BF%9B-gra-dematel-%E7%A1%AE%E5%AE%9A%E6%8C%87%E6%A0%87%E6%9D%83%E9%87%8D"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二步：用改进
+GRA-DEMATEL 确定指标权重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E7%94%A8%E6%94%B9%E8%BF%9B-hhfs-oreste-%E5%AE%8C%E6%88%90%E5%BC%B1%E6%8E%92%E5%BA%8F%E5%92%8C%E5%BC%BA%E6%8E%92%E5%BA%8F"><span class="toc-number">1.3.3.</span> <span class="toc-text">第三步：用改进
+HHFS-ORESTE 完成弱排序和强排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E7%9A%84%E4%BC%98%E5%8A%BF%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">1.4.</span> <span class="toc-text">四、这个方法的优势在哪里？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E5%A4%84%E7%90%86%E7%9C%9F%E6%AD%A3%E5%BC%82%E6%9E%84%E7%9A%84%E8%AF%84%E4%BB%B7%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 能处理真正异构的评价数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%97%B6%E8%80%83%E8%99%91%E6%8C%87%E6%A0%87%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E5%92%8C%E6%96%B9%E6%A1%88%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.
+同时考虑“指标之间的关系”和“方案之间的差异”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AA%E7%BB%99%E5%87%BA%E4%B8%80%E6%9D%A1%E7%AE%80%E5%8D%95%E6%8E%92%E5%90%8D"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 不只给出一条简单排名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%AD%98%E5%9C%A8%E4%BF%A1%E6%81%AF%E4%B8%8D%E5%AE%8C%E6%95%B4%E5%92%8C%E4%B8%BB%E8%A7%82%E5%88%A4%E6%96%AD%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.
+适合存在信息不完整和主观判断的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E6%A1%88%E4%BE%8B%E4%B8%AD%E8%AF%84%E4%BB%B7%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.5.</span> <span class="toc-text">五、案例中评价了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E6%9C%AC%E6%AC%A1%E5%A4%8D%E7%8E%B0%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">六、本次复现做了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E6%8C%89%E8%AE%BA%E6%96%87%E6%8A%AB%E9%9C%B2%E7%9A%84-b-bar-%E7%BB%AD%E7%AE%97%E7%BB%93%E6%9E%9C%E5%A6%82%E4%BD%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、按论文披露的 B-bar
+续算，结果如何？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E8%AE%BA%E6%96%87%E4%B8%AD-b-bar-%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E7%91%95%E7%96%B5"><span class="toc-number">1.8.</span> <span class="toc-text">八、论文中 B-bar
+存在什么瑕疵？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E4%B8%A5%E6%A0%BC%E6%8C%89%E8%AE%BA%E6%96%87%E5%85%AC%E5%BC%8F%E4%BB%8E-b-%E9%87%8D%E7%AE%97%E5%92%8C%E8%AE%BA%E6%96%87%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C%E5%B7%AE%E5%A4%9A%E5%B0%91"><span class="toc-number">1.9.</span> <span class="toc-text">九、严格按论文公式从
+B 重算，和论文最终结果差多少？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E4%BC%9A%E5%8F%91%E7%94%9F%E5%8F%AF%E8%A7%81%E5%8F%98%E5%8C%96"><span class="toc-number">1.9.1.</span> <span class="toc-text">1. 权重会发生可见变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gps-%E5%92%8C-ggps-%E4%BC%9A%E4%BA%A7%E7%94%9F%E7%B3%BB%E7%BB%9F%E6%80%A7%E5%81%8F%E7%A7%BB"><span class="toc-number">1.9.2.</span> <span class="toc-text">2. GPS 和 GGPS
+会产生系统性偏移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E5%BC%B1%E6%8E%92%E5%BA%8F%E6%B2%A1%E6%9C%89%E6%94%B9%E5%8F%98"><span class="toc-number">1.9.3.</span> <span class="toc-text">3. 最终弱排序没有改变</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%BD%93%E5%89%8D%E5%A4%8D%E7%8E%B0%E5%8F%AF%E4%BB%A5%E4%B8%8B%E4%BB%80%E4%B9%88%E7%BB%93%E8%AE%BA"><span class="toc-number">1.10.</span> <span class="toc-text">十、当前复现可以下什么结论？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E7%BA%A7%E5%A4%8D%E7%8E%B0%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.10.1.</span> <span class="toc-text">1. 结果级复现：可以实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E5%BC%8F%E7%BA%A7%E7%8B%AC%E7%AB%8B%E5%A4%8D%E7%8E%B0%E5%AD%98%E5%9C%A8%E6%8A%AB%E9%9C%B2%E9%9A%9C%E7%A2%8D"><span class="toc-number">1.10.2.</span> <span class="toc-text">2. 公式级独立复现：存在披露障碍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E7%BB%93%E8%AE%BA%E5%BD%93%E5%89%8D%E6%A1%88%E4%BE%8B%E4%B8%8B%E4%BF%9D%E6%8C%81%E7%A8%B3%E5%AE%9A"><span class="toc-number">1.10.3.</span> <span class="toc-text">3. 业务结论：当前案例下保持稳定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E8%BF%99%E4%B8%AA%E6%A8%A1%E5%9E%8B%E9%80%82%E5%90%88%E8%B0%81%E4%BD%BF%E7%94%A8"><span class="toc-number">1.11.</span> <span class="toc-text">十一、这个模型适合谁使用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E5%A4%8D%E7%8E%B0%E5%B0%8F%E7%BB%93"><span class="toc-number">1.12.</span> <span class="toc-text">十二、复现小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/23/HHFS_ORESTE_GRA_DEMATEL%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择">多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择</a><time datetime="2026-08-23T00:00:00.000Z" title="发表于 2026-08-23 08:00:00">2026-08-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/24/%E5%9B%A0%E6%9E%9C%E6%A3%AE%E6%9E%97%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="因果森林可视化工作台介绍：为什么它比平均效应分析更适合发现异质性影响、识别人群差异与做结果可视化展示">因果森林可视化工作台介绍：为什么它比平均效应分析更适合发现异质性影响、识别人群差异与做结果可视化展示</a><time datetime="2026-04-24T00:00:00.000Z" title="发表于 2026-04-24 08:00:00">2026-04-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/19/%E5%8F%8C%E9%87%8D%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%88%86%E6%9E%90%E5%8F%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="双重机器学习分析台介绍：为什么它比传统回归更适合高维控制、因果识别与经济学实证分析">双重机器学习分析台介绍：为什么它比传统回归更适合高维控制、因果识别与经济学实证分析</a><time datetime="2026-04-19T00:00:00.000Z" title="发表于 2026-04-19 08:00:00">2026-04-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/14/%E5%8D%9A%E5%BC%88%E4%BA%A4%E5%8F%89DEA%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="博弈交叉DEA模型介绍：为什么它比传统交叉效率更稳、更有说服力、更适合高质量评价">博弈交叉DEA模型介绍：为什么它比传统交叉效率更稳、更有说服力、更适合高质量评价</a><time datetime="2026-04-14T00:00:00.000Z" title="发表于 2026-04-14 08:00:00">2026-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/03/RDA%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="RDA分析可视化工具介绍：把排序分析从‘会算’变成‘会看、会讲、会导出’">RDA分析可视化工具介绍：把排序分析从‘会算’变成‘会看、会讲、会导出’</a><time datetime="2026-04-03T00:00:00.000Z" title="发表于 2026-04-03 08:00:00">2026-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2026  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'gongju128/gongju128.github.io',
+      'data-repo-id': 'R_kgDOLZkzyw',
+      'data-category-id': 'DIC_kwDOLZkzy84Cdncw',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"mapping":"https://gongju128.github.io","reactions-enabled":1,"input-position":"end"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
