@@ -1,0 +1,616 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型 | 工具视界</title><meta name="author" content="任公子"><meta name="copyright" content="任公子"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Shannon熵DEA文献复现介绍，简要说明模型思想、六步计算流程、适用场景与 Julia + JuMP 复现结果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型">
+<meta property="og:url" content="http://gongju128.github.io/2026/08/25/Shannon%E7%86%B5DEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="工具视界">
+<meta property="og:description" content="Shannon熵DEA文献复现介绍，简要说明模型思想、六步计算流程、适用场景与 Julia + JuMP 复现结果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://gongju128.github.io/img/zhuang.png">
+<meta property="article:published_time" content="2026-08-25T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-25T13:58:20.460Z">
+<meta property="article:author" content="任公子">
+<meta property="article:tag" content="DEA">
+<meta property="article:tag" content="判别力">
+<meta property="article:tag" content="综合效率得分">
+<meta property="article:tag" content="CES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://gongju128.github.io/img/zhuang.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://gongju128.github.io/2026/08/25/Shannon%E7%86%B5DEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-08-25 21:58:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/zhuang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="工具视界"><span class="site-name">工具视界</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96/"><i class="fa-fw fas fa-asterisk"></i><span> 运筹优化</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="fa-fw fas fa-laptop-code"></i><span> 深度学习</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%95%B0%E5%80%BC%E8%AE%A1%E7%AE%97/"><i class="fa-fw fas fa-pencil-ruler"></i><span> 数值计算</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95/"><i class="fa-fw fas fa-frog"></i><span> 智能算法</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%AE%A1%E9%87%8F%E7%BB%8F%E6%B5%8E/"><i class="fa-fw fas fa-book"></i><span> 计量经济</span></a></div><div class="menus_item"><a class="site-page" href="/categories/R%E8%AF%AD%E8%A8%80/"><i class="fa-fw fab fa-r-project"></i><span> R语言</span></a></div><div class="menus_item"><a class="site-page" href="/categories/QLAB/"><i class="fa-fw fas fa-box"></i><span> QLAB</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-25T00:00:00.000Z" title="发表于 2026-08-25 08:00:00">2026-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-25T13:58:20.460Z" title="更新于 2026-08-25 21:58:20">2026-08-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/DEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/">DEA模型复现</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1
+id="dea模型复现介绍shannon熵提高dea判别力的综合效率评价模型">DEA模型复现介绍：Shannon熵提高DEA判别力的综合效率评价模型</h1>
+<h2 id="一论文基本信息">一、论文基本信息</h2>
+<p><strong>论文题目：</strong> Increasing the Discriminatory Power of
+DEA Using Shannon's Entropy<br />
+<strong>期刊：</strong> <em>Entropy</em><br />
+<strong>年份：</strong> 2014<br />
+<strong>卷期页码：</strong> 16, 1571–1585<br />
+<strong>作者：</strong> Qiwei Xie, Qianzhi Dai, Yongjun Li, An Jiang</p>
+<p>这篇文章讨论的是 DEA 里一个很典型、又有点“两难”的问题：</p>
+<blockquote>
+<p>当变量数量相对于决策单元（DMU）数量过多时，传统 DEA
+的判别力会急剧下降，很多 DMU
+都被判成“有效”，无法区分、无法完整排序。如何在不丢失变量信息的前提下，把判别力提上来？</p>
+</blockquote>
+<p>这正是本文要解决的问题，答案就是——<strong>用 Shannon
+熵做“加权聚合”。</strong></p>
+<hr />
+<h2 id="二这篇文章解决了什么问题">二、这篇文章解决了什么问题？</h2>
+<p>传统 DEA（以 CCR 为例）允许每个 DMU
+在约束下<strong>自由选择对自己最有利的权重</strong>来最大化自身效率。这样带来的副作用是：</p>
+<blockquote>
+<p>变量越多，权重空间的维数越高，越容易有更多 DMU 被判定为有效，DEA
+的“判别力”就越差。</p>
+</blockquote>
+<p>经验法则是：<strong>变量数应小于 DMU 数的
+1/3</strong>。但现实里大量场景（如学校院系、酒店、环保城市、银行等）变量数都明显超过这个比例，导致：</p>
+<ol type="1">
+<li>传统 DEA 结果是“一大片 1”，无法排序；</li>
+<li>只靠单一的全变量模型做判断，风险很大——因为你很难确定究竟该选哪些变量来描述生产过程。</li>
+</ol>
+<p>过去提升判别力的方法主要有两类，但都有局限：</p>
+<ul>
+<li><strong>扩大 DMU
+数量</strong>：用面板数据，但假设了“无技术进步”，实践中常常不成立；</li>
+<li><strong>压缩变量维度</strong>：用
+PCA（主成分分析）或变量缩减（VR）方法，但这会<strong>丢失原始变量信息</strong>，结果也更“不透明”（难以反推每个原始变量的贡献）。</li>
+</ul>
+<p>这篇文章提出 <strong>Shannon熵综合效率
+DEA</strong>，核心改进可以概括为一句话：</p>
+<blockquote>
+<p><strong>把所有可能的变量子组合都拿来算 DEA，再用 Shannon
+熵给每个子组合定权，最后加权得到一个“综合效率得分 CES”。</strong></p>
+</blockquote>
+<p>这样既<strong>不丢任何变量信息</strong>，又显著<strong>提高了判别力</strong>。</p>
+<hr />
+<h2
+id="三shannon熵dea的核心思想与数学模型">三、Shannon熵DEA的核心思想与数学模型</h2>
+<p>设共有 <span class="math inline">\(n\)</span> 个 DMU，每个 DMU 消耗
+<span class="math inline">\(m\)</span> 个投入（输入）、产出 <span
+class="math inline">\(s\)</span>
+个产出（输出）。变量子组合的总数记为：</p>
+<p><span class="math display">\[
+K = (2^m - 1)(2^s - 1)
+\]</span></p>
+<p>理论上一套 DEA 模型至少要有 1 个投入、1 个产出，因此对投入集合 <span
+class="math inline">\(M\)</span> 与产出集合 <span
+class="math inline">\(S\)</span>
+分别取<strong>非空子集</strong>，就能得到 <span
+class="math inline">\(K\)</span> 种组合。对本文的算例（<span
+class="math inline">\(m=3, s=2\)</span>）：</p>
+<p><span class="math display">\[
+K = (2^3 - 1)(2^2 - 1) = 7 \times 3 = 21
+\]</span></p>
+<h3 id="每一个子组合都用-ccr-模型求效率">3.1 每一个子组合都用 CCR
+模型求效率</h3>
+<p>对第 <span class="math inline">\(k\)</span>
+种变量组合，记其对应模型为 <span
+class="math inline">\(\mathcal{M}_k\)</span>，基于<strong>投入导向、规模报酬不变（CRS）</strong>
+的 CCR 模型（本文用乘子模型形式）。被评价的 DMU 记为 <span
+class="math inline">\(d\)</span>，其效率 <span
+class="math inline">\(E_{dk}\)</span> 由下面这个线性规划给出：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\max &amp; \sum_{r=1}^{s} u_r y_{rd} \\
+\text{s.t.} &amp; \sum_{i=1}^{m} v_i x_{id} = 1, \\
+&amp; \sum_{r=1}^{s} u_r y_{rj} - \sum_{i=1}^{m} v_i x_{ij} \le 0, \quad
+j = 1,\dots,n, \\
+&amp; u_r \ge 0, v_i \ge 0, \quad r=1,\dots,s, i=1,\dots,m .
+\end{aligned}
+\]</span></p>
+<p>其中 <span class="math inline">\(u_r\)</span> 是产出权重、<span
+class="math inline">\(v_i\)</span> 是投入权重，<span
+class="math inline">\(x_{ij}\)</span> 与 <span
+class="math inline">\(y_{rj}\)</span> 分别是第 <span
+class="math inline">\(j\)</span> 个 DMU 的第 <span
+class="math inline">\(i\)</span> 个投入与第 <span
+class="math inline">\(r\)</span> 个产出。把 <span
+class="math inline">\(K\)</span> 个子组合各求解一次，就得到一张 <span
+class="math inline">\(n \times K\)</span>
+的<strong>效率矩阵</strong>：</p>
+<p><span class="math display">\[
+E = [E_{jk}]_{n \times K}
+\]</span></p>
+<h3 id="用-shannon-熵给每个子组合定权六步法">3.2 用 Shannon
+熵给每个子组合定权（六步法）</h3>
+<p><strong>Step 1</strong> 求效率矩阵 <span
+class="math inline">\(E\)</span>（即上面 <span
+class="math inline">\(K\)</span> 次 CCR 求解的结果）。</p>
+<p><strong>Step 2</strong> 对每一列做归一化：</p>
+<p><span class="math display">\[
+e_{jk} = \frac{E_{jk}}{\sum_{j=1}^{n} E_{jk}}, \qquad k = 1,\dots,K
+\]</span></p>
+<p><strong>Step 3</strong> 计算第 <span class="math inline">\(k\)</span>
+个子组合的 Shannon 熵：</p>
+<p><span class="math display">\[
+f_k = -\frac{1}{\ln n} \sum_{j=1}^{n} e_{jk} \ln e_{jk}, \qquad k =
+1,\dots,K
+\]</span></p>
+<p><strong>Step 4</strong> 计算差异度（多样化程度）：</p>
+<p><span class="math display">\[
+d_k = 1 - f_k, \qquad k = 1,\dots,K
+\]</span></p>
+<p><strong>Step 5</strong> 归一化得到权重：</p>
+<p><span class="math display">\[
+W_k = \frac{d_k}{\sum_{k=1}^{K} d_k}, \qquad k = 1,\dots,K
+\]</span></p>
+<p>并满足 <span class="math inline">\(\sum_{k=1}^K W_k =
+1\)</span>。</p>
+<p><strong>Step 6</strong> 求综合效率得分：</p>
+<p><span class="math display">\[
+\theta_j = \text{CES}_j = \sum_{k=1}^{K} W_k \cdot E_{jk}, \qquad j =
+1,\dots,n
+\]</span></p>
+<h3 id="两条重要性质定理">3.3 两条重要性质（定理）</h3>
+<blockquote>
+<p><strong>定理 1：</strong> 熵值与“该子集下各 DMU
+效率的差异程度”负相关。若某子集下所有 DMU
+效率都相等，则该子集得到的权重最小。</p>
+</blockquote>
+<blockquote>
+<p><strong>定理 2：</strong> DMU 的 <span
+class="math inline">\(\text{CES}=1\)</span>（综合有效）当且仅当它在<strong>所有</strong>变量子组合下都有效。</p>
+</blockquote>
+<p>定理 2 直接说明了为什么这套方法能提升判别力：某些 DMU
+在一个子集下有效、在另一个子集下无效，那么它的 CES 一定小于
+1。只有当某个 DMU
+在<strong>所有</strong>子集下都有效时，它才是综合有效的。因此在大多数情况下，很难同时出现两个（或更多）综合有效的
+DMU。</p>
+<blockquote>
+<p>注意：这套“加权聚合”框架<strong>并不依赖具体的 DEA
+模型</strong>——既可以是 CRS 也可以是
+VRS，既可以投入导向也可以产出导向。本文算例只是用投入导向
+CRS（CCR-I）来演示。</p>
+</blockquote>
+<hr />
+<h2
+id="四这个模型相比已有方法好在哪">四、这个模型相比已有方法好在哪？</h2>
+<p>如果只讲最值得公众号读者关注的几点，我认为有三点：</p>
+<h3 id="不丢变量信息判别力却更强">1. 不丢变量信息，判别力却更强</h3>
+<p>PCA、变量缩减（VR）这类方法要“砍变量”，会损失信息。这个方法把<strong>所有</strong>变量子组合都纳入，不砍任何一个变量。</p>
+<h3 id="判别力有理论保证">2. 判别力有理论保证</h3>
+<p>由定理 2，传统 DEA 若无法区分两个有效
+DMU，则这套方法<strong>必然也不弱于</strong>它；在很多情况下能给出更明确的排序。</p>
+<h3 id="通用性好可移植性强">3. 通用性好、可移植性强</h3>
+<p>只要能算出效率，就能用这个框架聚合。它不绑定 CRS/VRS
+或投入/产出导向，也能适配含非期望产出等各类 DEA 模型。</p>
+<hr />
+<h2 id="五这篇文章适合哪些应用场景">五、这篇文章适合哪些应用场景？</h2>
+<p>只要存在“变量数相对 DMU 数偏多、传统 DEA
+判别不出排名”的情形，就值得用这套方法。例如：</p>
+<ul>
+<li>用较多指标评价数量较少的对象（如院系、酒店、城市、银行）；</li>
+<li>无法确定该选哪些变量、又不想放弃部分变量信息；</li>
+<li>希望得到<strong>完整、稳定、可横向比较</strong>的排名；</li>
+<li>需要同时兼顾变量信息完整性与评价判别力的评估任务。</li>
+</ul>
+<hr />
+<h2 id="六这次复现做了什么">六、这次复现做了什么？</h2>
+<p>这次我基于论文给出的<strong>例1（简单数据集）</strong>，使用：</p>
+<ul>
+<li><strong>Julia</strong></li>
+<li><strong>JuMP</strong></li>
+<li><strong>GLPK</strong></li>
+</ul>
+<p>完成了文献中的小样例复现。</p>
+<p>复现过程分成三步：</p>
+<ol type="1">
+<li>生成全部 <span class="math inline">\((2^m-1)(2^s-1)=21\)</span>
+种变量子组合；</li>
+<li>对每种组合用<strong>投入导向 CRS(CCR-I)
+乘子模型</strong>求效率，拼成 <span class="math inline">\(n \times
+K\)</span> 效率矩阵；</li>
+<li>按论文六步法计算 Shannon 熵权重 <span
+class="math inline">\(W_k\)</span> 与综合效率得分 <span
+class="math inline">\(\text{CES}_j\)</span>。</li>
+</ol>
+<p>其中有一个很关键的细节：</p>
+<blockquote>
+<p>工作目录里的 <code>matlab.txt</code>
+数据是<strong>错的</strong>（DMU4、DMU5
+的投入/产出值写错）。只有用论文表1的<strong>正确数据</strong>才能对上论文的表2、表3。</p>
+</blockquote>
+<p>也正因为确认了这一点，最终表2、表3 都顺利与论文结果一致。</p>
+<hr />
+<h2 id="七复现结论">七、复现结论</h2>
+<p>本次复现确认：</p>
+<ul>
+<li><strong>表2（全部子组合效率与权重 Wk）可复现</strong>；</li>
+<li><strong>表3（综合效率得分 CES）可复现</strong>；</li>
+<li>论文给出的数据与结果，足以支持 Julia + JuMP 的模型复现。</li>
+</ul>
+<p>从方法理解上看，这篇文章最值得把握的不是某项复杂公式，而是这条主线：</p>
+<blockquote>
+<p><strong>先把所有变量子组合分别用 DEA 算出效率，再用 Shannon
+熵定权，最后加权得到一个判别力更强的综合效率得分 CES。</strong></p>
+</blockquote>
+<p>下面两张表分别给出<strong>权重（表2）</strong>与<strong>综合效率得分（表3）</strong>的“论文
+vs 程序”对比（四舍五入到 5 位小数）。</p>
+<h3 id="表2全部-21-个子组合的权重-wk按权重降序节选">表2：全部 21
+个子组合的权重 Wk（按权重降序，节选）</h3>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 32%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 25%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr>
+<th>Mk</th>
+<th>变量组合 X1X2X3·Y1Y2</th>
+<th>论文 Wk</th>
+<th>程序 Wk</th>
+<th>差值(程序-论文)</th>
+<th>是否一致</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>001·01</td>
+<td>0.11103</td>
+<td>0.11103</td>
+<td>0</td>
+<td>是</td>
+</tr>
+<tr>
+<td>5</td>
+<td>010·01</td>
+<td>0.09195</td>
+<td>0.09195</td>
+<td>0</td>
+<td>是</td>
+</tr>
+<tr>
+<td>8</td>
+<td>100·10</td>
+<td>0.06689</td>
+<td>0.06689</td>
+<td>0</td>
+<td>是</td>
+</tr>
+<tr>
+<td>15</td>
+<td>111·10</td>
+<td>0.01707</td>
+<td>0.01707</td>
+<td>0</td>
+<td>是</td>
+</tr>
+<tr>
+<td>21</td>
+<td>111·11</td>
+<td>0.00777</td>
+<td>0.00777</td>
+<td>0</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<p>（完整 21 行见 Excel 文件 <code>entropy_dea_results.xlsx</code>
+的“表2_子集与权重”工作表。）</p>
+<h3 id="表3综合效率得分-ces-与其它-dea-模型对比">表3：综合效率得分 CES
+与其它 DEA 模型对比</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 10%" />
+<col style="width: 4%" />
+<col style="width: 11%" />
+<col style="width: 4%" />
+</colgroup>
+<thead>
+<tr>
+<th>DMU</th>
+<th>论文 CES</th>
+<th>程序 CES</th>
+<th>差值(程序-论文)</th>
+<th>是否一致(5位)</th>
+<th>传统CCR</th>
+<th>GCE</th>
+<th>SuperCCR</th>
+<th>SBM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.47997</td>
+<td>0.47997</td>
+<td>0</td>
+<td>是</td>
+<td>0.68571</td>
+<td>0.6384</td>
+<td>0.68571</td>
+<td>0.47619</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.83347</td>
+<td>0.83347</td>
+<td>0</td>
+<td>是</td>
+<td>1.00000</td>
+<td>0.97664</td>
+<td>1.12</td>
+<td>1.00000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.99283</td>
+<td>0.99283</td>
+<td>0</td>
+<td>是</td>
+<td>1.00000</td>
+<td>1.00000</td>
+<td>1.50</td>
+<td>1.00000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.41582</td>
+<td>0.41582</td>
+<td>0</td>
+<td>是</td>
+<td>0.85714</td>
+<td>0.79878</td>
+<td>0.85714</td>
+<td>0.32179</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.69064</td>
+<td>0.69064</td>
+<td>0</td>
+<td>是</td>
+<td>0.85714</td>
+<td>0.66703</td>
+<td>0.85714</td>
+<td>0.56863</td>
+</tr>
+</tbody>
+</table>
+<p>（CES 最大绝对误差约 4.4e-6，仅为论文保留 5
+位小数的舍入差。CCR/GCE/SuperCCR/SBM 为论文中用于对比的其它 DEA
+模型，本复现未单独计算。）</p>
+<p><strong>复现要点：</strong></p>
+<ul>
+<li>程序 CES 与论文 CES 逐点一致，排名为：<strong>DMU3 &gt; DMU2 &gt;
+DMU5 &gt; DMU1 &gt; DMU4</strong>。</li>
+<li>传统 CCR 下 DMU2、DMU3 同为 1，无法区分；CES
+把二者拉开（DMU3=0.99283 &gt; DMU2=0.83347），体现“判别力提升”。</li>
+</ul>
+<p>如果需要，请联系微信<strong>canglang12002 任公子</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://gongju128.github.io">任公子</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://gongju128.github.io/2026/08/25/Shannon%E7%86%B5DEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D/">http://gongju128.github.io/2026/08/25/Shannon%E7%86%B5DEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://gongju128.github.io" target="_blank">工具视界</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DEA/">DEA</a><a class="post-meta__tags" href="/tags/%E5%88%A4%E5%88%AB%E5%8A%9B/">判别力</a><a class="post-meta__tags" href="/tags/%E7%BB%BC%E5%90%88%E6%95%88%E7%8E%87%E5%BE%97%E5%88%86/">综合效率得分</a><a class="post-meta__tags" href="/tags/CES/">CES</a></div><div class="post_share"><div class="social-share" data-image="/img/zhuang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/08/24/ACDEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" title="指标太多，DEA还怎么用？一种能自动‘挑变量’的进攻型方法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">指标太多，DEA还怎么用？一种能自动‘挑变量’的进攻型方法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/03/13/B2_DEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_next%E5%8D%9A%E5%AE%A2%E7%89%88/" title="DEA模型复现介绍：部分集中化资源配置模型（Partial Centralization DEA）"><img class="cover" src="https://github.com/cmyf122/picx-images-hosting/raw/master/image.6m4gfmxddh.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-13</div><div class="title">DEA模型复现介绍：部分集中化资源配置模型（Partial Centralization DEA）</div></div></a></div><div><a href="/2026/03/15/C2_DEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_next%E5%8D%9A%E5%AE%A2%E7%89%88/" title="DEA模型复现介绍：共享权重逆向 DEA 合并分析模型（CSW-Inverse DEA）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-15</div><div class="title">DEA模型复现介绍：共享权重逆向 DEA 合并分析模型（CSW-Inverse DEA）</div></div></a></div><div><a href="/2026/04/01/DEA%E8%B5%84%E6%BA%90%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="一篇 DEA 局部集中资源配置论文的复现说明"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-01</div><div class="title">一篇 DEA 局部集中资源配置论文的复现说明</div></div></a></div><div><a href="/2026/03/22/F1%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="DEA模型复现介绍：NEEFDEA with bargaining-based selection 固定总和产出效率评价模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-22</div><div class="title">DEA模型复现介绍：NEEFDEA with bargaining-based selection 固定总和产出效率评价模型</div></div></a></div><div><a href="/2026/03/19/GEEFDEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="DEA模型复现介绍：GEEFDEA固定总和产出效率评价模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-19</div><div class="title">DEA模型复现介绍：GEEFDEA固定总和产出效率评价模型</div></div></a></div><div><a href="/2026/04/14/%E5%8D%9A%E5%BC%88%E4%BA%A4%E5%8F%89DEA%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="博弈交叉DEA模型介绍：为什么它比传统交叉效率更稳、更有说服力、更适合高质量评价"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-14</div><div class="title">博弈交叉DEA模型介绍：为什么它比传统交叉效率更稳、更有说服力、更适合高质量评价</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/zhuang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">任公子</div><div class="author-info__description">经济、金融领域模型的实现工具及代码。<br>微信: canglang12002</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">171</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="http://www.gongju128.cn/"><i class="fab fa-github"></i><span>欢迎访问!</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">大家有什么问题或者建议，欢迎联系我们!</div></div><div class="card-widget user-map"><div class="item-headline"><i class="fas fa-qrcode"></i><span>公众号--工具视界</span></div><div class="item-content"><img src="/img/gong.jpg" alt="公众号二维码"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dea%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8Dshannon%E7%86%B5%E6%8F%90%E9%AB%98dea%E5%88%A4%E5%88%AB%E5%8A%9B%E7%9A%84%E7%BB%BC%E5%90%88%E6%95%88%E7%8E%87%E8%AF%84%E4%BB%B7%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">DEA模型复现介绍：Shannon熵提高DEA判别力的综合效率评价模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%AE%BA%E6%96%87%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">一、论文基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">二、这篇文章解决了什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89shannon%E7%86%B5dea%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">三、Shannon熵DEA的核心思想与数学模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%80%E4%B8%AA%E5%AD%90%E7%BB%84%E5%90%88%E9%83%BD%E7%94%A8-ccr-%E6%A8%A1%E5%9E%8B%E6%B1%82%E6%95%88%E7%8E%87"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 每一个子组合都用 CCR
+模型求效率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8-shannon-%E7%86%B5%E7%BB%99%E6%AF%8F%E4%B8%AA%E5%AD%90%E7%BB%84%E5%90%88%E5%AE%9A%E6%9D%83%E5%85%AD%E6%AD%A5%E6%B3%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 用 Shannon
+熵给每个子组合定权（六步法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%9D%A1%E9%87%8D%E8%A6%81%E6%80%A7%E8%B4%A8%E5%AE%9A%E7%90%86"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 两条重要性质（定理）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E8%BF%99%E4%B8%AA%E6%A8%A1%E5%9E%8B%E7%9B%B8%E6%AF%94%E5%B7%B2%E6%9C%89%E6%96%B9%E6%B3%95%E5%A5%BD%E5%9C%A8%E5%93%AA"><span class="toc-number">1.4.</span> <span class="toc-text">四、这个模型相比已有方法好在哪？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E4%B8%A2%E5%8F%98%E9%87%8F%E4%BF%A1%E6%81%AF%E5%88%A4%E5%88%AB%E5%8A%9B%E5%8D%B4%E6%9B%B4%E5%BC%BA"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 不丢变量信息，判别力却更强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E5%88%AB%E5%8A%9B%E6%9C%89%E7%90%86%E8%AE%BA%E4%BF%9D%E8%AF%81"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 判别力有理论保证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E6%80%A7%E5%A5%BD%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%80%A7%E5%BC%BA"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 通用性好、可移植性强</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E9%80%82%E5%90%88%E5%93%AA%E4%BA%9B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.5.</span> <span class="toc-text">五、这篇文章适合哪些应用场景？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E8%BF%99%E6%AC%A1%E5%A4%8D%E7%8E%B0%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">六、这次复现做了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E5%A4%8D%E7%8E%B0%E7%BB%93%E8%AE%BA"><span class="toc-number">1.7.</span> <span class="toc-text">七、复现结论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A82%E5%85%A8%E9%83%A8-21-%E4%B8%AA%E5%AD%90%E7%BB%84%E5%90%88%E7%9A%84%E6%9D%83%E9%87%8D-wk%E6%8C%89%E6%9D%83%E9%87%8D%E9%99%8D%E5%BA%8F%E8%8A%82%E9%80%89"><span class="toc-number">1.7.1.</span> <span class="toc-text">表2：全部 21
+个子组合的权重 Wk（按权重降序，节选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A83%E7%BB%BC%E5%90%88%E6%95%88%E7%8E%87%E5%BE%97%E5%88%86-ces-%E4%B8%8E%E5%85%B6%E5%AE%83-dea-%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="toc-number">1.7.2.</span> <span class="toc-text">表3：综合效率得分 CES
+与其它 DEA 模型对比</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/25/Shannon%E7%86%B5DEA%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D/" title="DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型">DEA模型复现介绍：Shannon 熵提高DEA判别力综合效率评价模型</a><time datetime="2026-08-25T00:00:00.000Z" title="发表于 2026-08-25 08:00:00">2026-08-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/24/ACDEA%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" title="指标太多，DEA还怎么用？一种能自动‘挑变量’的进攻型方法">指标太多，DEA还怎么用？一种能自动‘挑变量’的进攻型方法</a><time datetime="2026-08-24T00:00:00.000Z" title="发表于 2026-08-24 08:00:00">2026-08-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/23/HHFS_ORESTE_GRA_DEMATEL%E5%A4%8D%E7%8E%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择">多源异构模糊决策模型复现介绍：HHFS-ORESTE + GRA-DEMATEL 低碳供应链合作伙伴选择</a><time datetime="2026-08-23T00:00:00.000Z" title="发表于 2026-08-23 08:00:00">2026-08-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/24/%E5%9B%A0%E6%9E%9C%E6%A3%AE%E6%9E%97%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="因果森林可视化工作台介绍：为什么它比平均效应分析更适合发现异质性影响、识别人群差异与做结果可视化展示">因果森林可视化工作台介绍：为什么它比平均效应分析更适合发现异质性影响、识别人群差异与做结果可视化展示</a><time datetime="2026-04-24T00:00:00.000Z" title="发表于 2026-04-24 08:00:00">2026-04-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/19/%E5%8F%8C%E9%87%8D%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%88%86%E6%9E%90%E5%8F%B0%E4%BB%8B%E7%BB%8D_%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88/" title="双重机器学习分析台介绍：为什么它比传统回归更适合高维控制、因果识别与经济学实证分析">双重机器学习分析台介绍：为什么它比传统回归更适合高维控制、因果识别与经济学实证分析</a><time datetime="2026-04-19T00:00:00.000Z" title="发表于 2026-04-19 08:00:00">2026-04-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">联系方式</p><div class="bg-ad"><div class="contact-info"><div class="contact-item">公众号: 工具视界</div><div class="contact-item">邮箱: 1503329642@qq.com</div><div class="contact-item">微信: canglang12002</div></div></div></div><div class="t-t-r"></div></div></div><div class="ft-item-2"></div></div><div class="copyright">&copy;2020 - 2026  <i id="heartbeat" class="fa fas fa-heartbeat"></i> 任公子</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'gongju128/gongju128.github.io',
+      'data-repo-id': 'R_kgDOLZkzyw',
+      'data-category-id': 'DIC_kwDOLZkzy84Cdncw',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"mapping":"https://gongju128.github.io","reactions-enabled":1,"input-position":"end"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
